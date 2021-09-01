@@ -19,8 +19,12 @@ public class AppContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext ctx = servletContextEvent.getServletContext();
 
+        String dbURL = ctx.getInitParameter("dbURL");
+        String user = ctx.getInitParameter("dbUser");
+        String password = ctx.getInitParameter("dbPassword");
+
         try {
-            BasicDataSource connectionManager = DBConnectionManager.getDataSource();
+            BasicDataSource connectionManager = DBConnectionManager.getDataSource(dbURL, user, password);
             ctx.setAttribute("DBConnection", connectionManager.getConnection());
             System.out.println("DB Connection initialized successfully.");
         } catch (SQLException e) {

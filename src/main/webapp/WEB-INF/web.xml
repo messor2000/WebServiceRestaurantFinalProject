@@ -8,14 +8,18 @@
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
-<!--    <context-param>-->
-<!--        <param-name>dbUser</param-name>-->
-<!--        <param-value>pankaj</param-value>-->
-<!--    </context-param>-->
-<!--    <context-param>-->
-<!--        <param-name>dbPassword</param-name>-->
-<!--        <param-value>pankaj123</param-value>-->
-<!--    </context-param>-->
+    <context-param>
+        <param-name>dbUser</param-name>
+        <param-value>root</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbPassword</param-name>
+        <param-value>password</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbURL</param-name>
+        <param-value>jdbc:mysql://localhost:3308/final_task_restaurant</param-value>
+    </context-param>
     <context-param>
         <param-name>log4j-config</param-name>
         <param-value>WEB-INF/log4j.xml</param-value>
