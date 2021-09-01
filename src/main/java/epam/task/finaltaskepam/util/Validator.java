@@ -1,5 +1,6 @@
 package epam.task.finaltaskepam.util;
 
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,6 +19,8 @@ public class Validator {
     private static final String LOGIN = "[a-zA-Z_0-9]{3,16}";
     private static final Pattern PATTERN_LOGIN = Pattern.compile(LOGIN);
     private static final String EMAIL = "\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}";
+
+    private Validator(){}
 
     /**
      * This method validates array of Strings. Any string should be at least 1 symbol long.
@@ -72,7 +75,7 @@ public class Validator {
     public static boolean validateLogin(String login) {
         Matcher matcher;
         matcher = PATTERN_LOGIN.matcher(login);
-        return matcher.matches();
+        return !matcher.matches();
     }
 
     /**

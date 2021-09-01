@@ -13,6 +13,9 @@ import java.sql.SQLException;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 /**
  * @author Aleksandr Ovcharenko
  */
@@ -72,5 +75,38 @@ public class Util {
 
     public static String encodePassword(byte[] password) {
         return DigestUtils.md5Hex(password);
+    }
+
+    /**
+     * This method is used to get previous query string if it exists,
+     * in other case it returns default welcome page.
+     * @param request
+     * @return String previous query String
+     */
+    public static String getPreviousQuery(HttpServletRequest request) {
+        String previousQuery = (String) request.getSession(false).getAttribute(Constants.getPreviousQuery());
+        if (previousQuery == null) {
+            previousQuery = Constants.getWelcomePage();
+        }
+        return previousQuery;
+    }
+
+    /**
+     * This method creates session for client if it does not exist
+     * and sets query string attribute to this session object.
+     * @param request
+     */
+    public static void saveCurrentQueryToSession(HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+
+        String requestURI = request.getRequestURI();
+        String queryString = request.getQueryString();
+
+        if (queryString == null) {
+            session.setAttribute(Constants.getSessionPrevQuery(), requestURI);
+        } else {
+            session.setAttribute(Constants.getSessionPrevQuery(),
+                    requestURI + Constants.getSessionPrevQuery() + queryString);
+        }
     }
 }

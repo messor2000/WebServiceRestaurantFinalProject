@@ -16,11 +16,10 @@ public interface UserService {
      * @param email of user
      * @param password of user
      * @param passwordrep of user
-     * @param sex of user
      * @return User bean with filled in fields.
      * @throws ServiceException if any error occurred while processing method.
      */
-    AppUser register(String login, String email, byte[] password, byte[] passwordrep, String sex) throws ServiceException;
+    AppUser register(String login, String email, byte[] password, byte[] passwordrep) throws ServiceException;
 
     /**
      * This method is used to let user enter his account in the system.

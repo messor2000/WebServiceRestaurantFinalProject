@@ -2,7 +2,6 @@ package epam.task.finaltaskepam.service.user;
 
 import com.google.protobuf.ServiceException;
 import epam.task.finaltaskepam.dao.FactoryDao;
-import epam.task.finaltaskepam.dao.user.MySqlAppUserDao;
 import epam.task.finaltaskepam.dao.user.UserDao;
 import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
@@ -30,7 +29,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public AppUser authorize(String login, byte[] password) throws ServiceException {
         logger.debug("authorize begin");
-        if (!Validator.validateLogin(login) || !Validator.validatePassword(password)) {
+        if (Validator.validateLogin(login) || !Validator.validatePassword(password)) {
             throw new ServiceRuntimeException("Wrong parameters!");
         }
         String encodedPassword = Util.encodePassword(password);
@@ -58,13 +57,12 @@ public class UserServiceImpl implements UserService {
      * @param email       of user
      * @param password    of user
      * @param passwordrep of user
-     * @param sex         of user
      * @return User bean with filled in fields.
      * @throws ServiceException if any error occurred while processing method.
      */
     @Override
-    public AppUser register(String login, String email, byte[] password, byte[] passwordrep, String sex) throws ServiceException {
-        if (!Validator.validate(login, email, sex) || !Validator.validateLogin(login)
+    public AppUser register(String login, String email, byte[] password, byte[] passwordrep) throws ServiceException {
+        if (!Validator.validate(login, email) || Validator.validateLogin(login)
                 || !Validator.validatePassword(password, passwordrep) || !Validator.validateEmail(email)) {
             throw new ServiceRuntimeException("Check input parameters");
         }
@@ -79,7 +77,7 @@ public class UserServiceImpl implements UserService {
                 throw new ServiceException("Wrong login or password!");
             }
 
-        } catch (DaoRuntimeException e) {
+        } catch (DaoRuntimeException | ServiceException e) {
             throw new ServiceException("Error in source!", e);
         }
 
