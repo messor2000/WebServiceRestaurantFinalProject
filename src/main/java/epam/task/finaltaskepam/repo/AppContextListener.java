@@ -1,6 +1,6 @@
 package epam.task.finaltaskepam.repo;
 
-import epam.task.finaltaskepam.error.ApiRuntimeException;
+import epam.task.finaltaskepam.error.DaoRuntimeException;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.xml.DOMConfigurator;
@@ -24,7 +24,7 @@ public class AppContextListener implements ServletContextListener {
         String password = ctx.getInitParameter("dbPassword");
 
         try {
-            BasicDataSource connectionManager = DBConnectionManager.getDataSource(dbURL, user, password);
+            BasicDataSource connectionManager = DBConnectionManager.getDataSource();
             ctx.setAttribute("DBConnection", connectionManager.getConnection());
             System.out.println("DB Connection initialized successfully.");
         } catch (SQLException e) {
@@ -51,12 +51,13 @@ public class AppContextListener implements ServletContextListener {
         System.out.println("log4j configured properly");
     }
 
+    @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         Connection con = (Connection) servletContextEvent.getServletContext().getAttribute("DBConnection");
         try {
             con.close();
         } catch (SQLException e) {
-            throw new ApiRuntimeException(e);
+            throw new DaoRuntimeException(e);
         }
     }
 }

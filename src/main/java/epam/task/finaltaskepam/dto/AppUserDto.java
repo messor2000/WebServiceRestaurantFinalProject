@@ -1,7 +1,5 @@
 package epam.task.finaltaskepam.dto;
 
-import javafx.util.Builder;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -12,7 +10,7 @@ public class AppUserDto implements Serializable {
     private String username;
     private String email;
     private String password;
-    private int roleId;
+    private String role;
 
     public static final class Builder {
         AppUserDto userDto;
@@ -41,8 +39,8 @@ public class AppUserDto implements Serializable {
             return this;
         }
 
-        public Builder withRoleId(int roleId) {
-            userDto.roleId = roleId;
+        public Builder withRoleId(String roleId) {
+            userDto.role = roleId;
             return this;
         }
     }
@@ -83,12 +81,12 @@ public class AppUserDto implements Serializable {
         return this;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public String getRole() {
+        return role;
     }
 
-    public AppUserDto setRoleId(int roleId) {
-        this.roleId = roleId;
+    public AppUserDto setRole(String role) {
+        this.role = role;
         return this;
     }
 
@@ -98,7 +96,7 @@ public class AppUserDto implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         AppUserDto that = (AppUserDto) o;
         return idUser == that.idUser &&
-                roleId == that.roleId &&
+                role == that.role &&
                 Objects.equals(username, that.username) &&
                 Objects.equals(email, that.email) &&
                 Objects.equals(password, that.password);
@@ -106,6 +104,6 @@ public class AppUserDto implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idUser, username, email, password, roleId);
+        return Objects.hash(idUser, username, email, password, role);
     }
 }

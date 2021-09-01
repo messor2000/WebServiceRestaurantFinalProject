@@ -7,10 +7,13 @@ public class DBConnectionManager {
 
     private DBConnectionManager(){}
 
-    public static BasicDataSource getDataSource(String dbURL, String user, String password) {
+    public static BasicDataSource getDataSource() {
         if (basicDataSource == null) {
             BasicDataSource dataSource = new BasicDataSource();
 
+            String dbURL = "http://localhost:3038/final_task_restaurant";
+            String user = "root";
+            String password = "password";
             dataSource.setUrl(dbURL);
             dataSource.setUsername(user);
             dataSource.setPassword(password);
