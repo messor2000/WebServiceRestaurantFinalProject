@@ -3,7 +3,7 @@ package epam.task.finaltaskepam.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class AppUserDto implements Serializable {
+public class AppUser implements Serializable {
     private static final long serialVersionUID = 6297385302078200511L;
 
     private int idUser;
@@ -13,10 +13,10 @@ public class AppUserDto implements Serializable {
     private String role;
 
     public static final class Builder {
-        AppUserDto userDto;
+        AppUser userDto;
 
         public Builder() {
-            userDto = new AppUserDto();
+            userDto = new AppUser();
         }
 
         public Builder withIdUser(int idUser) {
@@ -49,7 +49,7 @@ public class AppUserDto implements Serializable {
         return idUser;
     }
 
-    public AppUserDto setIdUser(int idUser) {
+    public AppUser setIdUser(int idUser) {
         this.idUser = idUser;
         return this;
     }
@@ -58,7 +58,7 @@ public class AppUserDto implements Serializable {
         return username;
     }
 
-    public AppUserDto setUsername(String username) {
+    public AppUser setUsername(String username) {
         this.username = username;
         return this;
     }
@@ -67,7 +67,7 @@ public class AppUserDto implements Serializable {
         return email;
     }
 
-    public AppUserDto setEmail(String email) {
+    public AppUser setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -76,7 +76,7 @@ public class AppUserDto implements Serializable {
         return password;
     }
 
-    public AppUserDto setPassword(String password) {
+    public AppUser setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -85,7 +85,7 @@ public class AppUserDto implements Serializable {
         return role;
     }
 
-    public AppUserDto setRole(String role) {
+    public AppUser setRole(String role) {
         this.role = role;
         return this;
     }
@@ -94,7 +94,7 @@ public class AppUserDto implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AppUserDto that = (AppUserDto) o;
+        AppUser that = (AppUser) o;
         return idUser == that.idUser &&
                 role == that.role &&
                 Objects.equals(username, that.username) &&

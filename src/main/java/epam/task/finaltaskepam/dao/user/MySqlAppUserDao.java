@@ -1,13 +1,11 @@
 package epam.task.finaltaskepam.dao.user;
 
-import epam.task.finaltaskepam.dto.AppUserDto;
+import epam.task.finaltaskepam.dto.AppUser;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import epam.task.finaltaskepam.error.DaoRuntimeException;
-import epam.task.finaltaskepam.repo.DBConnectionManager;
 import epam.task.finaltaskepam.repo.pool.ConnectionPoolException;
 import epam.task.finaltaskepam.repo.pool.ConnectionPoolImpl;
 import epam.task.finaltaskepam.repo.request.Request;
@@ -18,7 +16,7 @@ import org.apache.log4j.Logger;
 /**
  * @author Aleksandr Ovcharenko
  */
-public class MySqlAppUserDao extends AppUserDto implements UserDao {
+public class MySqlAppUserDao extends AppUser implements UserDao {
 
     public static final Logger logger = Logger.getLogger(MySqlAppUserDao.class);
     private static final long serialVersionUID = 5566685127381260993L;
@@ -30,7 +28,7 @@ public class MySqlAppUserDao extends AppUserDto implements UserDao {
     }
 
     @Override
-    public AppUserDto authorize(String login, String password) {
+    public AppUser authorize(String login, String password) {
         Connection con = null;
         PreparedStatement st = null;
         ResultSet rs = null;
@@ -48,7 +46,7 @@ public class MySqlAppUserDao extends AppUserDto implements UserDao {
                 return null;
             }
 
-            AppUserDto user = new AppUserDto();
+            AppUser user = new AppUser();
             user.setUsername(rs.getString(1));
             user.setEmail(rs.getString(2));
             user.setRole(rs.getString(3));
@@ -64,7 +62,7 @@ public class MySqlAppUserDao extends AppUserDto implements UserDao {
     }
 
     @Override
-    public AppUserDto register(String login, String email, String password) {
+    public AppUser register(String login, String email, String password) {
         Connection con = null;
         PreparedStatement st = null;
         try {
@@ -91,7 +89,7 @@ public class MySqlAppUserDao extends AppUserDto implements UserDao {
     }
 
     @Override
-    public List<AppUserDto> getAllUsers() {
+    public List<AppUser> getAllUsers() {
         return null;
     }
 

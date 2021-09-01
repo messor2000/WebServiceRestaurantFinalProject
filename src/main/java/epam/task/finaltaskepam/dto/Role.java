@@ -6,7 +6,7 @@ package epam.task.finaltaskepam.dto;
 public enum Role {
     VISITOR, CUSTOMER, MANAGER;
 
-    public static Role getRole(AppUserDto user) {
+    public static Role getRole(AppUser user) {
         int roleId = user.getRole();
         return Role.values()[roleId];
     }

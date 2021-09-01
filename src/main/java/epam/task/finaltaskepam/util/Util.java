@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 /**
  * @author Aleksandr Ovcharenko
  */
@@ -66,5 +68,9 @@ public class Util {
         } catch (ConnectionPoolException e) {
             logger.log(Level.ERROR, e + "Exception while returning connection");
         }
+    }
+
+    public static String encodePassword(byte[] password) {
+        return DigestUtils.md5Hex(password);
     }
 }

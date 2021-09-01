@@ -5,7 +5,7 @@
   Time: 15:04
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="epam.task.finaltaskepam.dto.AppUserDto" %>
+<%@ page import="epam.task.finaltaskepam.dto.AppUser" %>
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
          pageEncoding="US-ASCII" %>
 <%--<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "https://www.w3.org/TR/html4/loose.dtd">--%>
@@ -15,7 +15,7 @@
     <title>Home Page</title>
 </head>
 <body>
-<%AppUserDto user = (AppUserDto) session.getAttribute("User"); %>
+<%AppUser user = (AppUser) session.getAttribute("User"); %>
 <h3>Hi <%=user.getUsername() %>
 </h3>
 <strong>Your Username</strong>: <%=user.getUsername() %><br>

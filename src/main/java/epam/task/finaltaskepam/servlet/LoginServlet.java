@@ -1,6 +1,6 @@
 package epam.task.finaltaskepam.servlet;
 
-import epam.task.finaltaskepam.dto.AppUserDto;
+import epam.task.finaltaskepam.dto.AppUser;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
 
                 if (resultSet != null && resultSet.next()) {
 
-                    AppUserDto user = new AppUserDto(resultSet.getInt("id"),
+                    AppUser user = new AppUser(resultSet.getInt("id"),
                             resultSet.getString("username"),
                             resultSet.getString("email"));
                     logger.info("User found with details=" + user);

@@ -1,8 +1,8 @@
-package epam.task.finaltaskepam.dao.factory;
+package epam.task.finaltaskepam.dao;
 
 import epam.task.finaltaskepam.dao.user.MySqlAppUserDao;
 import epam.task.finaltaskepam.dao.user.UserDao;
-import epam.task.finaltaskepam.dto.AppUserDto;
+import epam.task.finaltaskepam.repo.pool.ConnectionPoolImpl;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -19,8 +19,13 @@ public class FactoryDao {
     }
 
     private final UserDao userDao = MySqlAppUserDao.getInstance();
+    private final ConnectionPoolImpl connectionPool = ConnectionPoolImpl.getInstance();
 
     public UserDao getUserDao() {
         return userDao;
+    }
+
+    public ConnectionPoolImpl getConnectionPool() {
+        return connectionPool;
     }
 }

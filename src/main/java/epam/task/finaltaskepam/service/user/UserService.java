@@ -1,7 +1,7 @@
 package epam.task.finaltaskepam.service.user;
 
 import com.google.protobuf.ServiceException;
-import epam.task.finaltaskepam.dto.AppUserDto;
+import epam.task.finaltaskepam.dto.AppUser;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -20,7 +20,7 @@ public interface UserService {
      * @return User bean with filled in fields.
      * @throws ServiceException if any error occurred while processing method.
      */
-    AppUserDto register(String login, String email, byte[] password, byte[] passwordrep, String sex) throws ServiceException;
+    AppUser register(String login, String email, byte[] password, byte[] passwordrep, String sex) throws ServiceException;
 
     /**
      * This method is used to let user enter his account in the system.
@@ -30,6 +30,6 @@ public interface UserService {
      * @return User bean with filled in fields.
      * @throws ServiceException if any error occurred while processing method.
      */
-    AppUserDto authorize(String login, byte[] password) throws ServiceException;
+    AppUser authorize(String login, byte[] password) throws ServiceException;
 
 }
