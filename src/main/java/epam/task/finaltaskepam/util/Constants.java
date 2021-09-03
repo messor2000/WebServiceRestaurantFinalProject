@@ -14,6 +14,13 @@ public class Constants {
 
     private static final String ERROR = "errorMessage";
 
+    private static final String LANGUAGE = "language";
+    private static final String SESSION_LANGUAGE = "language";
+    private static final String RUSSIAN = "ru";
+    private static final String ENGLISH = "en";
+
+    private Constants(){}
+
     public static String getJspPagePath() {
         return JSP_PAGE_PATH;
     }
@@ -36,5 +43,21 @@ public class Constants {
 
     public static String getERROR() {
         return ERROR;
+    }
+
+    public static String getLANGUAGE() {
+        return LANGUAGE;
+    }
+
+    public static String getRUSSIAN() {
+        return RUSSIAN;
+    }
+
+    public static String getENGLISH() {
+        return ENGLISH;
+    }
+
+    public static String getSessionLanguage() {
+        return SESSION_LANGUAGE;
     }
 }

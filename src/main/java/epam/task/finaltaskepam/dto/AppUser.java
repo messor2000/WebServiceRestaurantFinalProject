@@ -96,7 +96,7 @@ public class AppUser implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         AppUser that = (AppUser) o;
         return idUser == that.idUser &&
-                role == that.role &&
+                role.equals(that.role) &&
                 Objects.equals(username, that.username) &&
                 Objects.equals(email, that.email) &&
                 Objects.equals(password, that.password);

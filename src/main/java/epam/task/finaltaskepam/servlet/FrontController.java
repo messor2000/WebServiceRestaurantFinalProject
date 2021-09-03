@@ -1,12 +1,5 @@
 package epam.task.finaltaskepam.servlet;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
 import epam.task.finaltaskepam.command.Command;
 import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.servlet.command.CommandProducer;
@@ -15,10 +8,15 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 /**
  * @author Aleksandr Ovcharenko
  */
-//@WebServlet(name = "FrontController")
 public class FrontController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -29,12 +27,22 @@ public class FrontController extends HttpServlet {
         super();
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            processRequest(request, response);
+        } catch (ServletException | IOException e) {
+            logger.log(Level.ERROR, e);
+        }
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            processRequest(request, response);
+        } catch (ServletException | IOException e) {
+            logger.log(Level.ERROR, e);
+        }
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,13 +53,13 @@ public class FrontController extends HttpServlet {
         if (commandName != null && !commandName.isEmpty()) {
             try {
                 AppUser user = (AppUser) request.getSession(false).getAttribute("user");
-                String type;
+                String role;
                 if (user != null) {
-                    type = user.getRole();
+                    role = user.getRole();
                 } else {
-                    type = "visitor";
+                    role = "visitor";
                 }
-                Command command = CommandProducer.getInstance().getCommandForUser(type, commandName);
+                Command command = CommandProducer.getInstance().getCommandForUser(role, commandName);
                 if (command == null) {
                     logger.log(Level.ERROR, "Access without permission from client");
                     request.setAttribute(Constants.getERROR(), "You don't have permission to do that.");

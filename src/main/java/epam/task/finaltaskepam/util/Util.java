@@ -109,4 +109,18 @@ public class Util {
                     requestURI + Constants.getSessionPrevQuery() + queryString);
         }
     }
+
+    /**
+     * This method is used to get session language, if session exists
+     * in other case returns russian language by default.
+     * @param request
+     * @return String language
+     */
+    public static Object getLanguage(HttpServletRequest request) {
+        Object lang = request.getSession(false).getAttribute(Constants.getLANGUAGE());
+        if (lang == null) {
+            return Constants.getRUSSIAN();
+        }
+        return lang;
+    }
 }

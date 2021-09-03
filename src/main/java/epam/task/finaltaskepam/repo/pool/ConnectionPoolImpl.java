@@ -10,7 +10,8 @@ import java.util.concurrent.BlockingQueue;
  * @author Aleksandr Ovcharenko
  */
 public class ConnectionPoolImpl implements ConnectionPool {
-    private static final String URL = "jdbc:mysql://localhost:3308/final_task_restaurant?useEncoding=true&amp;characterEncoding=UTF-8";
+    private static final String DRIVER = "com.mysql.jdbc.Driver";
+    private static final String URL = "jdbc:mysql://localhost:3308/final_task_restaurant";
     private static final String USER = "root";
     private static final String PASSWORD = "password";
 
@@ -23,28 +24,22 @@ public class ConnectionPoolImpl implements ConnectionPool {
 
     private static final ConnectionPoolImpl instance = new ConnectionPoolImpl();
 
-    private ConnectionPoolImpl() {
-    }
+    public ConnectionPoolImpl() { }
 
-
-    /**
-     * This method is used to initialize pool of connections with data source.
-     *
-     * @throws ConnectionPoolException if some error occurred while initializing ConnectionPool.
-     */
     @Override
     public void init() throws ConnectionPoolException {
         if (!isInit) {
             try {
                 freeConnections = new ArrayBlockingQueue<>(MINIMAL_CONNECTION_COUNT);
                 usedConnections = new ArrayBlockingQueue<>(MINIMAL_CONNECTION_COUNT);
+                Class.forName(DRIVER);
                 Connection connection;
                 for (int i = 0; i < MINIMAL_CONNECTION_COUNT; i++) {
                     connection = DriverManager.getConnection(URL, USER, PASSWORD);
                     freeConnections.add(connection);
                 }
                 isInit = true;
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         } else {
