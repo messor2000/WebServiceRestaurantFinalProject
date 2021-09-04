@@ -1,5 +1,7 @@
 package epam.task.finaltaskepam.repo.pool;
 
+import epam.task.finaltaskepam.error.ConnectionPoolException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -24,7 +26,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
 
     private static final ConnectionPoolImpl instance = new ConnectionPoolImpl();
 
-    public ConnectionPoolImpl() { }
+    public ConnectionPoolImpl(){}
 
     @Override
     public void init() throws ConnectionPoolException {

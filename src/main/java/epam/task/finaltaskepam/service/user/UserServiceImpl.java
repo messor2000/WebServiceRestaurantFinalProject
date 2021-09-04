@@ -2,7 +2,7 @@ package epam.task.finaltaskepam.service.user;
 
 import com.google.protobuf.ServiceException;
 import epam.task.finaltaskepam.dao.FactoryDao;
-import epam.task.finaltaskepam.dao.user.UserDao;
+import epam.task.finaltaskepam.dao.user.AppUserDao;
 import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         }
         String encodedPassword = Util.encodePassword(password);
         FactoryDao factoryDao = FactoryDao.getInstance();
-        UserDao dao = factoryDao.getUserDao();
+        AppUserDao dao = factoryDao.getUserDao();
         AppUser user;
         try {
             user = dao.authorize(login, encodedPassword);
@@ -50,25 +50,24 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * This method is used to register and give access to the system for
-     * some new visitor.
+     * This method is used to register and give access to the system for some new visitor.
      *
      * @param login       of user
      * @param email       of user
      * @param password    of user
-     * @param passwordrep of user
+     * @param passwordrepeat of user
      * @return User bean with filled in fields.
      * @throws ServiceException if any error occurred while processing method.
      */
     @Override
-    public AppUser register(String login, String email, byte[] password, byte[] passwordrep) throws ServiceException {
+    public AppUser register(String login, String email, byte[] password, byte[] passwordrepeat) throws ServiceException {
         if (!Validator.validate(login, email) || Validator.validateLogin(login)
-                || !Validator.validatePassword(password, passwordrep) || !Validator.validateEmail(email)) {
+                || !Validator.validatePassword(password, passwordrepeat) || !Validator.validateEmail(email)) {
             throw new ServiceRuntimeException("Check input parameters");
         }
         String encodedPassword = Util.encodePassword(password);
         FactoryDao factoryDao = FactoryDao.getInstance();
-        UserDao dao = factoryDao.getUserDao();
+        AppUserDao dao = factoryDao.getUserDao();
         AppUser user;
         try {
             user = dao.register(login, email, encodedPassword);

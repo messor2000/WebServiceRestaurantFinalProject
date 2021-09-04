@@ -20,9 +20,10 @@
 <fmt:message bundle="${locale}" key="locale.password" var="password"/>
 <fmt:message bundle="${locale}" key="locale.cancel" var="cancel"/>
 <fmt:message bundle="${locale}" key="locale.email" var="email"/>
-<fmt:message bundle="${locale}" key="locale.repeatPassword" var="repeatPassword"/>
+<fmt:message bundle="${locale}" key="locale.repeatPassword" var="password2"/>
 <fmt:message bundle="${locale}" key="locale.register" var="register"/>
-
+<fmt:message bundle="${locale}" key="locale.registerName" var="registerName"/>
+<fmt:message bundle="${locale}" key="locale.loginName" var="loginName"/>
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -71,12 +72,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
-                <h4 class="modal-title">${movieRateEntrance}</h4>
+                <h4 class="modal-title">${loginName}</h4>
             </div>
             <div class="modal-body text-center">
                 <form name="loginForm" class="form-horizontal" method="post" action="FrontController" onsubmit="return validateForm();">
                     <input type="hidden" name="command" value="login"/>
-                    <span id="unameDemo" class="red"></span>
+                    <span id="usernameDemo" class="red"></span>
                     <div class="form-group">
                         <label for="username" class="col-sm-3 control-label">${username}</label>
                         <div class="col-sm-7">
@@ -86,10 +87,10 @@
                     </div>
                     <div class="form-group">
                         <label for="password3" class="col-sm-3 control-label">${password}</label>
-                        <span id="pswDemo" class="red"></span>
+                        <span id="passwordDemo" class="red"></span>
                         <div class="col-sm-7">
                             <input type="password" class="form-control" id="password3" placeholder="${password}"
-                                   name="pass" required>
+                                   name="password" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -109,40 +110,40 @@
 
 <script language="javascript">
     function validateForm() {
-        let uname, psw;
-        let unameText, pswText;
+        let username, password;
+        let usernameText, passwordText;
         let result = true;
-        uname = document.forms["loginForm"]["username"].value;
-        psw = document.forms["loginForm"]["pass"].value;
+        username = document.forms["loginForm"]["username"].value;
+        password = document.forms["loginForm"]["password"].value;
         const unamePattern = /[a-zA-Z_0-9]{3,16}/;
-        if (!unamePattern.test(uname)) {
-            unameText = "Username should contain only latin symbols, digits and _";
-            document.getElementById("unameDemo").innerHTML = unameText;
+        if (!unamePattern.test(username)) {
+            usernameText = "Username should contain only latin symbols, digits and _";
+            document.getElementById("usernameDemo").innerHTML = usernameText;
             result = false;
-        } else if (uname.length < 3) {
-            unameText = "Username should be at least 3 symbols.";
-            document.getElementById("unameDemo").innerHTML = unameText;
+        } else if (username.length < 3) {
+            usernameText = "Username should be at least 3 symbols.";
+            document.getElementById("usernameDemo").innerHTML = usernameText;
             result = false;
-        } else if (uname.length > 16) {
-            unameText = "Username should be less then 17 symbols.";
-            document.getElementById("unameDemo").innerHTML = unameText;
+        } else if (username.length > 16) {
+            usernameText = "Username should be less then 17 symbols.";
+            document.getElementById("usernameDemo").innerHTML = usernameText;
             result = false;
         } else {
-            unameText = "";
-            document.getElementById("unameDemo").innerHTML = unameText;
+            usernameText = "";
+            document.getElementById("usernameDemo").innerHTML = usernameText;
         }
         const passPattern = /[a-zA-Z0-9_]{6,32}/;
-        if (psw.length < 6) {
-            pswText = "Password should be at least 6 symbols";
-            document.getElementById("pswDemo").innerHTML = pswText;
+        if (password.length < 6) {
+            passwordText = "Password should be at least 6 symbols";
+            document.getElementById("passwordDemo").innerHTML = passwordText;
             result = false;
-        } else if (!passPattern.test(psw)) {
-            pswText = "Password should contain only latin symbols, digits and _";
-            document.getElementById("pswDemo").innerHTML = pswText;
+        } else if (!passPattern.test(password)) {
+            passwordText = "Password should contain only latin symbols, digits and _";
+            document.getElementById("passwordDemo").innerHTML = passwordText;
             result = false;
-        } else if (psw.length > 32) {
-            pswText = "Password should be less then 32 symbols";
-            document.getElementById("pswDemo").innerHTML = pswText;
+        } else if (password.length > 32) {
+            passwordText = "Password should be less then 32 symbols";
+            document.getElementById("passwordDemo").innerHTML = passwordText;
             result = false;
         }
         return result;
@@ -154,14 +155,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
-                <h4 class="modal-title" id="myModalLabel">${movieRateRegister}</h4>
+                <h4 class="modal-title" id="myModalLabel">${registerName}</h4>
             </div>
             <div class="modal-body text-center">
-                <form name="registerForm" class="form-horizontal" method="post" action="FrontController"  onsubmit="return validateReg();">
+                <form name="registerForm" class="form-horizontal" method="post" action="FrontController"  onsubmit="return validateRegistration();">
                     <input type="hidden" name="command" value="register"/>
                     <div class="form-group">
                         <label for="inputUsername" class="col-sm-3 control-label">${username}</label>
-                        <span id="unameDemo2" class="red"></span>
+                        <span id="usernameDemo2" class="red"></span>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" id="inputUsername" placeholder="${username}"
                                    name="username" required>
@@ -177,17 +178,17 @@
                     </div>
                     <div class="form-group">
                         <label for="inputPassword3" class="col-sm-3 control-label">${password}</label>
-                        <span id="pswDemo2" class="red"></span>
+                        <span id="passwordDemo2" class="red"></span>
                         <div class="col-sm-7">
                             <input type="password" class="form-control" id="inputPassword3" placeholder="${password}"
-                                   name="pass" required>
+                                   name="password" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword4" class="col-sm-3 control-label">${repeatPassword}</label>
+                        <label for="inputPassword4" class="col-sm-3 control-label">${password2}</label>
                         <div class="col-sm-7">
-                            <input type="password" class="form-control" id="inputPassword4" placeholder="${repeatPassword}"
-                                   name="pass2" required>
+                            <input type="password" class="form-control" id="inputPassword4" placeholder="${password2}"
+                                   name="password2" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -205,30 +206,30 @@
     </div>
 </div>
 <script  language="javascript">
-    function validateReg() {
-        let uname, email, psw, psw2;
-        let unameText, emailText, pswText;
+    function validateRegistration() {
+        let username, email, password, password2;
+        let usernameText, emailText, passwordText;
         let result = true;
-        uname = document.forms["registerForm"]["nickname"].value;
+        username = document.forms["registerForm"]["nickname"].value;
         email = document.forms["registerForm"]["email"].value;
-        psw = document.forms["registerForm"]["pass"].value;
-        psw2 = document.forms["registerForm"]["pass2"].value;
+        password = document.forms["registerForm"]["pass"].value;
+        password2 = document.forms["registerForm"]["pass2"].value;
         const unamePattern = /[a-zA-Z_0-9]{3,16}/;
-        if (!unamePattern.test(uname)) {
-            unameText = "Nickname should contain only latin symbols, digits and _";
-            document.getElementById("unameDemo2").innerHTML = unameText;
+        if (!unamePattern.test(username)) {
+            usernameText = "Nickname should contain only latin symbols, digits and _";
+            document.getElementById("usernameDemo2").innerHTML = usernameText;
             result = false;
-        } else if (uname.length < 3) {
-            unameText = "Nickname should be at least 3 symbols.";
-            document.getElementById("unameDemo2").innerHTML = unameText;
+        } else if (username.length < 3) {
+            usernameText = "Nickname should be at least 3 symbols.";
+            document.getElementById("usernameDemo2").innerHTML = usernameText;
             result = false;
-        } else if (uname.length > 16) {
-            unameText = "Nickname should be less then 17 symbols.";
-            document.getElementById("unameDemo2").innerHTML = unameText;
+        } else if (username.length > 16) {
+            usernameText = "Nickname should be less then 17 symbols.";
+            document.getElementById("usernameDemo2").innerHTML = usernameText;
             result = false;
         } else {
-            unameText = "";
-            document.getElementById("unameDemo2").innerHTML = unameText;
+            usernameText = "";
+            document.getElementById("usernameDemo2").innerHTML = usernameText;
         }
         const emailPattern = /[a-zA-Z0-9_]+@[A-Za-z0-9].+/;
         if (!emailPattern.test(email)) {
@@ -236,29 +237,29 @@
             document.getElementById("emailDemo2").innerHTML = emailText;
             return false;
         } else {
-            unameText = "";
-            document.getElementById("emailDemo2").innerHTML = unameText;
+            usernameText = "";
+            document.getElementById("emailDemo2").innerHTML = usernameText;
         }
         const passPattern = /[a-zA-Z0-9_]{6,32}/;
-        if (psw.length < 6) {
-            pswText = "Password should be at least 6 symbols";
-            document.getElementById("pswDemo2").innerHTML = pswText;
+        if (password.length < 6) {
+            passwordText = "Password should be at least 6 symbols";
+            document.getElementById("passwordDemo2").innerHTML = passwordText;
             result = false;
-        } else if (!passPattern.test(psw)) {
-            pswText = "Password should contain only latin symbols, digits and _";
-            document.getElementById("pswDemo2").innerHTML = pswText;
+        } else if (!passPattern.test(password)) {
+            passwordText = "Password should contain only latin symbols, digits and _";
+            document.getElementById("passwordDemo2").innerHTML = passwordText;
             result = false;
-        } else if (psw.length > 32) {
-            pswText = "Password should be less then 32 symbols";
-            document.getElementById("pswDemo2").innerHTML = pswText;
+        } else if (password.length > 32) {
+            passwordText = "Password should be less then 32 symbols";
+            document.getElementById("passwordDemo2").innerHTML = passwordText;
             result = false;
-        } else if (psw !== psw2) {
-            pswText = "Passwords should be the same";
-            document.getElementById("pswDemo2").innerHTML = pswText;
+        } else if (password !== password2) {
+            passwordText = "Passwords should be the same";
+            document.getElementById("passwordDemo2").innerHTML = passwordText;
             result = false;
         } else {
-            unameText = "";
-            document.getElementById("pswDemo2").innerHTML = unameText;
+            usernameText = "";
+            document.getElementById("passwordDemo2").innerHTML = usernameText;
         }
         return result;
     }

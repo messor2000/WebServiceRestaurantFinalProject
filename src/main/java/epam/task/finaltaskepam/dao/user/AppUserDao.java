@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author Aleksandr Ovcharenko
  */
-public interface UserDao {
+public interface AppUserDao {
 
     /**
      * This method is used to authorize user in the system using data source.

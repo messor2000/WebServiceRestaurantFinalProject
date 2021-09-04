@@ -1,5 +1,7 @@
 package epam.task.finaltaskepam.repo.pool;
 
+import epam.task.finaltaskepam.error.ConnectionPoolException;
+
 /**
  * @author Aleksandr Ovcharenko
  */

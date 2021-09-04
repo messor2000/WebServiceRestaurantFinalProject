@@ -11,13 +11,12 @@
 <fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="locale" var="locale"/>
 <fmt:message bundle="${locale}" key="locale.erorrPage" var="erorrPage"/>
-
-
+<%--<fmt:message bundle="${locale}" key="locale.retue" var="erorrPage"/>--%>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ErrorPage</title>
+    <title>${erorrPage}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
@@ -34,6 +33,12 @@
                 <h3 class="red"><c:out value="${requestScope.get('errorMessage')}"/></h3>
                 <c:remove var="errorMessage" scope="request"/>
             </c:if>
+        </div>
+
+        <div class="modal-footer">
+            <a href="index.jsp">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Return to main page</button>
+            </a>
         </div>
     </div>
 </div>

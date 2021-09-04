@@ -1,6 +1,6 @@
 package epam.task.finaltaskepam.util;
 
-import epam.task.finaltaskepam.repo.pool.ConnectionPoolException;
+import epam.task.finaltaskepam.error.ConnectionPoolException;
 import epam.task.finaltaskepam.repo.pool.ConnectionPoolImpl;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -74,6 +74,10 @@ public class Util {
     }
 
     public static String encodePassword(byte[] password) {
+        return DigestUtils.md5Hex(password);
+    }
+
+    public static String encodePassword(String password) {
         return DigestUtils.md5Hex(password);
     }
 

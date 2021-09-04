@@ -106,4 +106,15 @@ public class AppUser implements Serializable {
     public int hashCode() {
         return Objects.hash(idUser, username, email, password, role);
     }
+
+    @Override
+    public String toString() {
+        return "AppUser{" +
+                "idUser=" + idUser +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
 }

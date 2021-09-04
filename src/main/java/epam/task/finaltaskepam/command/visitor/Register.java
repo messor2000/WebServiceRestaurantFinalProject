@@ -28,10 +28,10 @@ public class Register implements Command {
 
     private static final String USER = "user";
 
-    private static final String LOGIN = "nickname";
+    private static final String LOGIN = "username";
     private static final String EMAIL = "email";
-    private static final String PASSWORD = "pass";
-    private static final String PASSWORD_2 = "pass2";
+    private static final String PASSWORD = "password";
+    private static final String PASSWORD_2 = "password2";
 
     private static final String MESSAGE_OF_ERROR_1 = "All fields should be filled";
     private static final String MESSAGE_OF_ERROR_2 = "Such with such email or login is already exist";
@@ -48,7 +48,7 @@ public class Register implements Command {
         String previousQuery = Util.getPreviousQuery(request);
         HttpSession session = request.getSession(true);
 
-        if (login != null && email != null && password.length > 0 && password2.length > 0) {
+        if (login != null && email != null && password.length > 0 && password2.length> 0) {
             try {
                 AppUser user = userService.register(login, email, password, password2);
                 Arrays.fill(password, (byte) 0);

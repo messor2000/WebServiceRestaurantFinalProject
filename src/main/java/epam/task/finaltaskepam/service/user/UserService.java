@@ -30,5 +30,4 @@ public interface UserService {
      * @throws ServiceException if any error occurred while processing method.
      */
     AppUser authorize(String login, byte[] password) throws ServiceException;
-
 }

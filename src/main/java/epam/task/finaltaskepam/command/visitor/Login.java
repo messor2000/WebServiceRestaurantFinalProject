@@ -28,8 +28,8 @@ public class Login implements Command {
 
     private static final Logger logger = LogManager.getLogger(Login.class);
 
-    private static final String LOGIN = "nickname";
-    private static final String PASSWORD = "pass";
+    private static final String LOGIN = "username";
+    private static final String PASSWORD = "password";
 
     private static final String ERROR = "errorMessage";
     private static final String MESSAGE_OF_ERROR_1 = "Wrong login or pass";
@@ -42,7 +42,6 @@ public class Login implements Command {
 
         String login = request.getParameter(LOGIN);
         byte[] password = request.getParameter(PASSWORD).getBytes();
-
         String previousQuery = Util.getPreviousQuery(request);
 
         UserService userService = FactoryService.getInstance().getUserService();

@@ -33,7 +33,7 @@
 </head>
 <body onload="active()">
 
-<%--<c:import url="template/navbar.jsp"/>--%>
+<c:import url="template/navbar.jsp"/>
 <script language="javascript">
     function active() {
         document.getElementById("index-page").className = "active";
@@ -69,7 +69,7 @@
                                 <span id="pswDemo" class="red"></span>
                                 <div class="col-sm-7">
                                     <input type="password" class="form-control" id="password3" placeholder="${password}"
-                                           name="pass" required>
+                                           name="password" required>
                                 </div>
                             </div>
                             <div class="form-group">

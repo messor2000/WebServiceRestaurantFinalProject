@@ -95,6 +95,10 @@ public class Validator {
         return Arrays.equals(password, passwordrep);
     }
 
+//    public static boolean validatePassword(String password, String passworrepeat) {
+//        return password.equals(passworrepeat);
+//    }
+
     /**
      * Validates email to match regexp for email.
      *
