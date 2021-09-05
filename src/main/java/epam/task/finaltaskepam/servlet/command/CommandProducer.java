@@ -1,6 +1,7 @@
 package epam.task.finaltaskepam.servlet.command;
 
 import epam.task.finaltaskepam.command.Command;
+import epam.task.finaltaskepam.command.customer.Logout;
 import epam.task.finaltaskepam.command.visitor.Language;
 import epam.task.finaltaskepam.command.visitor.Login;
 import epam.task.finaltaskepam.command.visitor.Register;
@@ -30,6 +31,11 @@ public class CommandProducer {
         guestCommands.put(CommandPool.LOGIN, new Login());
         guestCommands.put(CommandPool.REGISTER, new Register());
         guestCommands.put(CommandPool.CHANGE_LANGUAGE, new Language());
+
+        customerCommands.putAll(guestCommands);
+        customerCommands.put(CommandPool.LOG_OUT, new Logout());
+
+        managerCommands.putAll(customerCommands);
     }
 
     public Command getCommandForUser(String role, String commandName) {
