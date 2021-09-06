@@ -153,7 +153,7 @@ public class DishDaoImpl implements DishDao {
                 dish = new Dish();
                 dish.setDishId(resultSet.getInt(DISH_ID));
                 dish.setName(resultSet.getString(NAME));
-                dish.setPrice(resultSet.getLong(PRICE));
+                dish.setPrice(resultSet.getString(PRICE));
                 dish.setCategory(resultSet.getString(CATEGORY));
                 menu.add(dish);
             }

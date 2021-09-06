@@ -26,7 +26,7 @@ public class Register implements Command {
 
     private static final Logger logger = LogManager.getLogger(Register.class);
 
-    private static final String USER = "user";
+//    private static final String USER = "user";
 
     private static final String LOGIN = "username";
     private static final String EMAIL = "email";
@@ -34,7 +34,7 @@ public class Register implements Command {
     private static final String PASSWORD_2 = "password2";
 
     private static final String MESSAGE_OF_ERROR_1 = "All fields should be filled";
-    private static final String MESSAGE_OF_ERROR_2 = "Such with such email or login is already exist";
+    private static final String MESSAGE_OF_ERROR_2 = "Such user with such email or login is already exist";
     private static final String MESSAGE_OF_ERROR_3 = "Login and password should be at least 6 characters";
 
     @Override
@@ -54,21 +54,21 @@ public class Register implements Command {
                 Arrays.fill(password, (byte) 0);
                 Arrays.fill(password2, (byte) 0);
 
-                session.setAttribute(USER, user);
+                session.setAttribute(Constants.USER, user);
 
                 response.sendRedirect(previousQuery);
             } catch (ServiceRuntimeException e) {
                 logger.log(Level.ERROR, e.getMessage(), e);
-                request.setAttribute(Constants.getERROR(), MESSAGE_OF_ERROR_1);
-                request.getRequestDispatcher(Constants.getJspPagePath()).forward(request, response);
+                request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_1);
+                request.getRequestDispatcher(Constants.JSP_REGISTER_PAGE_PATH).forward(request, response);
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, e.getMessage(), e);
-                request.setAttribute(Constants.getERROR(), MESSAGE_OF_ERROR_2);
-                request.getRequestDispatcher(Constants.getJspPagePath()).forward(request, response);
+                request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_2);
+                request.getRequestDispatcher(Constants.JSP_REGISTER_PAGE_PATH).forward(request, response);
             }
         } else {
-            request.setAttribute(Constants.getERROR(), MESSAGE_OF_ERROR_3);
-            request.getRequestDispatcher(Constants.getJspPagePath()).forward(request, response);
+            request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_3);
+            request.getRequestDispatcher(Constants.JSP_REGISTER_PAGE_PATH).forward(request, response);
         }
     }
 }

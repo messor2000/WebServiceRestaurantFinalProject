@@ -17,7 +17,7 @@ public class Logout implements Command {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
-            response.sendRedirect(Constants.getWelcomePage());
+            response.sendRedirect(Constants.WELCOME_PAGE);
         }
     }
 }

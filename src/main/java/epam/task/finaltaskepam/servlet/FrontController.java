@@ -62,20 +62,20 @@ public class FrontController extends HttpServlet {
                 Command command = CommandProducer.getInstance().getCommandForUser(role, commandName);
                 if (command == null) {
                     logger.log(Level.ERROR, "Access without permission from client");
-                    request.setAttribute(Constants.getERROR(), "You don't have permission to do that.");
-                    request.getRequestDispatcher(Constants.getErrorPage()).forward(request, response);
+                    request.setAttribute(Constants.ERROR, "You don't have permission to do that.");
+                    request.getRequestDispatcher(Constants.ERROR_PAGE).forward(request, response);
                 } else {
                     command.execute(request, response);
                 }
             } catch (IllegalArgumentException ex) {
                 logger.log(Level.ERROR, "404 error, client requests a nonexistent command", ex);
-                request.setAttribute(Constants.getERROR(), "Ooops something went wrong");
-                request.getRequestDispatcher(Constants.getErrorPage()).forward(request, response);
+                request.setAttribute(Constants.ERROR, "Ooops something went wrong");
+                request.getRequestDispatcher(Constants.ERROR_PAGE).forward(request, response);
             }
         } else {
             logger.log(Level.ERROR, "No such command");
-            request.setAttribute(Constants.getERROR(), "Ooops something went wrong");
-            request.getRequestDispatcher(Constants.getErrorPage()).forward(request, response);
+            request.setAttribute(Constants.ERROR, "Ooops something went wrong");
+            request.getRequestDispatcher(Constants.ERROR_PAGE).forward(request, response);
         }
     }
 }

@@ -18,21 +18,21 @@ public class Language implements Command {
     private final ArrayList<String> supportedLanguages = new ArrayList<>();
 
     public Language() {
-        supportedLanguages.add(Constants.getENGLISH());
-        supportedLanguages.add(Constants.getRUSSIAN());
+        supportedLanguages.add(Constants.ENGLISH);
+        supportedLanguages.add(Constants.RUSSIAN);
     }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String language = request.getParameter(Constants.getLANGUAGE());
+        String language = request.getParameter(Constants.LANGUAGE);
 
         HttpSession session = request.getSession(true);
         if (language != null) {
             if (!supportedLanguages.contains(language)) {
-                language = Constants.getENGLISH();
+                language = Constants.ENGLISH;
             }
 
-            session.setAttribute(Constants.getSessionLanguage(), language);
+            session.setAttribute(Constants.SESSION_LANGUAGE, language);
         }
 
         String previousQuery = Util.getPreviousQuery(request);

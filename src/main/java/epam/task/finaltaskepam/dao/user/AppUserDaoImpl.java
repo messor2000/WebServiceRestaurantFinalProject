@@ -78,7 +78,6 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
             connection = ConnectionPoolImpl.getInstance().takeConnection();
 
             if (connection != null) {
-                connection.setAutoCommit(false);
 
                 statement = connection.prepareStatement(Request.CREATE_USER);
                 statement.setString(1, login);
@@ -89,11 +88,9 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
                 if (i > 0) {
                     return authorize(login, password);
                 }
-                connection.commit();
             }
 
         } catch (SQLException e) {
-            rollback(connection);
             throw new DaoRuntimeException("Register sql error", e);
         } catch (ConnectionPoolException e) {
             throw new DaoRuntimeException("Login pool connection error", e);

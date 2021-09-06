@@ -11,7 +11,7 @@ public class Dish implements Serializable {
 
     private int dishId;
     private String name;
-    private long price;
+    private String price;
     private String category;
 
     public int getDishId() {
@@ -32,11 +32,11 @@ public class Dish implements Serializable {
         return this;
     }
 
-    public long getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public Dish setPrice(long price) {
+    public Dish setPrice(String price) {
         this.price = price;
         return this;
     }

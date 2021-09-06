@@ -88,9 +88,9 @@ public class Util {
      * @return String previous query String
      */
     public static String getPreviousQuery(HttpServletRequest request) {
-        String previousQuery = (String) request.getSession(false).getAttribute(Constants.getPreviousQuery());
+        String previousQuery = (String) request.getSession(false).getAttribute(Constants.PREVIOUS_QUERY);
         if (previousQuery == null) {
-            previousQuery = Constants.getWelcomePage();
+            previousQuery = Constants.WELCOME_PAGE;
         }
         return previousQuery;
     }
@@ -107,10 +107,10 @@ public class Util {
         String queryString = request.getQueryString();
 
         if (queryString == null) {
-            session.setAttribute(Constants.getSessionPrevQuery(), requestURI);
+            session.setAttribute(Constants.SESSION_PREV_QUERY, requestURI);
         } else {
-            session.setAttribute(Constants.getSessionPrevQuery(),
-                    requestURI + Constants.getSessionPrevQuery() + queryString);
+            session.setAttribute(Constants.SESSION_PREV_QUERY,
+                    requestURI + Constants.SESSION_PREV_QUERY + queryString);
         }
     }
 
@@ -121,9 +121,9 @@ public class Util {
      * @return String language
      */
     public static Object getLanguage(HttpServletRequest request) {
-        Object lang = request.getSession(false).getAttribute(Constants.getLANGUAGE());
+        Object lang = request.getSession(false).getAttribute(Constants.LANGUAGE);
         if (lang == null) {
-            return Constants.getRUSSIAN();
+            return Constants.ENGLISH;
         }
         return lang;
     }

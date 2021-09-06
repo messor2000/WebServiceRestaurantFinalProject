@@ -25,7 +25,6 @@ public class MenuServiceImpl implements MenuService {
             if (menu == null || menu.isEmpty()) {
                 throw new ServiceRuntimeException("No movies matching your query");
             }
-//            Y.fillRatingsForMovie(ratingDAO, movies);
         } catch (DaoRuntimeException e) {
             throw new ServiceRuntimeException("Error in source!", e);
         }
