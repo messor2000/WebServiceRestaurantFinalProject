@@ -22,28 +22,6 @@
 <fmt:message bundle="${locale}" key="locale.fastFood" var="fastFood"/>
 <fmt:message bundle="${locale}" key="locale.healthyFood" var="healthyFood"/>
 <fmt:message bundle="${locale}" key="locale.desert" var="desert"/>
-<%--<fmt:message bundle="${locale}" key="locale.bestMoviesForYou" var="bestMoviesForYou"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.theBestMovies" var="theBestMovies"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.all" var="all"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.adventure" var="adventure"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.crime" var="crime"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.biography" var="biography"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.thriller" var="thriller"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.comedy" var="comedy"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.melodrama" var="melodrama"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.drama" var="drama"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.fantasy" var="fantasy"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.byDecades" var="byDecades"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.byYear" var="byYear"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.eightieth" var="eightieth"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.ninetieth" var="ninetieth"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.thousandth" var="thousandth"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.tenth" var="tenth"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.movie" var="movie"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.yourRating" var="yourRating"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.ratingVotes" var="ratingVotes"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.next" var="next"/>--%>
-<%--<fmt:message bundle="${locale}" key="locale.previous" var="previous"/>--%>
 
 <!DOCTYPE html>
 <html>
@@ -74,23 +52,94 @@
         <div class="col-sm-8 text-left mainContent">
             <h1>${menu}</h1>
 
-            <div class="row">
-                <c:forEach items="${requestScope.menu}" var="dish">
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">${dish.name}</h5>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">${price}:${dish.price}</li>
-                                    <li class="list-group-item">${category}:${dish.category}</li>
-                                </ul>
-                                <c:if test='${sessionScope.get("user").role eq "customer" || sessionScope.get("user").role eq "manager"}'>
-                                    <a href="#" class="btn btn-primary">Put in bucket</a>
-                                </c:if>
+<%--            <div class="selectboxes">--%>
+            <%--                <ul class="nav nav-pills">--%>
+            <%--                    <li class="nav-item">--%>
+            <%--                        <a class="nav-link active" aria-current="page" href="FrontController?command=show-menu">All--%>
+            <%--                            menu</a>--%>
+            <%--                    </li>--%>
+            <%--                    <li class="nav-item dropdown">--%>
+            <%--                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"--%>
+            <%--                           aria-expanded="false">By price</a>--%>
+            <%--                        <ul class="dropdown-menu">--%>
+            <%--                            <li><a class="dropdown-item" href="FrontController?command=show-menu-by-high-price">By high--%>
+            <%--                                price</a></li>--%>
+            <%--                            <li><a class="dropdown-item" href="FrontController?command=show-menu-by-low-price">By low--%>
+            <%--                                price</a></li>--%>
+            <%--                        </ul>--%>
+            <%--                    </li>--%>
+            <%--                    <li class="nav-item dropdown">--%>
+            <%--                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="FrontController?command=show-menu-by-category" role="button"--%>
+            <%--                           aria-expanded="false">By category</a>--%>
+            <%--                        <ul class="dropdown-menu">--%>
+            <%--                            <li><a class="dropdown-item"--%>
+            <%--                                   href="FrontController?command=show-menu-by-category&category=fast food">Fast Food</a>--%>
+            <%--                            </li>--%>
+            <%--                            <li><a class="dropdown-item"--%>
+            <%--                                   href="FrontController?command=show-menu-by-category&category=healthy food">Healthy--%>
+            <%--                                Food</a></li>--%>
+            <%--                            <li><a class="dropdown-item"--%>
+            <%--                                   href="FrontController?command=show-menu-by-category&category=desert">Desert</a></li>--%>
+            <%--                        </ul>--%>
+            <%--                    </li>--%>
+            <%--                </ul>--%>
+            <%--            </div>--%>
+
+            <div class="selectboxes">
+                <div class="sortAwaits" style="width: 391px; float: left; margin: 0">
+                    <span>By high price</span>
+                    <label>
+                        <select class="sortStat" onchange="MakeSort(this);">
+                            <option value="FrontController?command=show-menu">-</option>
+                            <option value="FrontController?command=show-menu-by-high-price">${lowPrice}</option>
+                            <option value="FrontController?command=show-menu-by-low-price">${highPrice}</option>
+                        </select>
+                    </label>
+                    <br>
+                    <span>By category</span>
+                    <label>
+                        <select class="sortStat" name="y" onchange="MakeSort(this);">
+                            <option value="Controller?command=all-movies">-</option>
+                            <option value="FrontController?command=show-menu-by-category&category=fast food">Fast Food</option>
+                            <option value="FrontController?command=show-menu-by-category&category=healthy food">Healthy Food</option>
+                            <option value="FrontController?command=show-menu-by-category&category=desert">Desert</option>
+                        </select>
+                    </label>
+                    <br>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <script type="text/javascript">
+                function MakeSort(element) {
+                    const selected = $('option:selected', element),
+                        href = selected.val();
+                    if (!href) {
+                        return false;
+                    }
+                    document.location = href;
+                }
+            </script>
+            <br>
+
+            <div class="col-sm-8 text-left mainContent">
+                <div class="row">
+                    <c:forEach items="${requestScope.menu}" var="dish">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">${dish.name}</h5>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">${price}:${dish.price}</li>
+                                        <li class="list-group-item">${category}:${dish.category}</li>
+                                    </ul>
+                                    <c:if test='${sessionScope.get("user").role eq "customer" || sessionScope.get("user").role eq "manager"}'>
+                                        <a href="#" class="btn btn-primary">Put in bucket</a>
+                                    </c:if>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </c:forEach>
+                    </c:forEach>
+                </div>
             </div>
         </div>
     </div>

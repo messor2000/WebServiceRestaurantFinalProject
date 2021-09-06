@@ -14,8 +14,6 @@ public class Constants {
     public static final String REQUEST_ATTRIBUTE = "menu";
 
     public static final String WELCOME_PAGE = "index.jsp";
-    public static final String PREVIOUS_QUERY = "previousQuery";
-    public static final String SESSION_PREV_QUERY = "previousQuery";
 
     public static final String ERROR = "errorMessage";
 
@@ -23,6 +21,8 @@ public class Constants {
     public static final String SESSION_LANGUAGE = "language";
     public static final String RUSSIAN = "ru";
     public static final String ENGLISH = "en";
+
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     private Constants(){}
 

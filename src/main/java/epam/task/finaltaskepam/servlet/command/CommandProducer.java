@@ -2,10 +2,13 @@ package epam.task.finaltaskepam.servlet.command;
 
 import epam.task.finaltaskepam.command.Command;
 import epam.task.finaltaskepam.command.customer.Logout;
-import epam.task.finaltaskepam.command.customer.ShowMenu;
+import epam.task.finaltaskepam.command.visitor.ShowMenu;
 import epam.task.finaltaskepam.command.visitor.Language;
 import epam.task.finaltaskepam.command.visitor.Login;
 import epam.task.finaltaskepam.command.visitor.Register;
+import epam.task.finaltaskepam.command.visitor.ShowMenuBuLowPrice;
+import epam.task.finaltaskepam.command.visitor.ShowMenuByCategory;
+import epam.task.finaltaskepam.command.visitor.ShowMenuByHighPrice;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,6 +36,9 @@ public class CommandProducer {
         guestCommands.put(CommandPool.REGISTER, new Register());
         guestCommands.put(CommandPool.CHANGE_LANGUAGE, new Language());
         guestCommands.put(CommandPool.SHOW_MENU, new ShowMenu());
+        guestCommands.put(CommandPool.SHOW_MENU_BY_LOW_PRICE, new ShowMenuBuLowPrice());
+        guestCommands.put(CommandPool.SHOW_MENU_BY_HIGH_PRICE, new ShowMenuByHighPrice());
+        guestCommands.put(CommandPool.SHOW_MENU_BY_CATEGORY, new ShowMenuByCategory());
 
         customerCommands.putAll(guestCommands);
         customerCommands.put(CommandPool.LOG_OUT, new Logout());

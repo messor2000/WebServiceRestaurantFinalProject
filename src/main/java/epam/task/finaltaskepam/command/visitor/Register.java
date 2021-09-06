@@ -26,15 +26,14 @@ public class Register implements Command {
 
     private static final Logger logger = LogManager.getLogger(Register.class);
 
-//    private static final String USER = "user";
-
     private static final String LOGIN = "username";
     private static final String EMAIL = "email";
     private static final String PASSWORD = "password";
     private static final String PASSWORD_2 = "password2";
 
-    private static final String MESSAGE_OF_ERROR_1 = "All fields should be filled";
-    private static final String MESSAGE_OF_ERROR_2 = "Such user with such email or login is already exist";
+    public static final String JSP_REGISTER_PAGE_PATH = "WEB-INF/jsp/registerPage.jsp";
+    private static final String MESSAGE_OF_ERROR_1 = "Such user already exist";
+    private static final String MESSAGE_OF_ERROR_2 = "Error in server, please try late";
     private static final String MESSAGE_OF_ERROR_3 = "Login and password should be at least 6 characters";
 
     @Override
@@ -60,15 +59,15 @@ public class Register implements Command {
             } catch (ServiceRuntimeException e) {
                 logger.log(Level.ERROR, e.getMessage(), e);
                 request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_1);
-                request.getRequestDispatcher(Constants.JSP_REGISTER_PAGE_PATH).forward(request, response);
+                request.getRequestDispatcher(JSP_REGISTER_PAGE_PATH).forward(request, response);
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, e.getMessage(), e);
                 request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_2);
-                request.getRequestDispatcher(Constants.JSP_REGISTER_PAGE_PATH).forward(request, response);
+                request.getRequestDispatcher(JSP_REGISTER_PAGE_PATH).forward(request, response);
             }
         } else {
             request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_3);
-            request.getRequestDispatcher(Constants.JSP_REGISTER_PAGE_PATH).forward(request, response);
+            request.getRequestDispatcher(JSP_REGISTER_PAGE_PATH).forward(request, response);
         }
     }
 }

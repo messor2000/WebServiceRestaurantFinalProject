@@ -23,6 +23,60 @@ public class MenuServiceImpl implements MenuService {
         try {
             menu = dishDao.getAllDishes();
             if (menu == null || menu.isEmpty()) {
+                throw new ServiceRuntimeException("No dishes matching your query");
+            }
+        } catch (DaoRuntimeException e) {
+            throw new ServiceRuntimeException("Error in source!", e);
+        }
+        return menu;
+    }
+
+    @Override
+    public List<Dish> getDishesByHighPrice() throws DaoRuntimeException {
+        FactoryDao factoryDao = FactoryDao.getInstance();
+        DishDao dishDao = factoryDao.getDishDao();
+
+        List<Dish> menu;
+
+        try {
+            menu = dishDao.getDishesByHighPrice();
+            if (menu == null || menu.isEmpty()) {
+                throw new ServiceRuntimeException("No dishes matching your query");
+            }
+        } catch (DaoRuntimeException e) {
+            throw new ServiceRuntimeException("Error in source!", e);
+        }
+        return menu;
+    }
+
+    @Override
+    public List<Dish> getDishesByLowPrice() throws DaoRuntimeException {
+        FactoryDao factoryDao = FactoryDao.getInstance();
+        DishDao dishDao = factoryDao.getDishDao();
+
+        List<Dish> menu;
+
+        try {
+            menu = dishDao.getDishesByLowPrice();
+            if (menu == null || menu.isEmpty()) {
+                throw new ServiceRuntimeException("No dishes matching your query");
+            }
+        } catch (DaoRuntimeException e) {
+            throw new ServiceRuntimeException("Error in source!", e);
+        }
+        return menu;
+    }
+
+    @Override
+    public List<Dish> getDishesByCategory(String category) throws DaoRuntimeException {
+        FactoryDao factoryDao = FactoryDao.getInstance();
+        DishDao dishDao = factoryDao.getDishDao();
+
+        List<Dish> menu;
+
+        try {
+            menu = dishDao.getDishesByCategory(category);
+            if (menu == null || menu.isEmpty()) {
                 throw new ServiceRuntimeException("No movies matching your query");
             }
         } catch (DaoRuntimeException e) {

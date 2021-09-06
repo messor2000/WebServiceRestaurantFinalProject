@@ -23,6 +23,7 @@ public class Util {
     private static final Logger logger = LogManager.getLogger(Util.class);
     private static final ConnectionPoolImpl CONNECTION_POOL = ConnectionPoolImpl.getInstance();
 
+    private Util(){}
     /**
      * This method is used to close opened resources such as PreparedStatement, ResultSet and
      * return Connection.
@@ -77,18 +78,15 @@ public class Util {
         return DigestUtils.md5Hex(password);
     }
 
-    public static String encodePassword(String password) {
-        return DigestUtils.md5Hex(password);
-    }
-
     /**
      * This method is used to get previous query string if it exists,
      * in other case it returns default welcome page.
      * @param request
      * @return String previous query String
      */
+    public static final String PREVIOUS_QUERY = "previousQuery";
     public static String getPreviousQuery(HttpServletRequest request) {
-        String previousQuery = (String) request.getSession(false).getAttribute(Constants.PREVIOUS_QUERY);
+        String previousQuery = (String) request.getSession(false).getAttribute(PREVIOUS_QUERY);
         if (previousQuery == null) {
             previousQuery = Constants.WELCOME_PAGE;
         }
@@ -100,6 +98,7 @@ public class Util {
      * and sets query string attribute to this session object.
      * @param request
      */
+    public static final String SESSION_PREV_QUERY = "previousQuery";
     public static void saveCurrentQueryToSession(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
 
@@ -107,10 +106,9 @@ public class Util {
         String queryString = request.getQueryString();
 
         if (queryString == null) {
-            session.setAttribute(Constants.SESSION_PREV_QUERY, requestURI);
+            session.setAttribute(SESSION_PREV_QUERY, requestURI);
         } else {
-            session.setAttribute(Constants.SESSION_PREV_QUERY,
-                    requestURI + Constants.SESSION_PREV_QUERY + queryString);
+            session.setAttribute(SESSION_PREV_QUERY, requestURI + SESSION_PREV_QUERY + queryString);
         }
     }
 

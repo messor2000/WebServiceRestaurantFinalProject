@@ -12,11 +12,13 @@ public interface DishDao {
 
     List<Dish> getAllDishes() throws DaoRuntimeException;
 
-    List<Dish> getDishesByName(String name) throws DaoRuntimeException;
+//    List<Dish> getDishesByName(String name) throws DaoRuntimeException;
 
-    List<Dish> getDishesByPrice(Long price) throws DaoRuntimeException;
+    List<Dish> getDishesByHighPrice() throws DaoRuntimeException;
 
-    List<Dish> getDishesByNCategory(String category) throws DaoRuntimeException;
+    List<Dish> getDishesByLowPrice() throws DaoRuntimeException;
+
+    List<Dish> getDishesByCategory(String category) throws DaoRuntimeException;
 
     Dish getDishById(int id) throws DaoRuntimeException;
 

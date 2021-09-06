@@ -10,8 +10,6 @@ import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
  * @author Aleksandr Ovcharenko
  */
 public class ConnectionPoolServiceImpl implements ConnectionPool {
-    public ConnectionPoolServiceImpl() {
-    }
 
     @Override
     public void init() {

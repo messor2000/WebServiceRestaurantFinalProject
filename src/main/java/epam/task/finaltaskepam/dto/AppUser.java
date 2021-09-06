@@ -90,16 +90,17 @@ public class AppUser implements Serializable {
         return this;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AppUser that = (AppUser) o;
-        return idUser == that.idUser &&
-                role.equals(that.role) &&
-                Objects.equals(username, that.username) &&
-                Objects.equals(email, that.email) &&
-                Objects.equals(password, that.password);
+        AppUser appUser = (AppUser) o;
+        return idUser == appUser.idUser &&
+                Objects.equals(username, appUser.username) &&
+                Objects.equals(email, appUser.email) &&
+                Objects.equals(password, appUser.password) &&
+                Objects.equals(role, appUser.role);
     }
 
     @Override

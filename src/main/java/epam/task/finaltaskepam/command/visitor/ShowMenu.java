@@ -1,4 +1,4 @@
-package epam.task.finaltaskepam.command.customer;
+package epam.task.finaltaskepam.command.visitor;
 
 import epam.task.finaltaskepam.command.Command;
 import epam.task.finaltaskepam.dto.Dish;
@@ -24,8 +24,7 @@ public class ShowMenu implements Command {
 
     private static final Logger logger = LogManager.getLogger(ShowMenu.class);
 
-    private static final String REQUEST_ATTRIBUTE = "menu";
-
+    public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/menu.jsp";
     private static final String MESSAGE_OF_ERROR = "Something wrong with menu, pls try later";
 
     @Override
@@ -38,9 +37,9 @@ public class ShowMenu implements Command {
 
             menu = menuService.getMenu();
 
-            request.setAttribute(REQUEST_ATTRIBUTE, menu);
+            request.setAttribute(Constants.REQUEST_ATTRIBUTE, menu);
 
-            request.getRequestDispatcher(Constants.JSP_MENU_PAGE_PATH).forward(request, response);
+            request.getRequestDispatcher(JSP_MENU_PAGE_PATH).forward(request, response);
         } catch (ServiceRuntimeException e) {
             logger.log(Level.ERROR, e.getMessage(), e);
             request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR);

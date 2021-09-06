@@ -51,7 +51,7 @@
             /* size of bullet elment */
             width: 16px;
             height: 16px;
-            background: url(images/main/b05.png) no-repeat;
+            /*background: url(images/main/b05.png) no-repeat;*/
             overflow: hidden;
             cursor: pointer;
         }
@@ -89,7 +89,7 @@
             width: 37px;
             height: 37px;
             cursor: pointer;
-            background: url(images/main/a11.png) no-repeat;
+            /*background: url(images/main/a11.png) no-repeat;*/
             overflow: hidden;
         }
 
@@ -167,19 +167,19 @@
                 <div u="slides"
                      style="position: absolute; left: 0px; top: 0px; width: 1000px; height: 700px;overflow: hidden;">
                     <div>
-                        <a href="FrontController?command=all-movies"><img u="image" src="image/coffee1.jpg"
+                        <a href="FrontController?command=show-menu"><img u="image" src="image/coffee1.jpg"
                                                                           alt="coffee1"/></a>
                     </div>
                     <div>
-                        <a href="FrontController?command=all-movies"><img u="image" src="image/coffee1.jpg"
+                        <a href="FrontController?command=show-menu"><img u="image" src="image/coffee1.jpg"
                                                                           alt="coffee1"/></a>
                     </div>
                     <div>
-                        <a href="FrontController?command=all-movies"><img u="image" src="image/coffee1.jpg"
+                        <a href="FrontController?command=show-menu"><img u="image" src="image/coffee1.jpg"
                                                                           alt="coffee1"/></a>
                     </div>
                     <div>
-                        <a href="FrontController?command=all-movies"><img u="image" src="image/coffee1.jpg"
+                        <a href="FrontController?command=show-menu"><img u="image" src="image/coffee1.jpg"
                                                                           alt="coffee1"/></a>
 
                     </div>

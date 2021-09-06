@@ -5,12 +5,14 @@ import epam.task.finaltaskepam.error.ConnectionPoolException;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
 import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
 import epam.task.finaltaskepam.repo.Request;
+import epam.task.finaltaskepam.util.Constants;
 import epam.task.finaltaskepam.util.Util;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -77,17 +79,20 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
         try {
             connection = ConnectionPoolImpl.getInstance().takeConnection();
 
-            if (connection != null) {
+            statement = connection.prepareStatement(Request.CREATE_USER);
 
-                statement = connection.prepareStatement(Request.CREATE_USER);
-                statement.setString(1, login);
-                statement.setString(2, email);
-                statement.setString(3, password);
-                int i = statement.executeUpdate();
+            java.util.Date dt = new java.util.Date();
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(Constants.DATE_FORMAT);
+            String currentTime = sdf.format(dt);
 
-                if (i > 0) {
-                    return authorize(login, password);
-                }
+            statement.setString(1, login);
+            statement.setString(2, email);
+            statement.setString(3, password);
+//            statement.setDate(4, Date.valueOf(currentTime));
+            int i = statement.executeUpdate();
+
+            if (i > 0) {
+                return authorize(login, password);
             }
 
         } catch (SQLException e) {

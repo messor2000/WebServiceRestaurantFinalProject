@@ -1,7 +1,7 @@
 package epam.task.finaltaskepam.service.menu;
 
-import com.google.protobuf.ServiceException;
 import epam.task.finaltaskepam.dto.Dish;
+import epam.task.finaltaskepam.error.DaoRuntimeException;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 
 import java.util.List;
@@ -12,6 +12,12 @@ import java.util.List;
 public interface MenuService {
 
     List<Dish> getMenu() throws ServiceRuntimeException;
+
+    List<Dish> getDishesByHighPrice() throws DaoRuntimeException;
+
+    List<Dish> getDishesByLowPrice() throws DaoRuntimeException;
+
+    List<Dish> getDishesByCategory(String category) throws DaoRuntimeException;
 
 //    /**
 //     * This method is used to get list of movies of a particular country.

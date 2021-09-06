@@ -30,10 +30,10 @@ public class Login implements Command {
     private static final String LOGIN = "username";
     private static final String PASSWORD = "password";
 
+    public static final String JSP_LOGIN_PAGE_PATH = "WEB-INF/jsp/loginPage.jsp";
     private static final String MESSAGE_OF_ERROR_1 = "Wrong login or pass";
-//    private static final String MESSAGE_OF_ERROR_2 = "Sorry access for you is temporary unavailable";
-    private static final String MESSAGE_OF_ERROR_3 = "Sorry something went wrong";
-    private static final String MESSAGE_OF_ERROR_4 = "All fields should be filled";
+    private static final String MESSAGE_OF_ERROR_2 = "Sorry something went wrong";
+    private static final String MESSAGE_OF_ERROR_3 = "All fields should be filled";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -55,15 +55,15 @@ public class Login implements Command {
             } catch (ServiceRuntimeException e) {
                 logger.log(Level.ERROR, e.getMessage(), e);
                 request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_1);
-                request.getRequestDispatcher(Constants.JSP_LOGIN_PAGE_PATH).forward(request, response);
+                request.getRequestDispatcher(JSP_LOGIN_PAGE_PATH).forward(request, response);
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, e.getMessage(), e);
-                request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_3);
-                request.getRequestDispatcher(Constants.JSP_LOGIN_PAGE_PATH).forward(request, response);
+                request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_2);
+                request.getRequestDispatcher(JSP_LOGIN_PAGE_PATH).forward(request, response);
             }
         } else {
-            request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_4);
-            request.getRequestDispatcher(Constants.JSP_LOGIN_PAGE_PATH).forward(request, response);
+            request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_3);
+            request.getRequestDispatcher(JSP_LOGIN_PAGE_PATH).forward(request, response);
         }
     }
 }
