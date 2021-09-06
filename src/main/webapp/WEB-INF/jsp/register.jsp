@@ -44,7 +44,7 @@
 <div class="container-fluid text-center wrapper">
     <div class="row content">
 
-<%--        <c:import url="template/sideleft.jsp"/>--%>
+        <c:import url="template/leftbar.jsp"/>
 
         <div class="col-sm-8 text-left mainContent">
 

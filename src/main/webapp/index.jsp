@@ -20,16 +20,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/first.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/first.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!--<script src="js/bootstrap.min.js"></script>
-    <script src="js/docs.min.js"></script>
-    IE10 viewport hack for Surface/desktop Windows 8 bug
-    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <%--    <script src="js/bootstrap.min.js"></script>--%>
+    <%--        <script src="js/docs.min.js"></script>--%>
+    <%--    IE10 viewport hack for Surface/desktop Windows 8 bug--%>
+    <%--    <script src="js/ie10-viewport-bug-workaround.js"></script>--%>
 
-    jssor slider scripts-->
+    <%--    jssor slider scripts-->--%>
     <!-- use jssor.slider.debug.js for debug -->
     <script type="text/javascript" src="js/jssor.slider.mini.js"></script>
 
@@ -45,6 +45,7 @@
         .jssorb05 {
             position: absolute;
         }
+
         .jssorb05 div, .jssorb05 div:hover, .jssorb05 .av {
             position: absolute;
             /* size of bullet elment */
@@ -54,15 +55,19 @@
             overflow: hidden;
             cursor: pointer;
         }
+
         .jssorb05 div {
             background-position: -7px -7px;
         }
+
         .jssorb05 div:hover, .jssorb05 .av:hover {
             background-position: -37px -7px;
         }
+
         .jssorb05 .av {
             background-position: -67px -7px;
         }
+
         .jssorb05 .dn, .jssorb05 .dn:hover {
             background-position: -97px -7px;
         }
@@ -87,21 +92,27 @@
             background: url(images/main/a11.png) no-repeat;
             overflow: hidden;
         }
+
         .jssora11l {
             background-position: -11px -41px;
         }
+
         .jssora11r {
             background-position: -71px -41px;
         }
+
         .jssora11l:hover {
             background-position: -131px -41px;
         }
+
         .jssora11r:hover {
             background-position: -191px -41px;
         }
+
         .jssora11l.jssora11ldn {
             background-position: -251px -41px;
         }
+
         .jssora11r.jssora11rdn {
             background-position: -311px -41px;
         }
@@ -118,85 +129,90 @@
 <div class="container-fluid text-center wrapper">
     <div class="row content">
 
-        <%--        <c:import url="WEB-INF/jsp/template/sideleft.jsp"/>--%>
+        <c:import url="WEB-INF/jsp/template/leftbar.jsp"/>
 
-        <%--        <div class="col-sm-8 text-left mainContent">--%>
-<%--        <br>--%>
-<%--        <form method="get" action="FrontController" class="form-horizontal">--%>
-<%--            <input type="hidden" name="command" value="find-movie-by-title"/>--%>
-<%--            <div class="form-group">--%>
-<%--                <label for="search" class="col-sm-2 control-label">${searchLabel}</label>--%>
-<%--                <div class="col-sm-8">--%>
-<%--                    <input id="search" title="${searchTitle}" type="text" class="form-control"--%>
-<%--                           placeholder="${movie}"--%>
-<%--                           name="movieTitle"/>--%>
-<%--                    <br/>--%>
-<%--                </div>--%>
-<%--                <div class="col-sm-2">--%>
-<%--                    <button type="submit" class="btn btn-success">${search}</button>--%>
-<%--                </div>--%>
-<%--            </div>--%>
+        <div class="col-sm-8 text-left mainContent">
+                        <br>
+                        <form method="get" action="FrontController" class="form-horizontal">
+                            <input type="hidden" name="command" value="find-movie-by-title"/>
+<%--                            <div class="form-group">--%>
+<%--                                <label for="search" class="col-sm-2 control-label">${searchLabel}</label>--%>
+<%--                                <div class="col-sm-8">--%>
+<%--                                    <input id="search" title="${searchTitle}" type="text" class="form-control"--%>
+<%--                                           placeholder="${movie}"--%>
+<%--                                           name="movieTitle"/>--%>
+<%--                                    <br/>--%>
+<%--                                </div>--%>
+<%--                                <div class="col-sm-2">--%>
+<%--                                    <button type="submit" class="btn btn-success">${search}</button>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
 
-<%--        </form>--%>
-<%--        <hr>--%>
-<%--        <div id="slider1_container"--%>
-<%--             style="visibility: hidden; position: relative; margin: 0 auto; width: 1000px; height: 700px; overflow: hidden;">--%>
+                        </form>
+                        <hr>
+            <div id="slider1_container"
+                 style="visibility: hidden; position: relative; margin: 0 auto; width: 1000px; height: 700px; overflow: hidden;">
 
-<%--            <!-- Loading Screen -->--%>
-<%--            <div u="loading" style="position: absolute; top: 0px; left: 0px;">--%>
-<%--                <div style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;--%>
-<%--                background-color: #000; top: 0px; left: 0px;width: 100%; height:100%;">--%>
-<%--                </div>--%>
-<%--                <div style="position: absolute; display: block; background: url(images/main/loading.gif) no-repeat center center;--%>
-<%--                top: 0px; left: 0px;width: 100%;height:100%;">--%>
-<%--                </div>--%>
-<%--            </div>--%>
+                <!-- Loading Screen -->
+                <%--                <div u="loading" style="position: absolute; top: 0px; left: 0px;">--%>
+                <%--                    <div style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;--%>
+                <%--                            background-color: #000; top: 0px; left: 0px;width: 100%; height:100%;">--%>
+                <%--                    </div>--%>
+                <%--                    <div style="position: absolute; display: block; background: url(images/main/loading.gif) no-repeat center center;--%>
+                <%--                            top: 0px; left: 0px;width: 100%;height:100%;">--%>
+                <%--                    </div>--%>
+                <%--                </div>--%>
 
-<%--            <!-- Slides Container -->--%>
-<%--            <div u="slides" style="position: absolute; left: 0px; top: 0px; width: 1000px; height: 700px;--%>
-<%--            overflow: hidden;">--%>
-<%--                <div>--%>
-<%--                    <a href="FrontController?command=all-movies"><img u="image" src2="images/main/bestmovies.jpg"/></a>--%>
-<%--                </div>--%>
-<%--                <div>--%>
-<%--                    <a href="FrontController?command=latest-movies"><img u="image" src2="images/main/newmovies.jpg"/></a>--%>
-<%--                </div>--%>
-<%--                <div>--%>
-<%--                    <a href="FrontController?command=all-movies"><img u="image" src2="images/main/genres.jpg"/></a>--%>
-<%--                </div>--%>
-<%--                <div>--%>
-<%--                    <a href="FrontController?command=view-latest-reviews"><img u="image" src2="images/main/reviews.jpg"/></a>--%>
-<%--                </div>--%>
-<%--            </div>--%>
+                <!-- Slides Container -->
+                <div u="slides"
+                     style="position: absolute; left: 0px; top: 0px; width: 1000px; height: 700px;overflow: hidden;">
+                    <div>
+                        <a href="FrontController?command=all-movies"><img u="image" src="image/coffee1.jpg"
+                                                                          alt="coffee1"/></a>
+                    </div>
+                    <div>
+                        <a href="FrontController?command=all-movies"><img u="image" src="image/coffee1.jpg"
+                                                                          alt="coffee1"/></a>
+                    </div>
+                    <div>
+                        <a href="FrontController?command=all-movies"><img u="image" src="image/coffee1.jpg"
+                                                                          alt="coffee1"/></a>
+                    </div>
+                    <div>
+                        <a href="FrontController?command=all-movies"><img u="image" src="image/coffee1.jpg"
+                                                                          alt="coffee1"/></a>
 
-<%--            <!--#region Bullet Navigator Skin Begin -->--%>
-<%--            <!-- Help: http://www.jssor.com/tutorial/set-bullet-navigator.html -->--%>
+                    </div>
+                </div>
+                <!--#region Bullet Navigator Skin Begin -->
+                <!-- Help: http://www.jssor.com/tutorial/set-bullet-navigator.html -->
 
-<%--            <!-- bullet navigator container -->--%>
-<%--            <div u="navigator" class="jssorb05" style="bottom: 16px; right: 6px;">--%>
-<%--                <!-- bullet navigator item prototype -->--%>
-<%--                <div u="prototype"></div>--%>
-<%--            </div>--%>
-<%--            <!--#endregion Bullet Navigator Skin End -->--%>
+                <!-- bullet navigator container -->
+                <div u="navigator" class="jssorb05" style="bottom: 16px; right: 6px;">
+                    <!-- bullet navigator item prototype -->
+                    <div u="prototype"></div>
+                </div>
+                <!--#endregion Bullet Navigator Skin End -->
 
-<%--            <!--#region Arrow Navigator Skin Begin -->--%>
-<%--            <!-- Help: http://www.jssor.com/tutorial/set-arrow-navigator.html -->--%>
+                <!--#region Arrow Navigator Skin Begin -->
+                <!-- Help: http://www.jssor.com/tutorial/set-arrow-navigator.html -->
 
-<%--            <!-- Arrow Left -->--%>
-<%--            <span u="arrowleft" class="jssora11l" style="top: 123px; left: 8px;">--%>
-<%--            </span>--%>
-<%--            <!-- Arrow Right -->--%>
-<%--            <span u="arrowright" class="jssora11r" style="top: 123px; right: 8px;">--%>
-<%--            </span>--%>
-<%--            <!--#endregion Arrow Navigator Skin End -->--%>
-<%--            <a style="display: none" href="http://www.jssor.com">Bootstrap Carousel</a>--%>
-<%--        </div>--%>
-        <!-- Jssor Slider End -->
-        <hr>
+                <!-- Arrow Left -->
+                <span u="arrowleft" class="jssora11l" style="top: 123px; left: 8px;">
+                                            </span>
+                <!-- Arrow Right -->
+                <span u="arrowright" class="jssora11r" style="top: 123px; right: 8px;">
+                                            </span>
+                <!--#endregion Arrow Navigator Skin End -->
+                <a style="display: none" href="http://www.jssor.com">Bootstrap Carousel</a>
+            </div>
+            <!-- Jssor Slider End -->
+            <hr>
+        </div>
+
+        <%--        <c:import url="WEB-INF/jsp/template/sideright.jsp"/>--%>
+
     </div>
-
-    <%--        <c:import url="WEB-INF/jsp/template/sideright.jsp"/>--%>
-
 </div>
 
 <c:import url="WEB-INF/jsp/template/footer.jsp"/>
@@ -205,7 +221,7 @@
         const options = {
             $AutoPlay: true,                                    //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
             $AutoPlaySteps: 1,                                  //[Optional] Steps to go for each navigation request (this options applys only when slideshow disabled), the default value is 1
-            $Idle: 2000,                            //[Optional] Interval (in milliseconds) to go for next slide since the previous stopped if the slider is auto playing, default value is 3000
+            $Idle: 2000,                                        //[Optional] Interval (in milliseconds) to go for next slide since the previous stopped if the slider is auto playing, default value is 3000
             $PauseOnHover: 1,                                   //[Optional] Whether to pause when mouse over if a slider is auto playing, 0 no pause, 1 pause for desktop, 2 pause for touch device, 3 pause for desktop and touch device, 4 freeze for desktop, 8 freeze for touch device, 12 freeze for desktop and touch device, default value is 1
             $ArrowKeyNavigation: true,   			            //[Optional] Allows keyboard (arrow key) navigation or not, default value is false
             $SlideEasing: $JssorEasing$.$EaseOutQuint,          //[Optional] Specifies easing for right to left animation, default value is $JssorEasing$.$EaseOutQuad
@@ -245,10 +261,10 @@
             const parentWidth = jssor_slider1.$Elmt.parentNode.clientWidth;
             if (parentWidth) {
                 jssor_slider1.$ScaleWidth(parentWidth - 30);
-            }
-            else
+            } else
                 window.setTimeout(ScaleSlider, 30);
         }
+
         ScaleSlider();
         $(window).bind("load", ScaleSlider);
         $(window).bind("resize", ScaleSlider);

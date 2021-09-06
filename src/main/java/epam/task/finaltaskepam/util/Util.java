@@ -1,7 +1,7 @@
 package epam.task.finaltaskepam.util;
 
 import epam.task.finaltaskepam.error.ConnectionPoolException;
-import epam.task.finaltaskepam.repo.pool.ConnectionPoolImpl;
+import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

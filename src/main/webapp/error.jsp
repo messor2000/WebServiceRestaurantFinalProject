@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="locale" var="locale"/>
-<fmt:message bundle="${locale}" key="locale.erorrPage" var="erorrPage"/>
+<fmt:message bundle="${locale}" key="locale.errorPage" var="errorPage"/>
 <%--<fmt:message bundle="${locale}" key="locale.retue" var="erorrPage"/>--%>
 
 <!DOCTYPE html>

@@ -1,8 +1,10 @@
 package epam.task.finaltaskepam.dao;
 
+import epam.task.finaltaskepam.dao.dish.DishDao;
+import epam.task.finaltaskepam.dao.dish.DishDaoImpl;
 import epam.task.finaltaskepam.dao.user.AppUserDaoImpl;
 import epam.task.finaltaskepam.dao.user.AppUserDao;
-import epam.task.finaltaskepam.repo.pool.ConnectionPoolImpl;
+import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -20,6 +22,7 @@ public class FactoryDao {
 
     private final AppUserDao appUserDao = AppUserDaoImpl.getInstance();
     private final ConnectionPoolImpl connectionPool = ConnectionPoolImpl.getInstance();
+    private final DishDao dishDao = DishDaoImpl.getInstance();
 
     public AppUserDao getUserDao() {
         return appUserDao;
@@ -27,5 +30,9 @@ public class FactoryDao {
 
     public ConnectionPoolImpl getConnectionPool() {
         return connectionPool;
+    }
+
+    public DishDao getDishDao() {
+        return dishDao;
     }
 }

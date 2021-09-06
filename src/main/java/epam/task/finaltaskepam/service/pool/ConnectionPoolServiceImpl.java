@@ -2,9 +2,9 @@ package epam.task.finaltaskepam.service.pool;
 
 import epam.task.finaltaskepam.dao.FactoryDao;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
-import epam.task.finaltaskepam.repo.pool.ConnectionPool;
+import epam.task.finaltaskepam.repo.ConnectionPool;
 import epam.task.finaltaskepam.error.ConnectionPoolException;
-import epam.task.finaltaskepam.repo.pool.ConnectionPoolImpl;
+import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
 
 /**
  * @author Aleksandr Ovcharenko

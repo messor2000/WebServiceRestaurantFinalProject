@@ -3,10 +3,9 @@ package epam.task.finaltaskepam.dao.dish;
 import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.error.ConnectionPoolException;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
-import epam.task.finaltaskepam.repo.pool.ConnectionPoolImpl;
+import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
+import epam.task.finaltaskepam.repo.Request;
 import epam.task.finaltaskepam.util.Util;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -122,6 +121,12 @@ public class DishDaoImpl implements DishDao {
 //    private static final String M_GROSS = "m_gross";
 //    private static final String M_IMAGE = "m_image";
 
+    private static final String DISH_ID = "dish_id";
+    private static final String NAME = "name";
+    private static final String PRICE = "price";
+    private static final String CATEGORY = "category";
+
+
     private static final DishDao instance = new DishDaoImpl();
 
     private DishDaoImpl(){}
@@ -132,38 +137,35 @@ public class DishDaoImpl implements DishDao {
 
     @Override
     public List<Dish> getAllDishes() throws DaoRuntimeException {
-//        Connection connection = null;
-//        PreparedStatement statement = null;
-//        ResultSet resultSet = null;
-//        try {
-//            connection = ConnectionPoolImpl.getInstance().takeConnection();
-//
-//            statement = connection.prepareStatement(SHOW_ALL);
-//
-//            resultSet = statement.executeQuery();
-//            List<Dish> dishes = new ArrayList<>();
-//            Dish dish;
-//
-//            while (resultSet.next()) {
-//                dish = new Dish();
-//                dish.setDishId(resultSet.getInt(M_ID));
-//                dish.setTitleRu(resultSet.getString(M_TITLE_RU));
-//                dish.setTitleEn(resultSet.getString(M_TITLE_EN));
-//                dish.setAvgRating(resultSet.getDouble(M_RATING));
-//                dish.setRatingVotes(resultSet.getInt(M_VOTES));
-//                dishes.add(dish);
-//            }
-//            return dishes;
-//
-//        } catch (SQLException e) {
-//            throw new DaoRuntimeException("Dish sql error", e);
-//        } catch (ConnectionPoolException e) {
-//            throw new DaoRuntimeException("Dish pool connection error", e);
-//        } finally {
-//            Util.closeResource(connection, statement, resultSet);
-//        }
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = ConnectionPoolImpl.getInstance().takeConnection();
 
-        return null;
+            statement = connection.prepareStatement(Request.SHOW_MENU);
+
+            resultSet = statement.executeQuery();
+            List<Dish> menu = new ArrayList<>();
+            Dish dish;
+
+            while (resultSet.next()) {
+                dish = new Dish();
+                dish.setDishId(resultSet.getInt(DISH_ID));
+                dish.setName(resultSet.getString(NAME));
+                dish.setPrice(resultSet.getLong(PRICE));
+                dish.setCategory(resultSet.getString(CATEGORY));
+                menu.add(dish);
+            }
+            return menu;
+
+        } catch (SQLException e) {
+            throw new DaoRuntimeException("Dish sql error", e);
+        } catch (ConnectionPoolException e) {
+            throw new DaoRuntimeException("Dish pool connection error", e);
+        } finally {
+            Util.closeResource(connection, statement, resultSet);
+        }
     }
 
     @Override

@@ -1,7 +1,7 @@
 package epam.task.finaltaskepam.listener;
 
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
-import epam.task.finaltaskepam.repo.pool.ConnectionPool;
+import epam.task.finaltaskepam.repo.ConnectionPool;
 import epam.task.finaltaskepam.error.ConnectionPoolException;
 import epam.task.finaltaskepam.service.FactoryService;
 import org.apache.logging.log4j.Level;

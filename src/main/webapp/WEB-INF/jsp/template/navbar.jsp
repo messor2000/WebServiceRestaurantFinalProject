@@ -38,6 +38,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li id="index-page"><a href="${pageContext.request.contextPath}/index.jsp">${home}</a></li>
+                <li id="menu"><a href="FrontController?command=show-menu">menu</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <c:if test="${sessionScope.get('user') == null}">

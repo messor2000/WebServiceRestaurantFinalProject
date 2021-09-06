@@ -3,8 +3,8 @@ package epam.task.finaltaskepam.dao.user;
 import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.error.ConnectionPoolException;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
-import epam.task.finaltaskepam.repo.pool.ConnectionPoolImpl;
-import epam.task.finaltaskepam.repo.request.Request;
+import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
+import epam.task.finaltaskepam.repo.Request;
 import epam.task.finaltaskepam.util.Util;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -77,18 +77,23 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
         try {
             connection = ConnectionPoolImpl.getInstance().takeConnection();
 
-            statement = connection.prepareStatement(Request.CREATE_USER);
-            statement.setString(1, login);
-            statement.setString(2, email);
-            statement.setString(3, password);
-//            statement.setString(4, role);
-            int i = statement.executeUpdate();
+            if (connection != null) {
+                connection.setAutoCommit(false);
 
-            if (i > 0) {
-                return authorize(login, password);
+                statement = connection.prepareStatement(Request.CREATE_USER);
+                statement.setString(1, login);
+                statement.setString(2, email);
+                statement.setString(3, password);
+                int i = statement.executeUpdate();
+
+                if (i > 0) {
+                    return authorize(login, password);
+                }
+                connection.commit();
             }
 
         } catch (SQLException e) {
+            rollback(connection);
             throw new DaoRuntimeException("Register sql error", e);
         } catch (ConnectionPoolException e) {
             throw new DaoRuntimeException("Login pool connection error", e);

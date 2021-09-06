@@ -1,4 +1,4 @@
-package epam.task.finaltaskepam.repo.pool;
+package epam.task.finaltaskepam.repo;
 
 import epam.task.finaltaskepam.error.ConnectionPoolException;
 
