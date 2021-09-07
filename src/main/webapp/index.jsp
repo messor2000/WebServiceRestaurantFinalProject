@@ -165,23 +165,18 @@
 
                 <!-- Slides Container -->
                 <div u="slides"
-                     style="position: absolute; left: 0px; top: 0px; width: 1000px; height: 700px;overflow: hidden;">
+                     style="position: absolute; left: 0; top: 0; width: 1000px; height: 700px;overflow: hidden;">
                     <div>
-                        <a href="FrontController?command=show-menu"><img u="image" src="image/coffee1.jpg"
-                                                                          alt="coffee1"/></a>
+                        <a href="FrontController?command=show-menu-by-category&category=fast food"><img u="image" src="image/fastfood.jpg"
+                                                                          alt="fastfood"/></a>
                     </div>
                     <div>
-                        <a href="FrontController?command=show-menu"><img u="image" src="image/coffee1.jpg"
-                                                                          alt="coffee1"/></a>
+                        <a href="FrontController?command=show-menu-by-category&category=healthy food"><img u="image" src="image/healthy.jpg"
+                                                                          alt="healthy"/></a>
                     </div>
                     <div>
-                        <a href="FrontController?command=show-menu"><img u="image" src="image/coffee1.jpg"
-                                                                          alt="coffee1"/></a>
-                    </div>
-                    <div>
-                        <a href="FrontController?command=show-menu"><img u="image" src="image/coffee1.jpg"
-                                                                          alt="coffee1"/></a>
-
+                        <a href="FrontController?command=show-menu-by-category&category=desert"><img u="image" src="image/desert.jpg"
+                                                                          alt="desert"/></a>
                     </div>
                 </div>
                 <!--#region Bullet Navigator Skin Begin -->
