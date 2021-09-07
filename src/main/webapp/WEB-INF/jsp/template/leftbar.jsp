@@ -14,7 +14,7 @@
 
 <div class="col-sm-2 sidenav">
     <c:if test='${sessionScope.get("user").role eq "manager"}'>
-        <p><a class="manager" href="FrontController?command=add-movie">Watch orders</a></p>
+        <p><a class="manager" href="FrontController?command=show-all-users">Show all users</a></p>
 
     </c:if>
 </div>

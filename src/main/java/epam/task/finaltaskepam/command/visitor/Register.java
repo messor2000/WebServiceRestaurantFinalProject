@@ -1,11 +1,10 @@
 package epam.task.finaltaskepam.command.visitor;
 
-import com.google.protobuf.ServiceException;
 import epam.task.finaltaskepam.command.Command;
 import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 import epam.task.finaltaskepam.service.FactoryService;
-import epam.task.finaltaskepam.service.user.UserServiceImpl;
+import epam.task.finaltaskepam.service.user.AppUserServiceImpl;
 import epam.task.finaltaskepam.util.Constants;
 import epam.task.finaltaskepam.util.Util;
 import org.apache.logging.log4j.Level;
@@ -34,7 +33,8 @@ public class Register implements Command {
     public static final String JSP_REGISTER_PAGE_PATH = "WEB-INF/jsp/registerPage.jsp";
     private static final String MESSAGE_OF_ERROR_1 = "Such user already exist";
     private static final String MESSAGE_OF_ERROR_2 = "Error in server, please try late";
-    private static final String MESSAGE_OF_ERROR_3 = "Login and password should be at least 6 characters";
+//    private static final String MESSAGE_OF_ERROR_2 = "Error in server, please try late";
+//    private static final String MESSAGE_OF_ERROR_2 = "Login and password should be at least 6 characters";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -43,7 +43,7 @@ public class Register implements Command {
         byte[] password = request.getParameter(PASSWORD).getBytes();
         byte[] password2 = request.getParameter(PASSWORD_2).getBytes();
 
-        UserServiceImpl userService = FactoryService.getInstance().getUserService();
+        AppUserServiceImpl userService = FactoryService.getInstance().getUserService();
         String previousQuery = Util.getPreviousQuery(request);
         HttpSession session = request.getSession(true);
 
@@ -53,20 +53,16 @@ public class Register implements Command {
                 Arrays.fill(password, (byte) 0);
                 Arrays.fill(password2, (byte) 0);
 
-                session.setAttribute(Constants.USER, user);
+                session.setAttribute(Constants.USER_REQUEST_ATTRIBUTE, user);
 
                 response.sendRedirect(previousQuery);
             } catch (ServiceRuntimeException e) {
                 logger.log(Level.ERROR, e.getMessage(), e);
                 request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_1);
                 request.getRequestDispatcher(JSP_REGISTER_PAGE_PATH).forward(request, response);
-            } catch (ServiceException e) {
-                logger.log(Level.ERROR, e.getMessage(), e);
-                request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_2);
-                request.getRequestDispatcher(JSP_REGISTER_PAGE_PATH).forward(request, response);
             }
         } else {
-            request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_3);
+            request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_2);
             request.getRequestDispatcher(JSP_REGISTER_PAGE_PATH).forward(request, response);
         }
     }

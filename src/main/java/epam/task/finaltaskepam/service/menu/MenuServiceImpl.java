@@ -77,7 +77,25 @@ public class MenuServiceImpl implements MenuService {
         try {
             menu = dishDao.getDishesByCategory(category);
             if (menu == null || menu.isEmpty()) {
-                throw new ServiceRuntimeException("No movies matching your query");
+                throw new ServiceRuntimeException("No dishes matching your query");
+            }
+        } catch (DaoRuntimeException e) {
+            throw new ServiceRuntimeException("Error in source!", e);
+        }
+        return menu;
+    }
+
+    @Override
+    public List<Dish> getDish(String name) throws DaoRuntimeException {
+        FactoryDao factoryDao = FactoryDao.getInstance();
+        DishDao dishDao = factoryDao.getDishDao();
+
+        List<Dish> menu;
+
+        try {
+            menu = dishDao.getDishByName(name);
+            if (menu == null || menu.isEmpty()) {
+                throw new ServiceRuntimeException("No dishes matching your query");
             }
         } catch (DaoRuntimeException e) {
             throw new ServiceRuntimeException("Error in source!", e);

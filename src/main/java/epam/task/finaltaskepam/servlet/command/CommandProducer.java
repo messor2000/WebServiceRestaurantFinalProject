@@ -2,6 +2,8 @@ package epam.task.finaltaskepam.servlet.command;
 
 import epam.task.finaltaskepam.command.Command;
 import epam.task.finaltaskepam.command.customer.Logout;
+import epam.task.finaltaskepam.command.manager.ShowAllUsers;
+import epam.task.finaltaskepam.command.visitor.ShowDish;
 import epam.task.finaltaskepam.command.visitor.ShowMenu;
 import epam.task.finaltaskepam.command.visitor.Language;
 import epam.task.finaltaskepam.command.visitor.Login;
@@ -39,11 +41,13 @@ public class CommandProducer {
         guestCommands.put(CommandPool.SHOW_MENU_BY_LOW_PRICE, new ShowMenuBuLowPrice());
         guestCommands.put(CommandPool.SHOW_MENU_BY_HIGH_PRICE, new ShowMenuByHighPrice());
         guestCommands.put(CommandPool.SHOW_MENU_BY_CATEGORY, new ShowMenuByCategory());
+        guestCommands.put(CommandPool.FIND_DISH, new ShowDish());
 
         customerCommands.putAll(guestCommands);
         customerCommands.put(CommandPool.LOG_OUT, new Logout());
 
         managerCommands.putAll(customerCommands);
+        managerCommands.put(CommandPool.SHOW_ALL_USERS, new ShowAllUsers());
     }
 
     public Command getCommandForUser(String role, String commandName) {

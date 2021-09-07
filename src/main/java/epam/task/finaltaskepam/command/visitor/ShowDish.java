@@ -20,25 +20,24 @@ import java.util.List;
 /**
  * @author Aleksandr Ovcharenko
  */
-public class ShowMenuByCategory implements Command {
+public class ShowDish implements Command {
+    private static final Logger logger = LogManager.getLogger(ShowDish.class);
 
-    private static final Logger logger = LogManager.getLogger(ShowMenuByCategory.class);
-
-    private static final String CATEGORY = "category";
+    private static final String NAME = "name";
 
     public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/menu.jsp";
     private static final String MESSAGE_OF_ERROR = "Something wrong with menu, pls try later";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String category = request.getParameter(CATEGORY);
+        String name = request.getParameter(NAME);
         Util.saveCurrentQueryToSession(request);
 
         List<Dish> menu;
         MenuService menuService = FactoryService.getInstance().getMenuService();
         try {
 
-            menu = menuService.getDishesByCategory(category);
+            menu = menuService.getDish(name);
 
             request.setAttribute(Constants.MENU_REQUEST_ATTRIBUTE, menu);
 
@@ -50,3 +49,4 @@ public class ShowMenuByCategory implements Command {
         }
     }
 }
+

@@ -10,8 +10,8 @@ public class Constants {
     public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/menu.jsp";
     public static final String ERROR_PAGE = "WEB-INF/jsp/error.jsp";
 
-    public static final String USER = "user";
-    public static final String REQUEST_ATTRIBUTE = "menu";
+    public static final String USER_REQUEST_ATTRIBUTE = "user";
+    public static final String MENU_REQUEST_ATTRIBUTE = "menu";
 
     public static final String WELCOME_PAGE = "index.jsp";
 

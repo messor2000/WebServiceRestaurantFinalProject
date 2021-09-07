@@ -1,10 +1,10 @@
-package epam.task.finaltaskepam.command.visitor;
+package epam.task.finaltaskepam.command.manager;
 
 import epam.task.finaltaskepam.command.Command;
-import epam.task.finaltaskepam.dto.Dish;
+import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 import epam.task.finaltaskepam.service.FactoryService;
-import epam.task.finaltaskepam.service.menu.MenuService;
+import epam.task.finaltaskepam.service.user.AppUserService;
 import epam.task.finaltaskepam.util.Constants;
 import epam.task.finaltaskepam.util.Util;
 import org.apache.logging.log4j.Level;
@@ -20,27 +20,24 @@ import java.util.List;
 /**
  * @author Aleksandr Ovcharenko
  */
-public class ShowMenuByCategory implements Command {
+public class ShowAllUsers implements Command {
 
-    private static final Logger logger = LogManager.getLogger(ShowMenuByCategory.class);
+    private static final Logger logger = LogManager.getLogger(ShowAllUsers.class);
 
-    private static final String CATEGORY = "category";
-
-    public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/menu.jsp";
-    private static final String MESSAGE_OF_ERROR = "Something wrong with menu, pls try later";
+    public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/managerPage.jsp";
+    private static final String MESSAGE_OF_ERROR = "Something wrong with show all menu, pls try later";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String category = request.getParameter(CATEGORY);
         Util.saveCurrentQueryToSession(request);
 
-        List<Dish> menu;
-        MenuService menuService = FactoryService.getInstance().getMenuService();
+        List<AppUser> users;
+        AppUserService appUserService = FactoryService.getInstance().getUserService();
         try {
 
-            menu = menuService.getDishesByCategory(category);
+            users = appUserService.showAllUsers();
 
-            request.setAttribute(Constants.MENU_REQUEST_ATTRIBUTE, menu);
+            request.setAttribute(Constants.USER_REQUEST_ATTRIBUTE, users);
 
             request.getRequestDispatcher(JSP_MENU_PAGE_PATH).forward(request, response);
         } catch (ServiceRuntimeException e) {

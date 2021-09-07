@@ -29,7 +29,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>${menu}</title>
+    <title>All Users</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -44,7 +44,7 @@
 <c:import url="template/navbar.jsp"/>
 <script language="javascript">
     function active() {
-        document.getElementById("menu").className = "active";
+        document.getElementById("user").className = "active";
     }
 </script>
 <div class="container-fluid text-center wrapper">
@@ -53,9 +53,9 @@
         <c:import url="template/leftbar.jsp"/>
 
         <div class="col-sm-8 text-left mainContent">
-            <h1>${menu}</h1>
+            <h1>All Users</h1>
 
-<%--            <div class="selectboxes">--%>
+            <%--            <div class="selectboxes">--%>
             <%--                <ul class="nav nav-pills">--%>
             <%--                    <li class="nav-item">--%>
             <%--                        <a class="nav-link active" aria-current="page" href="FrontController?command=show-menu">All--%>
@@ -88,74 +88,75 @@
             <%--                </ul>--%>
             <%--            </div>--%>
 
-            <div class="selectboxes">
-                <br>
-                <form method="get" action="FrontController" class="form-horizontal">
-                    <input type="hidden" name="command" value="find-dish"/>
-                    <div class="form-group">
-                        <label for="search" class="col-sm-2 control-label">${searchLabel}</label>
-                        <div class="col-sm-8">
-                            <input id="search" title="${searchTitle}" type="text" class="form-control"
-                                   placeholder="${menu}" name="name"/>
-                            <br/>
-                        </div>
-                        <div class="col-sm-2">
-                            <button type="submit" class="btn btn-success">${search}</button>
-                        </div>
-                    </div>
+<%--            <div class="selectboxes">--%>
+<%--                <br>--%>
+<%--                <form method="get" action="FrontController" class="form-horizontal">--%>
+<%--                    <input type="hidden" name="command" value="find-dish"/>--%>
+<%--                    <div class="form-group">--%>
+<%--                        <label for="search" class="col-sm-2 control-label">${searchLabel}</label>--%>
+<%--                        <div class="col-sm-8">--%>
+<%--                            <input id="search" title="${searchTitle}" type="text" class="form-control"--%>
+<%--                                   placeholder="${menu}" name="name"/>--%>
+<%--                            <br/>--%>
+<%--                        </div>--%>
+<%--                        <div class="col-sm-2">--%>
+<%--                            <button type="submit" class="btn btn-success">${search}</button>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
 
-                </form>
-                <hr>
+<%--                </form>--%>
+<%--                <hr>--%>
 
-                <div class="sortAwaits" style="width: 391px; float: left; margin: 0">
-                    <span>By high price</span>
-                    <label>
-                        <select class="sortStat" onchange="MakeSort(this);">
-                            <option value="FrontController?command=show-menu">-</option>
-                            <option value="FrontController?command=show-menu-by-high-price">${lowPrice}</option>
-                            <option value="FrontController?command=show-menu-by-low-price">${highPrice}</option>
-                        </select>
-                    </label>
-                    <br>
-                    <span>By category</span>
-                    <label>
-                        <select class="sortStat" name="y" onchange="MakeSort(this);">
-                            <option value="Controller?command=all-movies">-</option>
-                            <option value="FrontController?command=show-menu-by-category&category=fast food">Fast Food</option>
-                            <option value="FrontController?command=show-menu-by-category&category=healthy food">Healthy Food</option>
-                            <option value="FrontController?command=show-menu-by-category&category=desert">Desert</option>
-                        </select>
-                    </label>
-                    <br>
-                </div>
-                <div class="clear"></div>
-            </div>
-            <script type="text/javascript">
-                function MakeSort(element) {
-                    const selected = $('option:selected', element),
-                        href = selected.val();
-                    if (!href) {
-                        return false;
-                    }
-                    document.location = href;
-                }
-            </script>
-            <br>
+<%--                <div class="sortAwaits" style="width: 391px; float: left; margin: 0">--%>
+<%--                    <span>By high price</span>--%>
+<%--                    <label>--%>
+<%--                        <select class="sortStat" onchange="MakeSort(this);">--%>
+<%--                            <option value="FrontController?command=show-menu">-</option>--%>
+<%--                            <option value="FrontController?command=show-menu-by-high-price">${lowPrice}</option>--%>
+<%--                            <option value="FrontController?command=show-menu-by-low-price">${highPrice}</option>--%>
+<%--                        </select>--%>
+<%--                    </label>--%>
+<%--                    <br>--%>
+<%--                    <span>By category</span>--%>
+<%--                    <label>--%>
+<%--                        <select class="sortStat" name="y" onchange="MakeSort(this);">--%>
+<%--                            <option value="Controller?command=all-movies">-</option>--%>
+<%--                            <option value="FrontController?command=show-menu-by-category&category=fast food">Fast Food</option>--%>
+<%--                            <option value="FrontController?command=show-menu-by-category&category=healthy food">Healthy Food</option>--%>
+<%--                            <option value="FrontController?command=show-menu-by-category&category=desert">Desert</option>--%>
+<%--                        </select>--%>
+<%--                    </label>--%>
+<%--                    <br>--%>
+<%--                </div>--%>
+<%--                <div class="clear"></div>--%>
+<%--            </div>--%>
+<%--            <script type="text/javascript">--%>
+<%--                function MakeSort(element) {--%>
+<%--                    const selected = $('option:selected', element),--%>
+<%--                        href = selected.val();--%>
+<%--                    if (!href) {--%>
+<%--                        return false;--%>
+<%--                    }--%>
+<%--                    document.location = href;--%>
+<%--                }--%>
+<%--            </script>--%>
+<%--            <br>--%>
 
             <div class="col-sm-8 text-left mainContent">
                 <div class="row">
-                    <c:forEach items="${requestScope.menu}" var="dish">
+                    <c:forEach items="${requestScope.user}" var="user">
                         <div class="col-sm-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">${dish.name}</h5>
+                                    <h5 class="card-title">${user.username}</h5>
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">${price}:${dish.price}</li>
-                                        <li class="list-group-item">${category}:${dish.category}</li>
+                                        <li class="list-group-item">${price}:${user.username}</li>
+                                        <li class="list-group-item">${category}:${user.email}</li>
+                                        <li class="list-group-item">${category}:${user.password}</li>
+                                        <li class="list-group-item">${category}:${user.role}</li>
+                                        <li class="list-group-item">${category}:${user.purse}</li>
+
                                     </ul>
-                                    <c:if test='${sessionScope.get("user").role eq "customer" || sessionScope.get("user").role eq "manager"}'>
-                                        <a href="#" class="btn btn-primary">Put in bucket</a>
-                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -167,3 +168,4 @@
     <c:import url="template/footer.jsp"/>
 </body>
 </html>
+

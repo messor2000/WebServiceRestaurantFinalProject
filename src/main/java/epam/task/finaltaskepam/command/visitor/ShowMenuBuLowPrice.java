@@ -37,7 +37,7 @@ public class ShowMenuBuLowPrice implements Command {
 
             menu = menuService.getDishesByLowPrice();
 
-            request.setAttribute(Constants.REQUEST_ATTRIBUTE, menu);
+            request.setAttribute(Constants.MENU_REQUEST_ATTRIBUTE, menu);
 
             request.getRequestDispatcher(JSP_MENU_PAGE_PATH).forward(request, response);
         } catch (ServiceRuntimeException e) {

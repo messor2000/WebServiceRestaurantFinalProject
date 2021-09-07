@@ -2,7 +2,7 @@ package epam.task.finaltaskepam.service;
 
 import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
 import epam.task.finaltaskepam.service.menu.MenuServiceImpl;
-import epam.task.finaltaskepam.service.user.UserServiceImpl;
+import epam.task.finaltaskepam.service.user.AppUserServiceImpl;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -14,11 +14,11 @@ public class FactoryService {
         return INSTANCE;
     }
 
-    private final UserServiceImpl userService = new UserServiceImpl();
+    private final AppUserServiceImpl userService = new AppUserServiceImpl();
     private final ConnectionPoolImpl connectionPool = new ConnectionPoolImpl();
     private final MenuServiceImpl menuService = new MenuServiceImpl();
 
-    public UserServiceImpl getUserService() {
+    public AppUserServiceImpl getUserService() {
         return userService;
     }
 

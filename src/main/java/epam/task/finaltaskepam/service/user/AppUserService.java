@@ -1,12 +1,14 @@
 package epam.task.finaltaskepam.service.user;
 
-import com.google.protobuf.ServiceException;
 import epam.task.finaltaskepam.dto.AppUser;
+import epam.task.finaltaskepam.error.ServiceRuntimeException;
+
+import java.util.List;
 
 /**
  * @author Aleksandr Ovcharenko
  */
-public interface UserService {
+public interface AppUserService {
 
     /**
      * This method is used to register and give access to the system for
@@ -17,9 +19,9 @@ public interface UserService {
      * @param password of user
      * @param passwordrep of user
      * @return User bean with filled in fields.
-     * @throws ServiceException if any error occurred while processing method.
+     * @throws ServiceRuntimeException if any error occurred while processing method.
      */
-    AppUser register(String login, String email, byte[] password, byte[] passwordrep) throws ServiceException;
+    AppUser register(String login, String email, byte[] password, byte[] passwordrep) throws ServiceRuntimeException;
 
     /**
      * This method is used to let user enter his account in the system.
@@ -27,7 +29,9 @@ public interface UserService {
      * @param login of user
      * @param password of user
      * @return User bean with filled in fields.
-     * @throws ServiceException if any error occurred while processing method.
+     * @throws ServiceRuntimeException if any error occurred while processing method.
      */
-    AppUser authorize(String login, byte[] password) throws ServiceException;
+    AppUser authorize(String login, byte[] password) throws ServiceRuntimeException;
+
+    List<AppUser> showAllUsers() throws ServiceRuntimeException;
 }

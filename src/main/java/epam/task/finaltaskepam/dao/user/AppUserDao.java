@@ -1,6 +1,7 @@
 package epam.task.finaltaskepam.dao.user;
 
 import epam.task.finaltaskepam.dto.AppUser;
+import epam.task.finaltaskepam.dto.AppUserPurse;
 
 import java.util.List;
 

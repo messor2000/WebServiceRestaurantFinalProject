@@ -11,10 +11,12 @@ import epam.task.finaltaskepam.util.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+
 /**
  * @author Aleksandr Ovcharenko
  */
-public class UserServiceImpl implements UserService {
+public class AppUserServiceImpl implements AppUserService {
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -24,10 +26,10 @@ public class UserServiceImpl implements UserService {
      * @param login    of user
      * @param password of user
      * @return User bean with filled in fields.
-     * @throws ServiceException if any error occurred while processing method.
+     * @throws ServiceRuntimeException if any error occurred while processing method.
      */
     @Override
-    public AppUser authorize(String login, byte[] password) throws ServiceException {
+    public AppUser authorize(String login, byte[] password) throws ServiceRuntimeException {
         logger.debug("authorize begin");
         if (Validator.validateLogin(login) || !Validator.validatePassword(password)) {
             throw new ServiceRuntimeException("Wrong parameters!");
@@ -43,7 +45,7 @@ public class UserServiceImpl implements UserService {
                 throw new ServiceRuntimeException("Wrong login or password!");
             }
         } catch (DaoRuntimeException e) {
-            throw new ServiceException("Error in source", e);
+            throw new ServiceRuntimeException("Error in source", e);
         }
 
         return user;
@@ -57,10 +59,10 @@ public class UserServiceImpl implements UserService {
      * @param password    of user
      * @param passwordrepeat of user
      * @return User bean with filled in fields.
-     * @throws ServiceException if any error occurred while processing method.
+     * @throws ServiceRuntimeException if any error occurred while processing method.
      */
     @Override
-    public AppUser register(String login, String email, byte[] password, byte[] passwordrepeat) throws ServiceException {
+    public AppUser register(String login, String email, byte[] password, byte[] passwordrepeat) throws ServiceRuntimeException {
         if (!Validator.validate(login, email) || Validator.validateLogin(login)
                 || !Validator.validatePassword(password, passwordrepeat) || !Validator.validateEmail(email)) {
             throw new ServiceRuntimeException("Check input parameters");
@@ -77,10 +79,33 @@ public class UserServiceImpl implements UserService {
             }
 
         } catch (DaoRuntimeException | ServiceException e) {
-            throw new ServiceException("Error in source!", e);
+            throw new ServiceRuntimeException("Error in source!", e);
         }
 
         return user;
     }
+
+    @Override
+    public List<AppUser> showAllUsers() throws ServiceRuntimeException {
+//        String encodedPassword = Util.encodePassword(password);
+        FactoryDao factoryDao = FactoryDao.getInstance();
+        AppUserDao dao = factoryDao.getUserDao();
+
+        List<AppUser> users;
+//
+//        for (int i = 0; i < dao.getAllUsers().size(); i++) {
+//
+//        }
+
+        try {
+            users = dao.getAllUsers();
+        } catch (DaoRuntimeException | ServiceRuntimeException e) {
+            throw new ServiceRuntimeException("Error in source!", e);
+        }
+
+
+        return users;
+    }
+
 }
 

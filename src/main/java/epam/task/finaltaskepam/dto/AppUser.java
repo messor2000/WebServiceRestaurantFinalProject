@@ -1,6 +1,7 @@
 package epam.task.finaltaskepam.dto;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.Objects;
 
 public class AppUser implements Serializable {
@@ -11,37 +12,52 @@ public class AppUser implements Serializable {
     private String email;
     private String password;
     private String role;
+//    private Date registrationDate;
+    private AppUserPurse purse;
 
     public static final class Builder {
-        AppUser userDto;
+        private final AppUser appUser;
 
         public Builder() {
-            userDto = new AppUser();
+            appUser = new AppUser();
         }
 
         public Builder withIdUser(int idUser) {
-            userDto.idUser = idUser;
+            appUser.idUser = idUser;
             return this;
         }
 
         public Builder withUsername(String username) {
-            userDto.username = username;
+            appUser.username = username;
             return this;
         }
 
         public Builder withPassword(String password) {
-            userDto.password = password;
+            appUser.password = password;
             return this;
         }
 
         public Builder withEmail(String email) {
-            userDto.email = email;
+            appUser.email = email;
             return this;
         }
 
-        public Builder withRoleId(String roleId) {
-            userDto.role = roleId;
+        public Builder withRole(String role) {
+            appUser.role = role;
             return this;
+        }
+
+//        public Builder withRegistrationDate(Date registrationDate) {
+//            appUser.registrationDate = registrationDate;
+//            return this;
+//        }
+        public Builder withPurse(AppUserPurse purse) {
+            appUser.purse = purse;
+            return this;
+        }
+
+        public AppUser build() {
+            return appUser;
         }
     }
 
@@ -90,6 +106,24 @@ public class AppUser implements Serializable {
         return this;
     }
 
+//    public Date getRegistrationDate() {
+//        return registrationDate;
+//    }
+//
+//    public AppUser setRegistrationDate(Date registrationDate) {
+//        this.registrationDate = registrationDate;
+//        return this;
+//    }
+
+
+    public AppUserPurse getPurse() {
+        return purse;
+    }
+
+    public AppUser setPurse(AppUserPurse purse) {
+        this.purse = purse;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {

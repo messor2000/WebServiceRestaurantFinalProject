@@ -20,6 +20,8 @@ public interface DishDao {
 
     List<Dish> getDishesByCategory(String category) throws DaoRuntimeException;
 
+    List<Dish> getDishByName(String name) throws DaoRuntimeException;
+
     Dish getDishById(int id) throws DaoRuntimeException;
 
     void addDish(int id, String name, long price, String category) throws DaoRuntimeException;

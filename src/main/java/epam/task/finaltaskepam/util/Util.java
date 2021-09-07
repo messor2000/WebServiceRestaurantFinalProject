@@ -108,7 +108,7 @@ public class Util {
         if (queryString == null) {
             session.setAttribute(SESSION_PREV_QUERY, requestURI);
         } else {
-            session.setAttribute(SESSION_PREV_QUERY, requestURI + SESSION_PREV_QUERY + queryString);
+            session.setAttribute(SESSION_PREV_QUERY, requestURI + "?" + queryString);
         }
     }
 

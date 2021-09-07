@@ -5,7 +5,7 @@ import epam.task.finaltaskepam.command.Command;
 import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 import epam.task.finaltaskepam.service.FactoryService;
-import epam.task.finaltaskepam.service.user.UserService;
+import epam.task.finaltaskepam.service.user.AppUserService;
 import epam.task.finaltaskepam.util.Constants;
 import epam.task.finaltaskepam.util.Util;
 import org.apache.logging.log4j.Level;
@@ -31,9 +31,9 @@ public class Login implements Command {
     private static final String PASSWORD = "password";
 
     public static final String JSP_LOGIN_PAGE_PATH = "WEB-INF/jsp/loginPage.jsp";
-    private static final String MESSAGE_OF_ERROR_1 = "Wrong login or pass";
-    private static final String MESSAGE_OF_ERROR_2 = "Sorry something went wrong";
-    private static final String MESSAGE_OF_ERROR_3 = "All fields should be filled";
+    private static final String MESSAGE_OF_ERROR_1 = "Sorry something went wrong";
+//    private static final String MESSAGE_OF_ERROR_1 = "Wrong login or pass";
+    private static final String MESSAGE_OF_ERROR_2 = "All fields should be filled";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -42,27 +42,23 @@ public class Login implements Command {
         byte[] password = request.getParameter(PASSWORD).getBytes();
         String previousQuery = Util.getPreviousQuery(request);
 
-        UserService userService = FactoryService.getInstance().getUserService();
+        AppUserService appUserService = FactoryService.getInstance().getUserService();
         HttpSession session = request.getSession(true);
 
         if (login != null && password.length>5) {
             try {
-                AppUser user = userService.authorize(login, password);
+                AppUser user = appUserService.authorize(login, password);
                 Arrays.fill(password, (byte) 0);
-                session.setAttribute(Constants.USER, user);
+                session.setAttribute(Constants.USER_REQUEST_ATTRIBUTE, user);
 
                 response.sendRedirect(previousQuery);
             } catch (ServiceRuntimeException e) {
                 logger.log(Level.ERROR, e.getMessage(), e);
                 request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_1);
                 request.getRequestDispatcher(JSP_LOGIN_PAGE_PATH).forward(request, response);
-            } catch (ServiceException e) {
-                logger.log(Level.ERROR, e.getMessage(), e);
-                request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_2);
-                request.getRequestDispatcher(JSP_LOGIN_PAGE_PATH).forward(request, response);
             }
         } else {
-            request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_3);
+            request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_2);
             request.getRequestDispatcher(JSP_LOGIN_PAGE_PATH).forward(request, response);
         }
     }

@@ -24,6 +24,7 @@
 <fmt:message bundle="${locale}" key="locale.register" var="register"/>
 <fmt:message bundle="${locale}" key="locale.registerName" var="registerName"/>
 <fmt:message bundle="${locale}" key="locale.loginName" var="loginName"/>
+<fmt:message bundle="${locale}" key="locale.menu" var="menu"/>
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -38,7 +39,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li id="index-page"><a href="${pageContext.request.contextPath}/index.jsp">${home}</a></li>
-                <li id="menu"><a href="FrontController?command=show-menu">menu</a></li>
+                <li id="menu"><a href="FrontController?command=show-menu">${menu}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <c:if test="${sessionScope.get('user') == null}">
