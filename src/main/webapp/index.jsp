@@ -132,24 +132,13 @@
         <c:import url="WEB-INF/jsp/template/leftbar.jsp"/>
 
         <div class="col-sm-8 text-left mainContent">
-                        <br>
-                        <form method="get" action="FrontController" class="form-horizontal">
-                            <input type="hidden" name="command" value="find-movie-by-title"/>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="search" class="col-sm-2 control-label">${searchLabel}</label>--%>
-<%--                                <div class="col-sm-8">--%>
-<%--                                    <input id="search" title="${searchTitle}" type="text" class="form-control"--%>
-<%--                                           placeholder="${movie}"--%>
-<%--                                           name="movieTitle"/>--%>
-<%--                                    <br/>--%>
-<%--                                </div>--%>
-<%--                                <div class="col-sm-2">--%>
-<%--                                    <button type="submit" class="btn btn-success">${search}</button>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
+            <br>
+            <form method="get" action="FrontController" class="form-horizontal">
+                <input type="hidden" name="command" value="find-movie-by-title"/>
 
-                        </form>
-                        <hr>
+
+            </form>
+            <hr>
             <div id="slider1_container"
                  style="visibility: hidden; position: relative; margin: 0 auto; width: 1000px; height: 700px; overflow: hidden;">
 
@@ -167,16 +156,19 @@
                 <div u="slides"
                      style="position: absolute; left: 0; top: 0; width: 1000px; height: 700px;overflow: hidden;">
                     <div>
-                        <a href="FrontController?command=show-menu-by-category&category=fast food"><img u="image" src="image/fastfood.jpg"
-                                                                          alt="fastfood"/></a>
+                        <a href="FrontController?command=show-menu-by-category&category=fast food"><img u="image"
+                                                                                                        src="image/fastfood.jpg"
+                                                                                                        alt="fastfood"/></a>
                     </div>
                     <div>
-                        <a href="FrontController?command=show-menu-by-category&category=healthy food"><img u="image" src="image/healthy.jpg"
-                                                                          alt="healthy"/></a>
+                        <a href="FrontController?command=show-menu-by-category&category=healthy food"><img u="image"
+                                                                                                           src="image/healthy.jpg"
+                                                                                                           alt="healthy"/></a>
                     </div>
                     <div>
-                        <a href="FrontController?command=show-menu-by-category&category=desert"><img u="image" src="image/desert.jpg"
-                                                                          alt="desert"/></a>
+                        <a href="FrontController?command=show-menu-by-category&category=desert"><img u="image"
+                                                                                                     src="image/desert.jpg"
+                                                                                                     alt="desert"/></a>
                     </div>
                 </div>
                 <!--#region Bullet Navigator Skin Begin -->

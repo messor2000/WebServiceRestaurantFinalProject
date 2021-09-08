@@ -69,7 +69,7 @@ public class FrontController extends HttpServlet {
                 }
             } catch (IllegalArgumentException ex) {
                 logger.log(Level.ERROR, "404 error, client requests a nonexistent command", ex);
-                request.setAttribute(Constants.ERROR, "Ooops something went wrong");
+                request.setAttribute(Constants.ERROR, "404 error");
                 request.getRequestDispatcher(Constants.ERROR_PAGE).forward(request, response);
             }
         } else {

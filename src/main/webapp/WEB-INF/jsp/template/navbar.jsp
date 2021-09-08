@@ -61,6 +61,7 @@
                     <li><a href="FrontController?command=log-out">
                         <span class="glyphicon glyphicon-log-out"></span> ${logOut}</a>
                     </li>
+
                 </c:if>
                 <li><a href="FrontController?command=change-language&language=en">English</a></li>
                 <li><a href="FrontController?command=change-language&language=ru">Pусский</a></li>

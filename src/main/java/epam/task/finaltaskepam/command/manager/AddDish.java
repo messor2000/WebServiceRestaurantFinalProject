@@ -1,10 +1,10 @@
-package epam.task.finaltaskepam.command.visitor;
+package epam.task.finaltaskepam.command.manager;
 
 import epam.task.finaltaskepam.command.Command;
-import epam.task.finaltaskepam.dto.AppUser;
+import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 import epam.task.finaltaskepam.service.FactoryService;
-import epam.task.finaltaskepam.service.user.AppUserServiceImpl;
+import epam.task.finaltaskepam.service.menu.MenuService;
 import epam.task.finaltaskepam.util.Constants;
 import epam.task.finaltaskepam.util.Util;
 import org.apache.logging.log4j.Level;
@@ -16,42 +16,42 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Aleksandr Ovcharenko
  */
-public class Register implements Command {
+public class AddDish implements Command {
 
-    private static final Logger logger = LogManager.getLogger(Register.class);
+    private static final Logger logger = LogManager.getLogger(AddDish.class);
 
-    private static final String LOGIN = "username";
-    private static final String EMAIL = "email";
-    private static final String PASSWORD = "password";
-    private static final String PASSWORD_2 = "password2";
+    private static final String NAME = "name";
+    private static final String PRICE = "price";
+    private static final String CATEGORY = "category";
+    private static final String AMOUNT = "amount";
 
-    public static final String JSP_REGISTER_PAGE_PATH = "WEB-INF/jsp/registerPage.jsp";
-    private static final String MESSAGE_OF_ERROR_1 = "Such user already exist";
+    public static final String JSP_REGISTER_PAGE_PATH = "WEB-INF/jsp/menu.jsp";
+    private static final String MESSAGE_OF_ERROR_1 = "Error in add new dish";
     private static final String MESSAGE_OF_ERROR_2 = "Error in server, please try late";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String login = request.getParameter(LOGIN);
-        String email = request.getParameter(EMAIL);
-        byte[] password = request.getParameter(PASSWORD).getBytes();
-        byte[] password2 = request.getParameter(PASSWORD_2).getBytes();
+        String name = request.getParameter(NAME);
+        String price = request.getParameter(PRICE);
+        String category = request.getParameter(CATEGORY);
+        String amount = request.getParameter(AMOUNT);
 
-        AppUserServiceImpl userService = FactoryService.getInstance().getUserService();
+        MenuService menuService = FactoryService.getInstance().getMenuService();
         String previousQuery = Util.getPreviousQuery(request);
         HttpSession session = request.getSession(true);
 
-        if (login != null && email != null && password.length > 0 && password2.length> 0) {
+        if (name != null && price != null && category != null && amount != null) {
             try {
-                AppUser user = userService.register(login, email, password, password2);
-                Arrays.fill(password, (byte) 0);
-                Arrays.fill(password2, (byte) 0);
+                List<Dish> menu;
 
-                session.setAttribute(Constants.USER_REQUEST_ATTRIBUTE, user);
+                menu = menuService.addDish(name, Integer.parseInt(price), category, Integer.parseInt(price));
+
+                session.setAttribute(Constants.MENU_REQUEST_ATTRIBUTE, menu);
 
                 response.sendRedirect(previousQuery);
             } catch (ServiceRuntimeException e) {

@@ -4,6 +4,7 @@ import com.google.protobuf.ServiceException;
 import epam.task.finaltaskepam.dao.FactoryDao;
 import epam.task.finaltaskepam.dao.user.AppUserDao;
 import epam.task.finaltaskepam.dto.AppUser;
+import epam.task.finaltaskepam.dto.AppUserPurse;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 import epam.task.finaltaskepam.util.Util;
@@ -87,15 +88,10 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     public List<AppUser> showAllUsers() throws ServiceRuntimeException {
-//        String encodedPassword = Util.encodePassword(password);
         FactoryDao factoryDao = FactoryDao.getInstance();
         AppUserDao dao = factoryDao.getUserDao();
 
         List<AppUser> users;
-//
-//        for (int i = 0; i < dao.getAllUsers().size(); i++) {
-//
-//        }
 
         try {
             users = dao.getAllUsers();
@@ -107,5 +103,34 @@ public class AppUserServiceImpl implements AppUserService {
         return users;
     }
 
+    @Override
+    public AppUserPurse fillUpAPurse(int userId, int amount) throws ServiceRuntimeException {
+        FactoryDao factoryDao = FactoryDao.getInstance();
+        AppUserDao dao = factoryDao.getUserDao();
+        AppUserPurse purse;
+
+        try {
+            purse = dao.fillUpAPurse(userId, amount);
+        } catch (DaoRuntimeException e) {
+            throw new ServiceRuntimeException("Error in source!", e);
+        }
+
+        return purse;
+    }
+
+    @Override
+    public AppUserPurse checkPurseAmount(int userId) throws ServiceRuntimeException {
+        FactoryDao factoryDao = FactoryDao.getInstance();
+        AppUserDao dao = factoryDao.getUserDao();
+        AppUserPurse purse;
+
+        try {
+            purse = dao.getPurseAmount(userId);
+        } catch (DaoRuntimeException e) {
+            throw new ServiceRuntimeException("Error in source!", e);
+        }
+
+        return purse;
+    }
 }
 

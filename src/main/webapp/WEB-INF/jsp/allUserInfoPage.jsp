@@ -58,8 +58,7 @@
                                         <li class="list-group-item">${email}:${user.email}</li>
                                         <li class="list-group-item">${password}:${user.password}</li>
                                         <li class="list-group-item">${role}:${user.role}</li>
-                                        <li class="list-group-item">${purse}:${user.purse}</li>
-
+                                        <li class="list-group-item">${purse}:${user.purse.amount}</li>
                                     </ul>
                                 </div>
                             </div>

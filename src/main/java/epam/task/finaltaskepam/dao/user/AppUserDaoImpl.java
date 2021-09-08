@@ -2,25 +2,23 @@ package epam.task.finaltaskepam.dao.user;
 
 import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.dto.AppUserPurse;
-import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.error.ConnectionPoolException;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
 import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
 import epam.task.finaltaskepam.repo.Request;
-import epam.task.finaltaskepam.util.Constants;
 import epam.task.finaltaskepam.util.Util;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -30,6 +28,7 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
 
     private static final Logger logger = LogManager.getLogger(AppUserDaoImpl.class);
     private static final long serialVersionUID = 5566685127381260993L;
+    private int counter = 10;
 
     public static final AppUserDao instance = new AppUserDaoImpl();
 
@@ -65,33 +64,12 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
                 return null;
             }
 
-//            AppUser user = new AppUser();
-
-            //            user.setIdUser(resultSet.getInt(1));
-//            user.setUsername(resultSet.getString(USERNAME));
-//            user.setEmail(resultSet.getString(EMAIL));
-//            user.setRole(resultSet.getString(ROLE));
-
-//            user.setPurse(createCheckForUser(user));
-
-//            AppUser user = new AppUser.Builder()
-//                    .withIdUser(resultSet.getInt(1))
-//                    .withUsername(resultSet.getString(USERNAME))
-//                    .withEmail(resultSet.getString(EMAIL))
-//                    .withRole(resultSet.getString(ROLE))
-//                    .withPurse(createCheckForUser(resultSet.getInt(1)))
-//                    .build();
-
-            //            createCheckForUser(user);
-
-//            user.setPurse(createCheckForUser(user));
-
             return new Builder()
                     .withIdUser(resultSet.getInt(1))
                     .withUsername(resultSet.getString(USERNAME))
                     .withEmail(resultSet.getString(EMAIL))
                     .withRole(resultSet.getString(ROLE))
-                    .withPurse(createCheckForUser(resultSet.getInt(1)))
+                    .withPurse(getPurse())
                     .build();
         } catch (SQLException e) {
             throw new DaoRuntimeException("Login sql error", e);
@@ -111,12 +89,15 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
 
             statement = connection.prepareStatement(Request.CREATE_USER);
 
-            statement.setString(1, login);
-            statement.setString(2, email);
-            statement.setString(3, password);
+            statement.setInt(1, counter);
+            statement.setString(2, login);
+            statement.setString(3, email);
+            statement.setString(4, password);
             int i = statement.executeUpdate();
 
             if (i > 0) {
+                createCheckForUser(counter);
+                counter++;
                 return authorize(login, password);
             }
 
@@ -150,14 +131,11 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
                         .withEmail(resultSet.getString(EMAIL))
                         .withRole(resultSet.getString(PASSWORD))
                         .withRole(resultSet.getString(ROLE))
-//                        .withPurse(createCheckForUser(resultSet.getInt(1)))
-                        .build();;
+                        .build();
                 users.add(user);
-
-
             }
-            return users;
 
+            return users;
         } catch (SQLException e) {
             throw new DaoRuntimeException("Dish sql error", e);
         } catch (ConnectionPoolException e) {
@@ -167,7 +145,7 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
         }
     }
 
-    public AppUserPurse createCheckForUser(int userId) {
+    public void createCheckForUser(int userId) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -179,8 +157,9 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
 
             statement.setInt(1, userId);
             statement.setLong(2, purseAmount);
+            statement.executeUpdate();
 
-            return new AppUserPurse.Builder()
+            new AppUserPurse.Builder()
                     .withIdAppUser(userId)
                     .withAmount(purseAmount)
                     .build();
@@ -193,40 +172,63 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
         }
     }
 
+    @Override
+    public AppUserPurse fillUpAPurse(int userId, int amount) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPoolImpl.getInstance().takeConnection();
 
-//    public AppUserPurse fillUpAPurse(int userId, int amount) {
-//        Connection connection = null;
-//        PreparedStatement statement = null;
-//        try {
-//            connection = ConnectionPoolImpl.getInstance().takeConnection();
-//
-//            if (checkUserPurse(userId)) {
-//
-//            }
-//
-//            statement = connection.prepareStatement(Request.CREATE_PURSE_FOR_USER);
-//
-//            statement.setInt(1, userId);
-//            statement.setLong(2, amount);
-//
-//            if (checkUserPurse(userId)) {
-//
-//            }
-//
-//                AppUserPurse purse = new AppUserPurse.Builder()
-//                    .withIdAppUser(userId)
-//                    .withAmount(amount)
-//                    .build();
-//
-//            return purse;
-//        } catch (SQLException e) {
-//            throw new DaoRuntimeException("Create check sql error", e);
-//        } catch (ConnectionPoolException e) {
-//            throw new DaoRuntimeException("Create check  connection error", e);
-//        } finally {
-//            Util.closeResource(connection, statement);
-//        }
-//    }
+            statement = connection.prepareStatement(Request.TOP_UP_A_PURSE);
+
+            statement.setInt(1, amount);
+            statement.setLong(2, userId);
+            int i = statement.executeUpdate();
+
+            if (i > 0) {
+                return getPurseAmount(userId);
+            }
+
+        } catch (SQLException e) {
+            throw new DaoRuntimeException("Create check sql error", e);
+        } catch (ConnectionPoolException e) {
+            throw new DaoRuntimeException("Create check  connection error", e);
+        } finally {
+            Util.closeResource(connection, statement);
+        }
+
+        return null;
+    }
+
+    @Override
+    public AppUserPurse getPurseAmount(int userId) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+        try {
+            connection = ConnectionPoolImpl.getInstance().takeConnection();
+
+            statement = connection.prepareStatement(Request.FIND_USER_PURSE);
+
+            statement.setLong(1, userId);
+
+            resultSet = statement.executeQuery();
+
+            if(resultSet.next()){
+                return new AppUserPurse.Builder()
+                        .withIdAppUser(resultSet.getInt(USER_ID))
+                        .withAmount(resultSet.getInt(AMOUNT))
+                        .build();
+            }
+        } catch (SQLException e) {
+            throw new DaoRuntimeException("Create check sql error", e);
+        } catch (ConnectionPoolException e) {
+            throw new DaoRuntimeException("Create check  connection error", e);
+        } finally {
+            Util.closeResource(connection, statement);
+        }
+        return null;
+    }
 //
 //    private boolean checkUserPurse(int userId) {
 //        Connection connection = null;
@@ -294,4 +296,17 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        AppUserDaoImpl that = (AppUserDaoImpl) o;
+        return counter == that.counter;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), counter);
+    }
 }

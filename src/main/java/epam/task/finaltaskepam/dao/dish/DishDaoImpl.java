@@ -26,11 +26,12 @@ public class DishDaoImpl implements DishDao {
     private static final String NAME = "dish_name";
     private static final String PRICE = "price";
     private static final String CATEGORY = "category";
-
+    private static final String AMOUNT = "amount";
 
     private static final DishDao instance = new DishDaoImpl();
 
-    private DishDaoImpl(){}
+    private DishDaoImpl() {
+    }
 
     public static DishDao getInstance() {
         return instance;
@@ -48,14 +49,16 @@ public class DishDaoImpl implements DishDao {
 
             resultSet = statement.executeQuery();
             List<Dish> menu = new ArrayList<>();
-            Dish dish;
 
             while (resultSet.next()) {
-                dish = new Dish();
-                dish.setDishId(resultSet.getInt(DISH_ID));
-                dish.setName(resultSet.getString(NAME));
-                dish.setPrice(resultSet.getLong(PRICE));
-                dish.setCategory(resultSet.getString(CATEGORY));
+                Dish dish = new Dish.Builder()
+                        .withDishId(resultSet.getInt(DISH_ID))
+                        .withName(resultSet.getString(NAME))
+                        .withPrice(resultSet.getLong(PRICE))
+                        .withCategory(resultSet.getString(CATEGORY))
+                        .withAmount(resultSet.getInt(AMOUNT))
+                        .build();
+
                 menu.add(dish);
             }
             return menu;
@@ -81,14 +84,16 @@ public class DishDaoImpl implements DishDao {
 
             resultSet = statement.executeQuery();
             List<Dish> menu = new ArrayList<>();
-            Dish dish;
 
             while (resultSet.next()) {
-                dish = new Dish();
-                dish.setDishId(resultSet.getInt(DISH_ID));
-                dish.setName(resultSet.getString(NAME));
-                dish.setPrice(resultSet.getLong(PRICE));
-                dish.setCategory(resultSet.getString(CATEGORY));
+                Dish dish = new Dish.Builder()
+                        .withDishId(resultSet.getInt(DISH_ID))
+                        .withName(resultSet.getString(NAME))
+                        .withPrice(resultSet.getLong(PRICE))
+                        .withCategory(resultSet.getString(CATEGORY))
+                        .withAmount(resultSet.getInt(AMOUNT))
+                        .build();
+
                 menu.add(dish);
             }
             return menu;
@@ -114,14 +119,16 @@ public class DishDaoImpl implements DishDao {
 
             resultSet = statement.executeQuery();
             List<Dish> menu = new ArrayList<>();
-            Dish dish;
 
             while (resultSet.next()) {
-                dish = new Dish();
-                dish.setDishId(resultSet.getInt(DISH_ID));
-                dish.setName(resultSet.getString(NAME));
-                dish.setPrice(resultSet.getLong(PRICE));
-                dish.setCategory(resultSet.getString(CATEGORY));
+                Dish dish = new Dish.Builder()
+                        .withDishId(resultSet.getInt(DISH_ID))
+                        .withName(resultSet.getString(NAME))
+                        .withPrice(resultSet.getLong(PRICE))
+                        .withCategory(resultSet.getString(CATEGORY))
+                        .withAmount(resultSet.getInt(AMOUNT))
+                        .build();
+
                 menu.add(dish);
             }
             return menu;
@@ -150,14 +157,16 @@ public class DishDaoImpl implements DishDao {
 
             resultSet = statement.executeQuery();
             List<Dish> menu = new ArrayList<>();
-            Dish dish;
 
             while (resultSet.next()) {
-                dish = new Dish();
-                dish.setDishId(resultSet.getInt(DISH_ID));
-                dish.setName(resultSet.getString(NAME));
-                dish.setPrice(resultSet.getLong(PRICE));
-                dish.setCategory(resultSet.getString(CATEGORY));
+                Dish dish = new Dish.Builder()
+                        .withDishId(resultSet.getInt(DISH_ID))
+                        .withName(resultSet.getString(NAME))
+                        .withPrice(resultSet.getLong(PRICE))
+                        .withCategory(resultSet.getString(CATEGORY))
+                        .withAmount(resultSet.getInt(AMOUNT))
+                        .build();
+
                 menu.add(dish);
             }
             return menu;
@@ -185,14 +194,16 @@ public class DishDaoImpl implements DishDao {
 
             resultSet = statement.executeQuery();
             List<Dish> dishes = new ArrayList<>();
-            Dish dish;
 
             while (resultSet.next()) {
-                dish = new Dish();
-                dish.setDishId(resultSet.getInt(DISH_ID));
-                dish.setName(resultSet.getString(NAME));
-                dish.setPrice(resultSet.getLong(PRICE));
-                dish.setCategory(resultSet.getString(CATEGORY));
+                Dish dish = new Dish.Builder()
+                        .withDishId(resultSet.getInt(DISH_ID))
+                        .withName(resultSet.getString(NAME))
+                        .withPrice(resultSet.getLong(PRICE))
+                        .withCategory(resultSet.getString(CATEGORY))
+                        .withAmount(resultSet.getInt(AMOUNT))
+                        .build();
+
                 dishes.add(dish);
             }
             return dishes;
@@ -212,7 +223,34 @@ public class DishDaoImpl implements DishDao {
     }
 
     @Override
-    public void addDish(int id, String name, long price, String category) throws DaoRuntimeException {
+    public List<Dish> addDish(String name, int price, String category, int amount) throws DaoRuntimeException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPoolImpl.getInstance().takeConnection();
 
+            statement = connection.prepareStatement(Request.ADD_DISH);
+
+            statement.setString(1, name);
+            statement.setLong(2, price);
+            statement.setString(3, category);
+            statement.setInt(4, amount);
+
+            int i = statement.executeUpdate();
+
+            if (i > 0) {
+                return getAllDishes();
+            }
+
+
+        } catch (SQLException e) {
+            throw new DaoRuntimeException("Add dish sql error", e);
+        } catch (ConnectionPoolException e) {
+            throw new DaoRuntimeException("Dish pool connection error", e);
+        } finally {
+            Util.closeResource(connection, statement);
+        }
+
+        return null;
     }
 }

@@ -35,4 +35,8 @@ public interface AppUserDao {
      * @return list of filled User beans
      */
     List<AppUser> getAllUsers();
+
+    public AppUserPurse fillUpAPurse(int userId, int amount);
+
+    public AppUserPurse getPurseAmount(int userId);
 }

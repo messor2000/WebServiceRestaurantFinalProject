@@ -102,9 +102,6 @@
                 </div>
             </div>
         </div>
-
-<%--        <c:import url="template/sideright.jsp"/>--%>
-
     </div>
 </div>
 

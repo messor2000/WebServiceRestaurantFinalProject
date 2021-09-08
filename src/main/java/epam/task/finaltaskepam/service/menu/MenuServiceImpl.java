@@ -102,4 +102,23 @@ public class MenuServiceImpl implements MenuService {
         }
         return menu;
     }
+
+    @Override
+    public List<Dish> addDish(String name, int price, String category, int amount) throws DaoRuntimeException {
+        FactoryDao factoryDao = FactoryDao.getInstance();
+        DishDao dishDao = factoryDao.getDishDao();
+
+        List<Dish> menu;
+
+        try {
+            menu = dishDao.addDish(name, price, category, amount);
+            if (menu == null || menu.isEmpty()) {
+                throw new ServiceRuntimeException("No dishes matching your query");
+            }
+        } catch (DaoRuntimeException e) {
+            throw new ServiceRuntimeException("Error in source!", e);
+        }
+
+        return menu;
+    }
 }

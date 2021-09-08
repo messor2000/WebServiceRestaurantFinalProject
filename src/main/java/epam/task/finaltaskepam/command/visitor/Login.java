@@ -1,6 +1,5 @@
 package epam.task.finaltaskepam.command.visitor;
 
-import com.google.protobuf.ServiceException;
 import epam.task.finaltaskepam.command.Command;
 import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
@@ -31,9 +30,8 @@ public class Login implements Command {
     private static final String PASSWORD = "password";
 
     public static final String JSP_LOGIN_PAGE_PATH = "WEB-INF/jsp/loginPage.jsp";
-    private static final String MESSAGE_OF_ERROR_1 = "Sorry something went wrong";
-//    private static final String MESSAGE_OF_ERROR_1 = "Wrong login or pass";
-    private static final String MESSAGE_OF_ERROR_2 = "All fields should be filled";
+    private static final String MESSAGE_OF_ERROR_1 = "Wrong login or pass";
+    private static final String MESSAGE_OF_ERROR_2 = "Sorry something went wrong";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

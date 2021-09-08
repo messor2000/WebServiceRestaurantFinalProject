@@ -13,6 +13,44 @@ public class Dish implements Serializable {
     private String name;
     private long price;
     private String category;
+    private int amount;
+
+    public static final class Builder {
+        private final Dish dish;
+
+        public Builder() {
+            dish = new Dish();
+        }
+
+        public Builder withDishId(int dishId) {
+            dish.dishId = dishId;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            dish.name = name;
+            return this;
+        }
+
+        public Builder withPrice(long price) {
+            dish.price = price;
+            return this;
+        }
+
+        public Builder withCategory(String category) {
+            dish.category = category;
+            return this;
+        }
+
+        public Builder withAmount(int amount) {
+            dish.amount = amount;
+            return this;
+        }
+
+        public Dish build() {
+            return dish;
+        }
+    }
 
     public int getDishId() {
         return dishId;
@@ -50,6 +88,15 @@ public class Dish implements Serializable {
         return this;
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
+    public Dish setAmount(int amount) {
+        this.amount = amount;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,13 +104,14 @@ public class Dish implements Serializable {
         Dish dish = (Dish) o;
         return dishId == dish.dishId &&
                 price == dish.price &&
+                amount == dish.amount &&
                 Objects.equals(name, dish.name) &&
                 Objects.equals(category, dish.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dishId, name, price, category);
+        return Objects.hash(dishId, name, price, category, amount);
     }
 
     @Override
@@ -73,6 +121,7 @@ public class Dish implements Serializable {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", category='" + category + '\'' +
+                ", amount=" + amount +
                 '}';
     }
 }

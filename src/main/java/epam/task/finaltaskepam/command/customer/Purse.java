@@ -1,7 +1,7 @@
-package epam.task.finaltaskepam.command.manager;
+package epam.task.finaltaskepam.command.customer;
 
 import epam.task.finaltaskepam.command.Command;
-import epam.task.finaltaskepam.dto.AppUser;
+import epam.task.finaltaskepam.dto.AppUserPurse;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 import epam.task.finaltaskepam.service.FactoryService;
 import epam.task.finaltaskepam.service.user.AppUserService;
@@ -15,30 +15,32 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @author Aleksandr Ovcharenko
  */
-public class ShowAllUsers implements Command {
+public class Purse implements Command {
 
-    private static final Logger logger = LogManager.getLogger(ShowAllUsers.class);
+    private static final Logger logger = LogManager.getLogger(Purse.class);
 
-    public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/allUserInfoPage.jsp";
-    private static final String MESSAGE_OF_ERROR = "Something wrong with show all menu, pls try later";
+    private static final String USER_ID = "appUserId";
+
+    public static final String JSP_PURSE_PAGE_PATH = "WEB-INF/jsp/purse.jsp";
+    private static final String MESSAGE_OF_ERROR = "Something wrong with show your purse, pls try later";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String userId = request.getParameter(USER_ID);
         Util.saveCurrentQueryToSession(request);
+        AppUserPurse purse;
 
-        List<AppUser> users;
         AppUserService appUserService = FactoryService.getInstance().getUserService();
         try {
-            users = appUserService.showAllUsers();
+            purse = appUserService.checkPurseAmount(Integer.parseInt(userId));
 
-            request.setAttribute(Constants.USER_REQUEST_ATTRIBUTE, users);
+            request.setAttribute(Constants.USER_PURSE_REQUEST_ATTRIBUTE, purse);
 
-            request.getRequestDispatcher(JSP_MENU_PAGE_PATH).forward(request, response);
+            request.getRequestDispatcher(JSP_PURSE_PAGE_PATH).forward(request, response);
         } catch (ServiceRuntimeException e) {
             logger.log(Level.ERROR, e.getMessage(), e);
             request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR);
