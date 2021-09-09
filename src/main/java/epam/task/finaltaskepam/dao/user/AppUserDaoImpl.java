@@ -229,62 +229,6 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
         }
         return null;
     }
-//
-//    private boolean checkUserPurse(int userId) {
-//        Connection connection = null;
-//        PreparedStatement statement = null;
-//        try {
-//            connection = ConnectionPoolImpl.getInstance().takeConnection();
-//
-//            statement = connection.prepareStatement(Request.CHECK_USER_PURSE);
-//
-//            statement.setInt(1, userId);
-//
-//            int i = statement.executeUpdate();
-//
-////            if (i > 0) {
-////                return true;
-////            }
-////
-////            return false;
-//            return i > 0;
-//
-//        } catch (SQLException e) {
-//            throw new DaoRuntimeException("Create check sql error", e);
-//        } catch (ConnectionPoolException e) {
-//            throw new DaoRuntimeException("Create check  connection error", e);
-//        } finally {
-//            Util.closeResource(connection, statement);
-//        }
-//    }
-//
-//    private AppUserPurse createPurse(String userId) {
-//        Connection connection = null;
-//        PreparedStatement statement = null;
-//        try {
-//            connection = ConnectionPoolImpl.getInstance().takeConnection();
-//
-//            statement = connection.prepareStatement(Request.FIND_USER_PURSE);
-//
-//            statement.setInt(1, userId);
-//
-//            int i = statement.executeUpdate();
-//
-////            if (i > 0) {
-////                return true;
-////            }
-////
-////            return false;
-//            return i > 0;
-//
-//        } catch (SQLException e) {
-//            throw new DaoRuntimeException("Create check sql error", e);
-//        } catch (ConnectionPoolException e) {
-//            throw new DaoRuntimeException("Create check  connection error", e);
-//        } finally {
-//            Util.closeResource(connection, statement);
-//        }
-//    }
 
     private static void rollback(Connection connection) {
         if (connection != null) {

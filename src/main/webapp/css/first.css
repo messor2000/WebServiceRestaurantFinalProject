@@ -158,3 +158,18 @@ html {
 textarea{
     width: 300px;
 }
+
+.toUpAPurse{
+    display: flex;
+    flex-direction: row;
+}
+
+.batton-submit{
+    margin: 0;
+    padding: 0;
+}
+
+.input-amount{
+    margin: 0;
+    padding: 0;
+}

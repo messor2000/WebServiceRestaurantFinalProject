@@ -30,7 +30,7 @@ public class AddDish implements Command {
     private static final String CATEGORY = "category";
     private static final String AMOUNT = "amount";
 
-    public static final String JSP_REGISTER_PAGE_PATH = "WEB-INF/jsp/menu.jsp";
+    public static final String JSP_ADD_DISH_PAGE_PATH = "WEB-INF/jsp/addDish.jsp";
     private static final String MESSAGE_OF_ERROR_1 = "Error in add new dish";
     private static final String MESSAGE_OF_ERROR_2 = "Error in server, please try late";
 
@@ -42,6 +42,8 @@ public class AddDish implements Command {
         String amount = request.getParameter(AMOUNT);
 
         MenuService menuService = FactoryService.getInstance().getMenuService();
+
+        Util.saveCurrentQueryToSession(request);
         String previousQuery = Util.getPreviousQuery(request);
         HttpSession session = request.getSession(true);
 
@@ -51,17 +53,20 @@ public class AddDish implements Command {
 
                 menu = menuService.addDish(name, Integer.parseInt(price), category, Integer.parseInt(price));
 
-                session.setAttribute(Constants.MENU_REQUEST_ATTRIBUTE, menu);
+//                session.setAttribute(Constants.MENU_REQUEST_ATTRIBUTE, menu);
+                request.setAttribute(Constants.USER_PURSE_REQUEST_ATTRIBUTE, menu);
 
-                response.sendRedirect(previousQuery);
+
+//                response.sendRedirect(previousQuery);
+                request.getRequestDispatcher(JSP_ADD_DISH_PAGE_PATH).forward(request, response);
             } catch (ServiceRuntimeException e) {
                 logger.log(Level.ERROR, e.getMessage(), e);
                 request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_1);
-                request.getRequestDispatcher(JSP_REGISTER_PAGE_PATH).forward(request, response);
+                request.getRequestDispatcher(JSP_ADD_DISH_PAGE_PATH).forward(request, response);
             }
         } else {
             request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_2);
-            request.getRequestDispatcher(JSP_REGISTER_PAGE_PATH).forward(request, response);
+            request.getRequestDispatcher(JSP_ADD_DISH_PAGE_PATH).forward(request, response);
         }
     }
 }

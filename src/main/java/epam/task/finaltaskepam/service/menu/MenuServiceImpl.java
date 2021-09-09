@@ -3,9 +3,16 @@ package epam.task.finaltaskepam.service.menu;
 import epam.task.finaltaskepam.dao.FactoryDao;
 import epam.task.finaltaskepam.dao.dish.DishDao;
 import epam.task.finaltaskepam.dto.Dish;
+import epam.task.finaltaskepam.error.ConnectionPoolException;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
+import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
+import epam.task.finaltaskepam.repo.Request;
+import epam.task.finaltaskepam.util.Util;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -115,6 +122,22 @@ public class MenuServiceImpl implements MenuService {
             if (menu == null || menu.isEmpty()) {
                 throw new ServiceRuntimeException("No dishes matching your query");
             }
+        } catch (DaoRuntimeException e) {
+            throw new ServiceRuntimeException("Error in source!", e);
+        }
+
+        return menu;
+    }
+
+    @Override
+    public List<Dish> replenishStock(int dishId, int amount) throws DaoRuntimeException {
+        FactoryDao factoryDao = FactoryDao.getInstance();
+        DishDao dishDao = factoryDao.getDishDao();
+
+        List<Dish> menu;
+
+        try {
+            menu = dishDao.replenishStock(dishId, amount);
         } catch (DaoRuntimeException e) {
             throw new ServiceRuntimeException("Error in source!", e);
         }

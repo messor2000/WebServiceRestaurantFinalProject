@@ -22,4 +22,6 @@ public interface MenuService {
     List<Dish> getDish(String name) throws DaoRuntimeException;
 
     List<Dish> addDish(String name, int price, String category, int amount) throws DaoRuntimeException;
+
+    List<Dish> replenishStock(int dishId, int amount) throws DaoRuntimeException;
 }

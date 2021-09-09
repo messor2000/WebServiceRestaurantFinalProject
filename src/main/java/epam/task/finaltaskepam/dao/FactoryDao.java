@@ -2,6 +2,8 @@ package epam.task.finaltaskepam.dao;
 
 import epam.task.finaltaskepam.dao.dish.DishDao;
 import epam.task.finaltaskepam.dao.dish.DishDaoImpl;
+import epam.task.finaltaskepam.dao.order.OrderDao;
+import epam.task.finaltaskepam.dao.order.OrderDaoImpl;
 import epam.task.finaltaskepam.dao.user.AppUserDaoImpl;
 import epam.task.finaltaskepam.dao.user.AppUserDao;
 import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
@@ -23,6 +25,7 @@ public class FactoryDao {
     private final AppUserDao appUserDao = AppUserDaoImpl.getInstance();
     private final ConnectionPoolImpl connectionPool = ConnectionPoolImpl.getInstance();
     private final DishDao dishDao = DishDaoImpl.getInstance();
+    private final OrderDao orderDao = OrderDaoImpl.getInstance();
 
     public AppUserDao getUserDao() {
         return appUserDao;
@@ -34,5 +37,9 @@ public class FactoryDao {
 
     public DishDao getDishDao() {
         return dishDao;
+    }
+
+    public OrderDao getOrderDao() {
+        return orderDao;
     }
 }

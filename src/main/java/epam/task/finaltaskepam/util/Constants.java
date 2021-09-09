@@ -10,6 +10,7 @@ public class Constants {
     public static final String USER_REQUEST_ATTRIBUTE = "user";
     public static final String USER_PURSE_REQUEST_ATTRIBUTE = "purse";
     public static final String MENU_REQUEST_ATTRIBUTE = "menu";
+    public static final String USER_ORDER_REQUEST_ATTRIBUTE = "order";
 
     public static final String WELCOME_PAGE = "index.jsp";
 

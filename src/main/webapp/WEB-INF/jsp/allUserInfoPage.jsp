@@ -68,7 +68,8 @@
             </div>
         </div>
     </div>
-    <c:import url="template/footer.jsp"/>
+</div>
+<c:import url="template/footer.jsp"/>
 </body>
 </html>
 

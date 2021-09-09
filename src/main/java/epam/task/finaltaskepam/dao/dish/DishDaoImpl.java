@@ -253,4 +253,32 @@ public class DishDaoImpl implements DishDao {
 
         return null;
     }
+
+    @Override
+    public List<Dish> replenishStock(int dishId, int amount) throws DaoRuntimeException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPoolImpl.getInstance().takeConnection();
+
+            statement = connection.prepareStatement(Request.REPLENISH_STOCK);
+
+            statement.setInt(1, amount);
+            statement.setLong(2, dishId);
+            int i = statement.executeUpdate();
+
+            if (i > 0) {
+                return getAllDishes();
+            }
+
+        } catch (SQLException e) {
+            throw new DaoRuntimeException("Replenish stock sql error", e);
+        } catch (ConnectionPoolException e) {
+            throw new DaoRuntimeException("Replenish stock  connection error", e);
+        } finally {
+            Util.closeResource(connection, statement);
+        }
+
+        return null;
+    }
 }
