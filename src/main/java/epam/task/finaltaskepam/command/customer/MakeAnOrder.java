@@ -24,6 +24,7 @@ public class MakeAnOrder implements Command {
 
     private static final String ORDER_ID = "order_id";
     private static final String DISH_ID = "dish_id";
+    private static final String DISH_PRICE = "dish_id";
 
 
     public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/menu.jsp";
@@ -36,9 +37,9 @@ public class MakeAnOrder implements Command {
         String orderId = request.getParameter(ORDER_ID);
         String dishId = request.getParameter(DISH_ID);
 
-
         OrderService orderService = FactoryService.getInstance().getOrderService();
         try {
+
             orderService.makeAnOrder(Integer.parseInt(orderId), Integer.parseInt(dishId));
 
             response.sendRedirect(previousQuery);

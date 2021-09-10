@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -194,7 +195,17 @@ public class DishDaoImpl implements DishDao {
 
             resultSet = statement.executeQuery();
             List<Dish> dishes = new ArrayList<>();
+//            Dish dish = null;
 
+//            while (resultSet.next()) {
+//                dish = new Dish.Builder()
+//                        .withDishId(resultSet.getInt(DISH_ID))
+//                        .withName(resultSet.getString(NAME))
+//                        .withPrice(resultSet.getLong(PRICE))
+//                        .withCategory(resultSet.getString(CATEGORY))
+//                        .withAmount(resultSet.getInt(AMOUNT))
+//                        .build();
+//            }
             while (resultSet.next()) {
                 Dish dish = new Dish.Builder()
                         .withDishId(resultSet.getInt(DISH_ID))
@@ -208,6 +219,8 @@ public class DishDaoImpl implements DishDao {
             }
             return dishes;
 
+//            return dish;
+
         } catch (SQLException e) {
             throw new DaoRuntimeException("Dish sql error", e);
         } catch (ConnectionPoolException e) {
@@ -219,7 +232,38 @@ public class DishDaoImpl implements DishDao {
 
     @Override
     public Dish getDishById(int id) throws DaoRuntimeException {
-        return null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = ConnectionPoolImpl.getInstance().takeConnection();
+
+            statement = connection.prepareStatement(Request.SHOW_DISH_BY_ID);
+
+            statement.setInt(1, id);
+
+            resultSet = statement.executeQuery();
+
+            Dish dish = null;
+
+            while (resultSet.next()) {
+                 dish = new Dish.Builder()
+                        .withDishId(resultSet.getInt(DISH_ID))
+                        .withName(resultSet.getString(NAME))
+                        .withPrice(resultSet.getLong(PRICE))
+                        .withCategory(resultSet.getString(CATEGORY))
+                        .withAmount(resultSet.getInt(AMOUNT))
+                        .build();
+            }
+
+            return dish;
+        } catch (SQLException e) {
+            throw new DaoRuntimeException("Dish sql error", e);
+        } catch (ConnectionPoolException e) {
+            throw new DaoRuntimeException("Dish pool connection error", e);
+        } finally {
+            Util.closeResource(connection, statement, resultSet);
+        }
     }
 
     @Override
@@ -242,7 +286,6 @@ public class DishDaoImpl implements DishDao {
                 return getAllDishes();
             }
 
-
         } catch (SQLException e) {
             throw new DaoRuntimeException("Add dish sql error", e);
         } catch (ConnectionPoolException e) {
@@ -251,11 +294,11 @@ public class DishDaoImpl implements DishDao {
             Util.closeResource(connection, statement);
         }
 
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
-    public List<Dish> replenishStock(int dishId, int amount) throws DaoRuntimeException {
+    public void replenishStock(String dishName, int amount) throws DaoRuntimeException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -264,12 +307,12 @@ public class DishDaoImpl implements DishDao {
             statement = connection.prepareStatement(Request.REPLENISH_STOCK);
 
             statement.setInt(1, amount);
-            statement.setLong(2, dishId);
-            int i = statement.executeUpdate();
+            statement.setString(2, dishName);
+            statement.executeUpdate();
 
-            if (i > 0) {
-                return getAllDishes();
-            }
+//            if (i > 0) {
+//                return getDishByName(dishName);
+//            }
 
         } catch (SQLException e) {
             throw new DaoRuntimeException("Replenish stock sql error", e);
@@ -279,6 +322,6 @@ public class DishDaoImpl implements DishDao {
             Util.closeResource(connection, statement);
         }
 
-        return null;
+//        return null;
     }
 }

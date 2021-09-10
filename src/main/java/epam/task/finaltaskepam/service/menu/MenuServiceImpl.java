@@ -3,16 +3,9 @@ package epam.task.finaltaskepam.service.menu;
 import epam.task.finaltaskepam.dao.FactoryDao;
 import epam.task.finaltaskepam.dao.dish.DishDao;
 import epam.task.finaltaskepam.dto.Dish;
-import epam.task.finaltaskepam.error.ConnectionPoolException;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
-import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
-import epam.task.finaltaskepam.repo.Request;
-import epam.task.finaltaskepam.util.Util;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -114,7 +107,6 @@ public class MenuServiceImpl implements MenuService {
     public List<Dish> addDish(String name, int price, String category, int amount) throws DaoRuntimeException {
         FactoryDao factoryDao = FactoryDao.getInstance();
         DishDao dishDao = factoryDao.getDishDao();
-
         List<Dish> menu;
 
         try {
@@ -130,18 +122,33 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<Dish> replenishStock(int dishId, int amount) throws DaoRuntimeException {
+    public Dish getDishById(int dishId) throws DaoRuntimeException {
         FactoryDao factoryDao = FactoryDao.getInstance();
         DishDao dishDao = factoryDao.getDishDao();
-
-        List<Dish> menu;
+        Dish dish;
 
         try {
-            menu = dishDao.replenishStock(dishId, amount);
+            dish = dishDao.getDishById(dishId);
+            if (dish == null) {
+                throw new ServiceRuntimeException("No dishes matching your query");
+            }
         } catch (DaoRuntimeException e) {
             throw new ServiceRuntimeException("Error in source!", e);
         }
 
-        return menu;
+        return dish;
+    }
+
+    @Override
+    public void replenishStock(String dishName, int amount) throws DaoRuntimeException {
+        FactoryDao factoryDao = FactoryDao.getInstance();
+        DishDao dishDao = factoryDao.getDishDao();
+
+        try {
+            dishDao.replenishStock(dishName, amount);
+        } catch (DaoRuntimeException e) {
+            throw new ServiceRuntimeException("Error in source!", e);
+        }
+
     }
 }

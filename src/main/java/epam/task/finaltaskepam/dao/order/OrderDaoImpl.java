@@ -1,7 +1,5 @@
 package epam.task.finaltaskepam.dao.order;
 
-import epam.task.finaltaskepam.dao.user.AppUserDaoImpl;
-import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.dto.order.Order;
 import epam.task.finaltaskepam.dto.order.Status;
 import epam.task.finaltaskepam.error.ConnectionPoolException;
@@ -63,10 +61,12 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public Order showOrder(int userId) throws ServiceRuntimeException {
+    public Order showUserOrder(int userId) throws ServiceRuntimeException {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        List<Order> orders;
+
         try {
             connection = ConnectionPoolImpl.getInstance().takeConnection();
 
@@ -75,6 +75,19 @@ public class OrderDaoImpl implements OrderDao {
             statement.setInt(1, userId);
 
             resultSet = statement.executeQuery();
+
+//            List<Order> orders = new ArrayList<>();
+//
+//            while (resultSet.next()) {
+//                Order order = new Order.Builder()
+//                        .withOrderId(resultSet.getInt(ORDER_ID))
+//                        .withOrderStatus(Status.valueOf(resultSet.getString(ORDER_STATUS)))
+//                        .withUserId(resultSet.getInt(USER_ID))
+//                        .build();
+//
+//                orders.add(order);
+//            }
+//            return orders;
 
             if (resultSet.next()) {
 
@@ -104,7 +117,7 @@ public class OrderDaoImpl implements OrderDao {
         try {
             connection = ConnectionPoolImpl.getInstance().takeConnection();
 
-            statement = connection.prepareStatement(Request.SHOW_MENU);
+            statement = connection.prepareStatement(Request.SHOW_ALL_ORDERS);
 
             resultSet = statement.executeQuery();
             List<Order> orders = new ArrayList<>();

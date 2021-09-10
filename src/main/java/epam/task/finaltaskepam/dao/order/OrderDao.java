@@ -13,7 +13,7 @@ public interface OrderDao {
 
     void makeAnOrder(int orderId, int dishId) throws DaoRuntimeException;
 
-    Order showOrder(int userId) throws ServiceRuntimeException;
+    Order showUserOrder(int userId) throws ServiceRuntimeException;
 
     List<Order> showAllOrders() throws ServiceRuntimeException;
 }

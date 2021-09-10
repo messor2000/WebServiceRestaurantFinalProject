@@ -26,7 +26,7 @@ public class ToUpAPurse implements Command {
 
     private static final String AMOUNT = "amount";
 
-    public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/purse.jsp";
+    public static final String JSP_PURSE_PAGE_PATH = "WEB-INF/jsp/purse.jsp";
     private static final String MESSAGE_OF_ERROR = "Something wrong with show your purse, pls try later";
 
     @Override
@@ -51,7 +51,7 @@ public class ToUpAPurse implements Command {
 
             request.setAttribute(Constants.USER_PURSE_REQUEST_ATTRIBUTE, purse);
 
-            request.getRequestDispatcher(JSP_MENU_PAGE_PATH).forward(request, response);
+            request.getRequestDispatcher(JSP_PURSE_PAGE_PATH).forward(request, response);
         } catch (ServiceRuntimeException e) {
             logger.log(Level.ERROR, e.getMessage(), e);
             request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR);

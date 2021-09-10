@@ -28,21 +28,12 @@ public class ShowAllOrders implements Command {
 
     private static final Logger logger = LogManager.getLogger(ShowAllOrders.class);
 
-    public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/menu.jsp";
-    private static final String MESSAGE_OF_ERROR = "Something wrong with show your purse, pls try later";
+    public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/orders.jsp";
+    private static final String MESSAGE_OF_ERROR = "Something wrong with this page, pls try later";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Util.saveCurrentQueryToSession(request);
-
-//        int userID = 0;
-//
-//        Object object = request.getSession(false).getAttribute(Constants.USER_REQUEST_ATTRIBUTE);
-//
-//        if (object.getClass().equals(AppUser.class)) {
-//            AppUser user = (AppUser) object;
-//            userID = user.getIdUser();
-//        }
 
         List<Order> orders;
 

@@ -21,16 +21,8 @@ public class ConnectionPoolListener implements ServletContextListener {
         // Public constructor is required by servlet spec
     }
 
-    // -------------------------------------------------------
-    // ServletContextListener implementation
-    // -------------------------------------------------------
-
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-      /* This method is called when the servlet context isно
-         initialized(when the Web application is deployed).
-         You can initialize servlet context related data here.
-      */
         try {
         FactoryService factoryService = FactoryService.getInstance();
         ConnectionPool connectionPool = factoryService.getConnectionPool();
@@ -44,10 +36,6 @@ public class ConnectionPoolListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-      /* This method is invoked when the Servlet Context
-         (the Web application) is undeployed or
-         Application Server shuts down.
-      */
         try {
             FactoryService factoryService = FactoryService.getInstance();
             ConnectionPool connectionPool = factoryService.getConnectionPool();

@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: olexandr
-  Date: 08.09.2021
-  Time: 09:14
+  Date: 09.09.2021
+  Time: 18:09
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>${purse}</title>
+    <title>Replehish stock</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -40,30 +40,18 @@
         <c:import url="template/leftbar.jsp"/>
 
         <div class="col-sm-8 text-left mainContent">
-            <h1>${purse}</h1>
+            <h1>Replenish stock</h1>
 
             <div class="col-sm-8 text-left mainContent">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Amount: ${requestScope.purse.amount}</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="col-sm-7">
-                    <form name="toUpAPurse" class="form-horizontal" method="post" action="FrontController">
-                        <input type="hidden" name="command" value="top-up-purse"/>
-                        <div class="toUpAPurse" >
+                    <form name="replenishStock" class="form-horizontal" method="post" action="FrontController">
+                        <input type="hidden" name="command" value="replenish-stock"/>
+                        <div class="replenishStock" >
                             <div class="form-group">
                                 <span id="amount" class="red"></span>
                                 <div class="col-sm-7 input-amount">
-                                    <label for="purseAmount"></label>
-                                    <input type="text" class="form-control" id="purseAmount" placeholder="Пополнить кошелек"
+                                    <label for="stockAmount"></label>
+                                    <input type="text" class="form-control" id="stockAmount" placeholder="Пополнить наличие"
                                            name="amount" required>
                                 </div>
                             </div>
@@ -83,5 +71,6 @@
 <c:import url="template/footer.jsp"/>
 </body>
 </html>
+
 
 

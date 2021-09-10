@@ -25,12 +25,11 @@
 <div class="col-sm-2 sidenav">
     <c:if test='${sessionScope.get("user").role eq "manager"}'>
         <p><a class="manager" href="FrontController?command=show-all-users">${allUsers}</a></p>
-        <%--        <p><a data-toggle="modal" data-target="#addDish" href="FrontController?command=add-dish">--%>
-        <%--            <span class="glyphicon glyphicon"></span>${add}</a></p>--%>
         <p><a class="manager" href="FrontController?command=add-dish">${addDish}</a></p>
-        <p><a class="manager" href="FrontController?command=replenish-stock">Replenish Stock</a></p>
+        <p><a class="manager" href="FrontController?command=show-all-orders">Все заказы</a></p>
     </c:if>
     <c:if test='${sessionScope.get("user").role eq "manager" || sessionScope.get("user").role eq "customer"}'>
-        <p><a class="manager" href="FrontController?command=show-purse">${purse}</a></p>
+        <p><a href="FrontController?command=show-purse">${purse}</a></p>
+        <p><a href="FrontController?command=show-order">Посмотреть заказ</a></p>
     </c:if>
 </div>

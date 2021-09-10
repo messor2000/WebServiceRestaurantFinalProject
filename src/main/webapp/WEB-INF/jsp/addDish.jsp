@@ -47,13 +47,13 @@
                 <div class="col-sm-7">
                     <form name="addDishForm" class="form-horizontal" method="post" action="FrontController">
                         <input type="hidden" name="command" value="add-dish"/>
-                        <%--                        <input type="hidden" name="id" value="Dish id"/>--%>
                         <div class="form-group">
                             <label for="name" class="col-sm-3 control-label">Dish name</label>
                             <span id="name" class="red"></span>
                             <div class="col-sm-7">
+                                <label for="dishName"></label>
                                 <input type="text" class="form-control" id="dishName" placeholder="name"
-                                       name="name" required>
+                                                                     name="name" required>
                             </div>
                         </div>
                         <div class="form-group">

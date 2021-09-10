@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: olexandr
-  Date: 05.09.2021
-  Time: 18:46
+  Date: 10.09.2021
+  Time: 18:22
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -20,7 +20,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>${allUsers}</title>
+    <title>All orders</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -44,22 +44,24 @@
         <c:import url="template/leftbar.jsp"/>
 
         <div class="col-sm-8 text-left mainContent">
-            <h1>${allUsers}</h1>
+            <h1>All orders</h1>
 
             <div class="col-sm-8 text-left mainContent">
                 <div class="row">
-                    <c:forEach items="${requestScope.user}" var="user">
+                    <c:forEach items="${requestScope.order}" var="order">
                         <div class="col-sm-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">${user.username}</h5>
+                                    <h5 class="card-title">Номер заказа:${order.orderId}</h5>
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">${email}:${user.email}</li>
-                                        <li class="list-group-item">${password}:**************</li>
-                                        <li class="list-group-item">${role}:${user.role}</li>
-                                        <li class="list-group-item">${purse}:${user.purse.amount}</li>
+                                        <li class="list-group-item">Статус:${order.orderStatus}</li>
                                     </ul>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-7">
+                                <button type="submit" class="btn btn-primary">Подвтердить заказ</button>
                             </div>
                         </div>
                     </c:forEach>
@@ -71,4 +73,3 @@
 <c:import url="template/footer.jsp"/>
 </body>
 </html>
-

@@ -26,13 +26,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order showOrder(int orderId) throws ServiceRuntimeException {
+    public Order showOrder(int userId) throws ServiceRuntimeException {
         FactoryDao factoryDao = FactoryDao.getInstance();
         OrderDao orderDao = factoryDao.getOrderDao();
         Order order;
 
         try {
-            order = orderDao.showOrder(orderId);
+            order = orderDao.showUserOrder(userId);
         } catch (DaoRuntimeException e) {
             throw new ServiceRuntimeException("Error in source", e);
         }

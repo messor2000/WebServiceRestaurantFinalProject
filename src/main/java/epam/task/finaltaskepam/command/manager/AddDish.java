@@ -24,6 +24,7 @@ import java.util.List;
 public class AddDish implements Command {
 
     private static final Logger logger = LogManager.getLogger(AddDish.class);
+    private static final String REDIRECT = "Controller?command=add-dish";
 
     private static final String NAME = "name";
     private static final String PRICE = "price";
@@ -44,8 +45,6 @@ public class AddDish implements Command {
         MenuService menuService = FactoryService.getInstance().getMenuService();
 
         Util.saveCurrentQueryToSession(request);
-        String previousQuery = Util.getPreviousQuery(request);
-        HttpSession session = request.getSession(true);
 
         if (name != null && price != null && category != null && amount != null) {
             try {
@@ -53,11 +52,8 @@ public class AddDish implements Command {
 
                 menu = menuService.addDish(name, Integer.parseInt(price), category, Integer.parseInt(price));
 
-//                session.setAttribute(Constants.MENU_REQUEST_ATTRIBUTE, menu);
                 request.setAttribute(Constants.USER_PURSE_REQUEST_ATTRIBUTE, menu);
 
-
-//                response.sendRedirect(previousQuery);
                 request.getRequestDispatcher(JSP_ADD_DISH_PAGE_PATH).forward(request, response);
             } catch (ServiceRuntimeException e) {
                 logger.log(Level.ERROR, e.getMessage(), e);

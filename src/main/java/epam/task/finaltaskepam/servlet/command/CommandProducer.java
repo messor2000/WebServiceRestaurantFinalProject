@@ -4,6 +4,7 @@ import epam.task.finaltaskepam.command.Command;
 import epam.task.finaltaskepam.command.customer.Logout;
 import epam.task.finaltaskepam.command.customer.MakeAnOrder;
 import epam.task.finaltaskepam.command.customer.Purse;
+import epam.task.finaltaskepam.command.customer.ShowOrder;
 import epam.task.finaltaskepam.command.customer.ToUpAPurse;
 import epam.task.finaltaskepam.command.manager.AddDish;
 import epam.task.finaltaskepam.command.manager.ReplenishStock;
@@ -54,6 +55,7 @@ public class CommandProducer {
         customerCommands.put(CommandPool.SHOW_PURSE, new Purse());
         customerCommands.put(CommandPool.TOP_UP_PURSE, new ToUpAPurse());
         customerCommands.put(CommandPool.MAKE_AN_ORDER, new MakeAnOrder());
+        customerCommands.put(CommandPool.SHOW_ORDER, new ShowOrder());
 
         managerCommands.putAll(customerCommands);
         managerCommands.put(CommandPool.SHOW_ALL_USERS, new ShowAllUsers());

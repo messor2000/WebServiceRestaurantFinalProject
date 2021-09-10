@@ -24,5 +24,5 @@ public interface DishDao {
 
     List<Dish> addDish(String name, int price, String category, int amount) throws DaoRuntimeException;
 
-    List<Dish> replenishStock(int dishId, int amount) throws DaoRuntimeException;
+    void replenishStock(String dishName, int amount) throws DaoRuntimeException;
 }

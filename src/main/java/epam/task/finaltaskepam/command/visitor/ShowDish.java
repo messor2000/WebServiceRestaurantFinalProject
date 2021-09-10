@@ -26,20 +26,18 @@ public class ShowDish implements Command {
     private static final String NAME = "name";
 
     public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/menu.jsp";
-    private static final String MESSAGE_OF_ERROR = "Something wrong with menu, pls try later";
+    private static final String MESSAGE_OF_ERROR = "No such dish in menu";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String name = request.getParameter(NAME);
         Util.saveCurrentQueryToSession(request);
 
-        List<Dish> menu;
         MenuService menuService = FactoryService.getInstance().getMenuService();
         try {
+            List<Dish> dish = menuService.getDish(name);
 
-            menu = menuService.getDish(name);
-
-            request.setAttribute(Constants.MENU_REQUEST_ATTRIBUTE, menu);
+            request.setAttribute(Constants.MENU_REQUEST_ATTRIBUTE, dish);
 
             request.getRequestDispatcher(JSP_MENU_PAGE_PATH).forward(request, response);
         } catch (ServiceRuntimeException e) {
