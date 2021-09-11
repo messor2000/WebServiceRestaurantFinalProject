@@ -38,7 +38,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public void makeAnOrder(int orderId, int dishId) throws DaoRuntimeException {
+    public void makeAnOrder(int orderId, int dishName) throws DaoRuntimeException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -47,7 +47,7 @@ public class OrderDaoImpl implements OrderDao {
             statement = connection.prepareStatement(Request.MAKE_AN_ORDER);
 
             statement.setInt(1, orderId);
-            statement.setInt(2, dishId);
+            statement.setInt(2, dishName);
 
             statement.executeUpdate();
 

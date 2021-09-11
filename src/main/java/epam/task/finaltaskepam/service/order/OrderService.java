@@ -9,7 +9,7 @@ import java.util.List;
  * @author Aleksandr Ovcharenko
  */
 public interface OrderService {
-    void makeAnOrder(int orderId, int dishId) throws ServiceRuntimeException;
+    void makeAnOrder(int orderId, int dishName) throws ServiceRuntimeException;
 
     Order showOrder(int userId) throws ServiceRuntimeException;
 

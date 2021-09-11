@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface OrderDao {
 
-    void makeAnOrder(int orderId, int dishId) throws DaoRuntimeException;
+    void makeAnOrder(int orderId, int dishName) throws DaoRuntimeException;
 
     Order showUserOrder(int userId) throws ServiceRuntimeException;
 
