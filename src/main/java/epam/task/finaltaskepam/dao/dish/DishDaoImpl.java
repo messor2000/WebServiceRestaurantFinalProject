@@ -1,5 +1,6 @@
 package epam.task.finaltaskepam.dao.dish;
 
+import epam.task.finaltaskepam.dto.AppUserPurse;
 import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.error.ConnectionPoolException;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
@@ -195,17 +196,7 @@ public class DishDaoImpl implements DishDao {
 
             resultSet = statement.executeQuery();
             List<Dish> dishes = new ArrayList<>();
-//            Dish dish = null;
 
-//            while (resultSet.next()) {
-//                dish = new Dish.Builder()
-//                        .withDishId(resultSet.getInt(DISH_ID))
-//                        .withName(resultSet.getString(NAME))
-//                        .withPrice(resultSet.getLong(PRICE))
-//                        .withCategory(resultSet.getString(CATEGORY))
-//                        .withAmount(resultSet.getInt(AMOUNT))
-//                        .build();
-//            }
             while (resultSet.next()) {
                 Dish dish = new Dish.Builder()
                         .withDishId(resultSet.getInt(DISH_ID))
@@ -218,8 +209,6 @@ public class DishDaoImpl implements DishDao {
                 dishes.add(dish);
             }
             return dishes;
-
-//            return dish;
 
         } catch (SQLException e) {
             throw new DaoRuntimeException("Dish sql error", e);
@@ -309,9 +298,10 @@ public class DishDaoImpl implements DishDao {
             statement.setInt(1, amount);
             statement.setString(2, dishName);
             statement.executeUpdate();
+//            int i = statement.executeUpdate();
 
 //            if (i > 0) {
-//                return getDishByName(dishName);
+//                return getAllDishes();
 //            }
 
         } catch (SQLException e) {
@@ -322,6 +312,34 @@ public class DishDaoImpl implements DishDao {
             Util.closeResource(connection, statement);
         }
 
-//        return null;
+//        return Collections.emptyList();
     }
+
+//    @Override
+//    public AppUserPurse fillUpAPurse(int userId, int amount) {
+//        Connection connection = null;
+//        PreparedStatement statement = null;
+//        try {
+//            connection = ConnectionPoolImpl.getInstance().takeConnection();
+//
+//            statement = connection.prepareStatement(Request.TOP_UP_A_PURSE);
+//
+//            statement.setInt(1, amount);
+//            statement.setLong(2, userId);
+//            int i = statement.executeUpdate();
+//
+//            if (i > 0) {
+//                return getPurseAmount(userId);
+//            }
+//
+//        } catch (SQLException e) {
+//            throw new DaoRuntimeException("Create check sql error", e);
+//        } catch (ConnectionPoolException e) {
+//            throw new DaoRuntimeException("Create check  connection error", e);
+//        } finally {
+//            Util.closeResource(connection, statement);
+//        }
+//
+//        return null;
+//    }
 }

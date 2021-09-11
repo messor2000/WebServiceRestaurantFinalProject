@@ -27,6 +27,7 @@
 <fmt:message bundle="${locale}" key="locale.search" var="search"/>
 <fmt:message bundle="${locale}" key="locale.byPrice" var="byPrice"/>
 <fmt:message bundle="${locale}" key="locale.byCategory" var="byCategory"/>
+<fmt:message bundle="${locale}" key="locale.cancel" var="cancel"/>
 
 <!DOCTYPE html>
 <html>
@@ -111,66 +112,6 @@
             </script>
             <br>
 
-            <div class="col-sm-8 text-left mainContent">
-                <div class="row">
-                    <c:forEach items="${requestScope.menu}" var="dish">
-                        <div class="col-sm-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title card-Title-Found">${dish.name}</h5>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">${price}:${dish.price}</li>
-                                        <li class="list-group-item">${category}:${dish.category}</li>
-                                    </ul>
-                                    <c:if test='${sessionScope.get("user").role eq "customer" || sessionScope.get("user").role eq "manager"}'>
-                                        <div class="col-sm-7">
-                                                <%--                                            <c:set var="dishName" value="${dish.name}" scope="session"/>--%>
-                                            <form name="replenishStock" class="form-horizontal" method="post"
-                                                  action="FrontController">
-                                                <input type="hidden" name="command" value="make-an-order"/>
-                                                <div class="replenishStock">
-                                                    <div class="form-group">
-                                                        <div class="col-sm-offset-3 col-sm-7 batton-submit batton-submit-put">
-                                                            <button type="submit" class="btn btn-primary">Put in
-                                                                bucket
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </c:if>
-                                    <c:if test='${sessionScope.get("user").role eq "manager"}'>
-                                        <div class="col-sm-7">
-                                            <form name="replenishStock" class="form-horizontal" method="post"
-                                                  action="FrontController">
-                                                <input type="hidden" name="command" value="replenish-stock"/>
-                                                <div class="replenishStock">
-                                                    <div class="form-group">
-                                                        <span id="amount" class="red"></span>
-                                                        <div class="col-sm-7 input-amount">
-                                                            <label for="stockAmount"></label>
-                                                            <input type="text" class="form-control" id="stockAmount"
-                                                                   placeholder="Пополнить наличие"
-                                                                   name="amount" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="col-sm-offset-3 col-sm-7 batton-submit">
-                                                            <button type="submit" class="btn btn-primary">Пополнить
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </c:if>
-                                </div>
-                            </div>
-                        </div>
-                    </c:forEach>
-                </div>
-            </div>
             <%--            <div class="col-sm-8 text-left mainContent">--%>
             <%--                <div class="row">--%>
             <%--                    <c:forEach items="${requestScope.menu}" var="dish">--%>
@@ -184,13 +125,16 @@
             <%--                                    </ul>--%>
             <%--                                    <c:if test='${sessionScope.get("user").role eq "customer" || sessionScope.get("user").role eq "manager"}'>--%>
             <%--                                        <div class="col-sm-7">--%>
+            <%--                                                &lt;%&ndash;                                            <c:set var="dishName" value="${dish.name}" scope="session"/>&ndash;%&gt;--%>
             <%--                                            <form name="replenishStock" class="form-horizontal" method="post"--%>
             <%--                                                  action="FrontController">--%>
             <%--                                                <input type="hidden" name="command" value="make-an-order"/>--%>
             <%--                                                <div class="replenishStock">--%>
             <%--                                                    <div class="form-group">--%>
             <%--                                                        <div class="col-sm-offset-3 col-sm-7 batton-submit batton-submit-put">--%>
-            <%--                                                            <button type="submit" class="btn btn-primary">Put in bucket</button>--%>
+            <%--                                                            <button type="submit" class="btn btn-primary">Put in--%>
+            <%--                                                                bucket--%>
+            <%--                                                            </button>--%>
             <%--                                                        </div>--%>
             <%--                                                    </div>--%>
             <%--                                                </div>--%>
@@ -199,25 +143,27 @@
             <%--                                    </c:if>--%>
             <%--                                    <c:if test='${sessionScope.get("user").role eq "manager"}'>--%>
             <%--                                        <div class="col-sm-7">--%>
-            <%--                                            <input type="hidden" name="command" value="replenish-stock"/>--%>
-            <%--                                            <div class="replenishStock">--%>
-            <%--                                                <div class="form-group">--%>
-            <%--                                                    <span id="amount" class="red"></span>--%>
-            <%--                                                    <div class="col-sm-7 input-amount">--%>
-            <%--                                                        <label for="stockAmount"></label>--%>
-            <%--                                                        <input type="text" class="form-control" id="stockAmount"--%>
-            <%--                                                               placeholder="Пополнить наличие"--%>
-            <%--                                                               name="amount" required>--%>
+            <%--                                            <form name="replenishStock" class="form-horizontal" method="post"--%>
+            <%--                                                  action="FrontController">--%>
+            <%--                                                <input type="hidden" name="command" value="replenish-stock"/>--%>
+            <%--                                                <div class="replenishStock">--%>
+            <%--                                                    <div class="form-group">--%>
+            <%--                                                        <span id="amount" class="red"></span>--%>
+            <%--                                                        <div class="col-sm-7 input-amount">--%>
+            <%--                                                            <label for="stockAmount"></label>--%>
+            <%--                                                            <input type="text" class="form-control" id="stockAmount"--%>
+            <%--                                                                   placeholder="Пополнить наличие"--%>
+            <%--                                                                   name="amount" required>--%>
+            <%--                                                        </div>--%>
+            <%--                                                    </div>--%>
+            <%--                                                    <div class="form-group">--%>
+            <%--                                                        <div class="col-sm-offset-3 col-sm-7 batton-submit">--%>
+            <%--                                                            <button type="submit" class="btn btn-primary">Пополнить--%>
+            <%--                                                            </button>--%>
+            <%--                                                        </div>--%>
             <%--                                                    </div>--%>
             <%--                                                </div>--%>
-            <%--                                                <div class="form-group">--%>
-            <%--                                                    <div class="col-sm-offset-3 col-sm-7 batton-submit">--%>
-            <%--                                                        <a href="FrontController?replenish-stock=">--%>
-            <%--                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Пополнить</button>--%>
-            <%--                                                        </a>--%>
-            <%--                                                    </div>--%>
-            <%--                                                </div>--%>
-            <%--                                            </div>--%>
+            <%--                                            </form>--%>
             <%--                                        </div>--%>
             <%--                                    </c:if>--%>
             <%--                                </div>--%>
@@ -226,9 +172,115 @@
             <%--                    </c:forEach>--%>
             <%--                </div>--%>
             <%--            </div>--%>
+            <div class="col-sm-8 text-left mainContent">
+                <div class="row">
+                    <c:forEach items="${requestScope.menu}" var="dish">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title card-Title-Found">${dish.name}</h5>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">${price}:${dish.price}</li>
+                                        <li class="list-group-item">${category}:${dish.category}</li>
+                                        <c:if test='${sessionScope.get("user").role eq "manager"}'>
+                                            <li class="list-group-item">Amount:${dish.amount}</li>
+                                        </c:if>
+                                    </ul>
+                                    <c:if test='${sessionScope.get("user").role eq "customer" || sessionScope.get("user").role eq "manager"}'>
+                                        <div class="col-sm-7">
+                                            <form name="replenishStock" class="form-horizontal" method="post"
+                                                  action="FrontController">
+                                                <input type="hidden" name="command" value="make-an-order"/>
+                                                <div class="replenishStock">
+                                                    <div class="form-group">
+                                                        <div class="col-sm-offset-3 col-sm-7 batton-submit batton-submit-put">
+                                                            <button type="submit" class="btn btn-primary">Put in bucket
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </c:if>
+                                    <c:if test='${sessionScope.get("user").role eq "manager"}'>
+                                        <%--                                <div class="col-sm-7">--%>
+                                        <%--                                    <input type="hidden" name="command" value="replenish-stock"/>--%>
+                                        <%--                                    <div class="replenishStock">--%>
+                                        <%--                                        <div class="form-group">--%>
+                                        <%--                                            <span id="amount" class="red"></span>--%>
+                                        <%--                                            <div class="col-sm-7 input-amount">--%>
+                                        <%--                                                <label for="stockAmount"></label>--%>
+                                        <%--                                                <input type="text" class="form-control" id="stockAmount"--%>
+                                        <%--                                                       placeholder="Пополнить наличие"--%>
+                                        <%--                                                       name="amount" required>--%>
+                                        <%--                                            </div>--%>
+                                        <%--                                        </div>--%>
+                                        <%--                                        <div class="form-group">--%>
+                                        <%--                                            <div class="col-sm-offset-3 col-sm-7 batton-submit">--%>
+                                        <%--                                                    &lt;%&ndash;                                                                                                                    <a href="FrontController?command=replenish-stock?dishName=${dish.name}&amount=amount">&ndash;%&gt;--%>
+                                        <%--                                                    &lt;%&ndash;                                                                                                                        <button type="button" class="btn btn-default"&ndash;%&gt;--%>
+                                        <%--                                                    &lt;%&ndash;                                                                                                                                data-dismiss="modal">Пополнить&ndash;%&gt;--%>
+                                        <%--                                                    &lt;%&ndash;                                                                                                                        </button>&ndash;%&gt;--%>
+                                        <%--                                                    &lt;%&ndash;                                                                                                                    </a>&ndash;%&gt;--%>
+                                        <%--                                                <a href="FrontController?command=replenish-stock?dishName=${dish.name}">--%>
+                                        <%--                                                    <button type="button" class="btn btn-default"--%>
+                                        <%--                                                            data-dismiss="modal">Пополнить--%>
+                                        <%--                                                    </button>--%>
+                                        <%--                                            </div>--%>
+                                        <%--                                        </div>--%>
+                                        <%--                                    </div>--%>
+                                        <%--                                </div>--%>
+                                        <li><a data-toggle="modal" data-target="#replenish-stock" href="#">
+                                            <span class="glyphicon"></span>Replenish Stock</a>
+                                        </li>
+                                    </c:if>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+
+            <div id="replenish-stock" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Replenish stock</h4>
+                        </div>
+                        <div class="modal-body text-center">
+                            <form name="replenishStock" class="form-horizontal" method="post" action="FrontController">
+                                <input type="hidden" name="command" value="replenish-stock"/>
+                                <span id="dishAmount" class="red"></span>
+                                <div class="form-group">
+                                    <div class="col-sm-7">
+                                        <label for="dishName"></label>
+                                        <input type="text" class="form-control" id="dishName" placeholder="${name}"
+                                               name="dishName" required>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <label for="amount"></label>
+                                        <input type="text" class="form-control" id="amount" placeholder="amount"
+                                               name="amount" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-7">
+                                        <button type="submit" class="btn btn-primary">Replenish stock</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">${cancel}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 </div>
 <c:import url="template/footer.jsp"/>
 <script src="../../js/test.js"></script>
