@@ -82,8 +82,8 @@
                     <label>
                         <select class="sortStat" onchange="MakeSort(this);">
                             <option value="FrontController?command=show-menu">-</option>
-                            <option value="FrontController?command=show-menu-by-high-price">${lowPrice}</option>
-                            <option value="FrontController?command=show-menu-by-low-price">${highPrice}</option>
+                            <option value="FrontController?command=show-menu-by-low-price">${lowPrice}</option>
+                            <option value="FrontController?command=show-menu-by-high-price">${highPrice}</option>
                         </select>
                     </label>
                     <br>

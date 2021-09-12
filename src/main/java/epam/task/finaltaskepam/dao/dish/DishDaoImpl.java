@@ -1,6 +1,5 @@
 package epam.task.finaltaskepam.dao.dish;
 
-import epam.task.finaltaskepam.dto.AppUserPurse;
 import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.error.ConnectionPoolException;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
@@ -21,8 +20,10 @@ import java.util.List;
 /**
  * @author Aleksandr Ovcharenko
  */
-public class DishDaoImpl implements DishDao {
+public class DishDaoImpl extends Dish implements DishDao {
+
     private static final Logger logger = LogManager.getLogger(DishDaoImpl.class);
+    private static final long serialVersionUID = 5566685127381260994L;
 
     private static final String DISH_ID = "dish_id";
     private static final String NAME = "dish_name";
@@ -298,11 +299,6 @@ public class DishDaoImpl implements DishDao {
             statement.setInt(1, amount);
             statement.setString(2, dishName);
             statement.executeUpdate();
-//            int i = statement.executeUpdate();
-
-//            if (i > 0) {
-//                return getAllDishes();
-//            }
 
         } catch (SQLException e) {
             throw new DaoRuntimeException("Replenish stock sql error", e);
@@ -311,35 +307,26 @@ public class DishDaoImpl implements DishDao {
         } finally {
             Util.closeResource(connection, statement);
         }
-
-//        return Collections.emptyList();
     }
 
-//    @Override
-//    public AppUserPurse fillUpAPurse(int userId, int amount) {
-//        Connection connection = null;
-//        PreparedStatement statement = null;
-//        try {
-//            connection = ConnectionPoolImpl.getInstance().takeConnection();
-//
-//            statement = connection.prepareStatement(Request.TOP_UP_A_PURSE);
-//
-//            statement.setInt(1, amount);
-//            statement.setLong(2, userId);
-//            int i = statement.executeUpdate();
-//
-//            if (i > 0) {
-//                return getPurseAmount(userId);
-//            }
-//
-//        } catch (SQLException e) {
-//            throw new DaoRuntimeException("Create check sql error", e);
-//        } catch (ConnectionPoolException e) {
-//            throw new DaoRuntimeException("Create check  connection error", e);
-//        } finally {
-//            Util.closeResource(connection, statement);
-//        }
-//
-//        return null;
-//    }
+    @Override
+    public void deleteDish(String dishName) throws DaoRuntimeException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = ConnectionPoolImpl.getInstance().takeConnection();
+
+            statement = connection.prepareStatement(Request.DELETE_DISH_BY_NAME);
+            statement.setString(1, dishName);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DaoRuntimeException("User sql error", e);
+        } catch (ConnectionPoolException e) {
+            throw new DaoRuntimeException("User pool connection error", e);
+        } finally {
+            Util.closeResource(connection, statement);
+        }
+    }
 }

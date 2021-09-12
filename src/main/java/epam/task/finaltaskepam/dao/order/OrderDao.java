@@ -11,9 +11,13 @@ import java.util.List;
  */
 public interface OrderDao {
 
-    void makeAnOrder(int orderId, int dishName) throws DaoRuntimeException;
+    Order createAnOrder(int userId) throws DaoRuntimeException;
+
+    void putDishIntoOrder(String dishName, int orderId) throws DaoRuntimeException;
 
     Order showUserOrder(int userId) throws ServiceRuntimeException;
 
     List<Order> showAllOrders() throws ServiceRuntimeException;
+
+    Order findOrderById(int orderId) throws ServiceRuntimeException;
 }

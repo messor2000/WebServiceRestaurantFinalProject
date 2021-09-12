@@ -25,4 +25,12 @@ public interface DishDao {
     List<Dish> addDish(String name, int price, String category, int amount) throws DaoRuntimeException;
 
     void replenishStock(String dishName, int amount) throws DaoRuntimeException;
+
+    /**
+     * This method is used to delete some dish from the system and used only for tests!!!
+     *
+     * @param dishName of dish
+     * @throws DaoRuntimeException if some error occurred while processing data.
+     */
+    void deleteDish(String dishName) throws DaoRuntimeException;
 }

@@ -15,14 +15,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void makeAnOrder(int orderId, int dishName) throws ServiceRuntimeException {
-        FactoryDao factoryDao = FactoryDao.getInstance();
-        OrderDao orderDao = factoryDao.getOrderDao();
-
-        try {
-            orderDao.makeAnOrder(orderId, dishName);
-        } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source", e);
-        }
+//        FactoryDao factoryDao = FactoryDao.getInstance();
+//        OrderDao orderDao = factoryDao.getOrderDao();
+//
+//        try {
+//            orderDao.makeAnOrder(orderId, dishName);
+//        } catch (DaoRuntimeException e) {
+//            throw new ServiceRuntimeException("Error in source", e);
+//        }
     }
 
     @Override
