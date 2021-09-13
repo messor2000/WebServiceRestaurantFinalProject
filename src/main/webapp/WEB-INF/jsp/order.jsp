@@ -16,6 +16,9 @@
 <fmt:message bundle="${locale}" key="locale.password" var="password"/>
 <fmt:message bundle="${locale}" key="locale.role" var="role"/>
 <fmt:message bundle="${locale}" key="locale.purse" var="purse"/>
+<fmt:message bundle="${locale}" key="locale.dishName" var="name"/>
+<fmt:message bundle="${locale}" key="locale.dishPrice" var="price"/>
+<fmt:message bundle="${locale}" key="locale.category" var="category"/>
 
 <!DOCTYPE html>
 <html>
@@ -47,36 +50,45 @@
             <h1>Order</h1>
 
             <div class="col-sm-8 text-left mainContent">
-                <div class="row">
-                    <c:forEach items="${requestScope.order}" var="order">
+                <div class="col-sm-6">
+                    <c:forEach items="${requestScope.menu}" var="dish">
                         <div class="col-sm-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">${order.orderId}</h5>
+                                    <h5 class="card-title card-Title-Found">${dish.name}</h5>
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Статус заказа:${order.orderStatus}</li>
+                                        <li class="list-group-item">${price}:${dish.price}</li>
+                                        <li class="list-group-item">${category}:${dish.category}</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </c:forEach>
-                </div>
-
-                <div class="col-sm-7">
-                    <form name="toUpAPurse" class="form-horizontal" method="post" action="FrontController">
-                        <input type="hidden" name="command" value="pay"/>
-                        <div class="pay" >
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-7 batton-submit">
-                                    <button type="submit" class="btn btn-primary">Pay</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    <c:if test='${requestScope.get("order").orderStatus eq "COOKING"}'>
+                        <a href="FrontController?command=pay">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">Оплатить
+                            </button>
+                        </a>
+                    </c:if>
                 </div>
             </div>
+
+<%--            <div class="col-sm-7">--%>
+<%--                <form name="toUpAPurse" class="form-horizontal" method="post" action="FrontController">--%>
+<%--                    <input type="hidden" name="command" value="pay"/>--%>
+<%--                    <div class="pay">--%>
+<%--                        <div class="form-group">--%>
+<%--                            <div class="col-sm-offset-3 col-sm-7 batton-submit">--%>
+<%--                                <button type="submit" class="btn btn-primary">Pay</button>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </form>--%>
+<%--            </div>--%>
         </div>
     </div>
+</div>
 </div>
 <c:import url="template/footer.jsp"/>
 </body>

@@ -37,7 +37,7 @@ public class FrontController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             processRequest(request, response);
         } catch (ServletException | IOException e) {
@@ -46,7 +46,6 @@ public class FrontController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String commandName = request.getParameter("command");
 
         logger.log(Level.INFO, "Controller processRequest() - commandName = {}", commandName);

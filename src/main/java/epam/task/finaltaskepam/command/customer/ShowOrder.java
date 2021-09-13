@@ -2,6 +2,7 @@ package epam.task.finaltaskepam.command.customer;
 
 import epam.task.finaltaskepam.command.Command;
 import epam.task.finaltaskepam.dto.AppUser;
+import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.dto.order.Order;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 import epam.task.finaltaskepam.service.FactoryService;
@@ -16,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -25,7 +27,9 @@ public class ShowOrder implements Command {
     private static final Logger logger = LogManager.getLogger(ShowOrder.class);
 
     public static final String JSP_PURSE_PAGE_PATH = "WEB-INF/jsp/order.jsp";
-    private static final String MESSAGE_OF_ERROR = "Something wrong with show your purse, pls try later";
+    public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/menu.jsp";
+    private static final String MESSAGE_OF_ERROR = "Something wrong with show your order, pls try later";
+    private static final String MESSAGE_OF_ERROR_2 = "You dont make any order";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -33,6 +37,7 @@ public class ShowOrder implements Command {
 
         int userId = 0;
 
+        OrderService orderService = FactoryService.getInstance().getOrderService();
         Object object = request.getSession(false).getAttribute(Constants.USER_REQUEST_ATTRIBUTE);
 
         if (object.getClass().equals(AppUser.class)) {
@@ -40,19 +45,26 @@ public class ShowOrder implements Command {
             userId = user.getIdUser();
         }
 
-        Order order;
+        Order order = orderService.showOrder(userId);
 
-        OrderService orderService = FactoryService.getInstance().getOrderService();
-        try {
-            order = orderService.showOrder(userId);
+        if (order == null) {
+            order = orderService.createAnOrder(userId);
+        }
+        List<Dish> dishes = orderService.showDishesInOrder(order.getOrderId());
 
-            request.setAttribute(Constants.USER_ORDER_REQUEST_ATTRIBUTE, order);
+        if (!dishes.isEmpty()) {
+            try {
+                request.setAttribute(Constants.MENU_REQUEST_ATTRIBUTE, dishes);
 
-            request.getRequestDispatcher(JSP_PURSE_PAGE_PATH).forward(request, response);
-        } catch (ServiceRuntimeException e) {
-            logger.log(Level.ERROR, e.getMessage(), e);
-            request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR);
-            request.getRequestDispatcher(Constants.ERROR_PAGE).forward(request, response);
+                request.getRequestDispatcher(JSP_PURSE_PAGE_PATH).forward(request, response);
+            } catch (ServiceRuntimeException e) {
+                logger.log(Level.ERROR, e.getMessage(), e);
+                request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR);
+                request.getRequestDispatcher(Constants.ERROR_PAGE).forward(request, response);
+            }
+        } else {
+            request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_2);
+            request.getRequestDispatcher(JSP_MENU_PAGE_PATH).forward(request, response);
         }
     }
 }

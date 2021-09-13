@@ -1,6 +1,10 @@
 package epam.task.finaltaskepam.repo;
 
 import epam.task.finaltaskepam.error.ConnectionPoolException;
+import epam.task.finaltaskepam.listener.ConnectionPoolListener;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,6 +21,8 @@ public class ConnectionPoolImpl implements ConnectionPool {
     private static final String USER = "root";
     private static final String PASSWORD = "password";
 
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionPoolListener.class);
+
     private static final int MINIMAL_CONNECTION_COUNT = 5;
 
     private static BlockingQueue<Connection> freeConnections;
@@ -26,7 +32,9 @@ public class ConnectionPoolImpl implements ConnectionPool {
 
     private static final ConnectionPoolImpl instance = new ConnectionPoolImpl();
 
-    public ConnectionPoolImpl(){}
+    public ConnectionPoolImpl(){
+        // not used constructor
+    }
 
     @Override
     public void init() throws ConnectionPoolException {
@@ -96,6 +104,8 @@ public class ConnectionPoolImpl implements ConnectionPool {
             usedConnections.put(connection);
             return connection;
         } catch (InterruptedException e) {
+            LOGGER.log(Level.WARN, "Interrupted!", e);
+            Thread.currentThread().interrupt();
             throw new ConnectionPoolException("Couldn't take connection from pull", e);
         }
 
@@ -116,9 +126,14 @@ public class ConnectionPoolImpl implements ConnectionPool {
         }
 
         try {
+//            if (usedConnections.remove(connection)) {
+//                freeConnections.put(connection);
+//            }
             usedConnections.remove(connection);
             freeConnections.put(connection);
         } catch (InterruptedException e) {
+            LOGGER.log(Level.WARN, "Interrupted!", e);
+            Thread.currentThread().interrupt();
             throw new ConnectionPoolException("Exception while returning connections to queues", e);
         }
     }

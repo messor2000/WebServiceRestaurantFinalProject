@@ -55,6 +55,8 @@
                                     <h5 class="card-title">Номер заказа:${order.orderId}</h5>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">Статус:${order.orderStatus}</li>
+                                        <li class="list-group-item">Юзер айди:${order.userId}</li>
+                                        <li class="list-group-item">Время создания:${order.creationDate}</li>
                                     </ul>
                                 </div>
                             </div>

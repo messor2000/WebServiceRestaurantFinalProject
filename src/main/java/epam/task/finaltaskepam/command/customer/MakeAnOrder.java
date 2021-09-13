@@ -46,10 +46,11 @@ public class MakeAnOrder implements Command {
 
         OrderService orderService = FactoryService.getInstance().getOrderService();
         try {
-            
+
+            assert user != null;
             int orderId = user.getIdUser();
             
-//            orderService.makeAnOrder(Integer.parseInt(orderId), Integer.parseInt(dishName));
+            orderService.makeAnOrder(dishName, orderId);
 
             response.sendRedirect(previousQuery);
 

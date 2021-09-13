@@ -159,7 +159,6 @@ public class DishDaoTests {
             List<Dish> dishes = dishDao.getDishesByHighPrice();
 
             Dish dish = dishes.get(0);
-            System.out.println(dish.getPrice());
 
             dishDao.deleteDish(dishName);
 

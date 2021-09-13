@@ -10,8 +10,8 @@ import java.util.regex.Pattern;
 public class Validator {
     private static final String REGEXP = "[\\w\\W]{1,4000}";
     private static final Pattern PATTERN_REGEXP = Pattern.compile(REGEXP);
-    private static final String NUMBER = "[\\d]+";
-    private static final Pattern PATTERN_NUMBER = Pattern.compile(NUMBER);
+//    private static final String NUMBER = "[\\d]+";
+//    private static final Pattern PATTERN_NUMBER = Pattern.compile(NUMBER);
     private static final String LOGIN = "[a-zA-Z_0-9]{3,16}";
     private static final Pattern PATTERN_LOGIN = Pattern.compile(LOGIN);
     private static final String EMAIL = "\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}";
@@ -35,32 +35,32 @@ public class Validator {
         return true;
     }
 
-    /**
-     * This method validates int numbers. Numbers should be greater than 0.
-     *
-     * @param data array of ints
-     * @return true if everything is fine
-     */
-    public static boolean validate(int... data) {
-        for (int arg : data) {
-            if (arg < 0) {
-                return false;
-            }
-        }
-        return true;
-    }
+//    /**
+//     * This method validates int numbers. Numbers should be greater than 0.
+//     *
+//     * @param data array of ints
+//     * @return true if everything is fine
+//     */
+//    public static boolean validate(int... data) {
+//        for (int arg : data) {
+//            if (arg < 0) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
-    /**
-     * This method validates string to consist only of digits.
-     *
-     * @param data String
-     * @return true if everything matches
-     */
-    public static boolean validateNumber(String data) {
-        Matcher matcher;
-        matcher = PATTERN_NUMBER.matcher(data);
-        return matcher.matches();
-    }
+//    /**
+//     * This method validates string to consist only of digits.
+//     *
+//     * @param data String
+//     * @return true if everything matches
+//     */
+//    public static boolean validateNumber(String data) {
+//        Matcher matcher;
+//        matcher = PATTERN_NUMBER.matcher(data);
+//        return matcher.matches();
+//    }
 
     /**
      * This method is used to check login for matching regexp.

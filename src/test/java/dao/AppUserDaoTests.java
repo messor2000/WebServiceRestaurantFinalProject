@@ -7,6 +7,9 @@ import epam.task.finaltaskepam.dto.AppUserPurse;
 import epam.task.finaltaskepam.error.ConnectionPoolException;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
 import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,6 +19,8 @@ import java.util.List;
  * @author Aleksandr Ovcharenko
  */
 public class AppUserDaoTests {
+
+    private static final Logger logger = LogManager.getLogger(AppUserDaoTests.class);
 
     @Test
     public void registerUserTest() {
@@ -42,13 +47,13 @@ public class AppUserDaoTests {
             Assert.assertEquals(userEmail, user.getEmail());
 
         } catch (ConnectionPoolException | DaoRuntimeException e) {
-            e.printStackTrace();
+            logger.log(Level.WARN, e);
         } finally {
             try {
                 assert pool != null;
                 pool.destroy();
             } catch (ConnectionPoolException e) {
-                e.printStackTrace();
+                logger.log(Level.WARN, e);
             }
         }
     }
@@ -79,13 +84,13 @@ public class AppUserDaoTests {
             Assert.assertEquals(userEmail, user.getEmail());
 
         } catch (ConnectionPoolException | DaoRuntimeException e) {
-            e.printStackTrace();
+            logger.log(Level.WARN, e);
         } finally {
             try {
                 assert pool != null;
                 pool.destroy();
             } catch (ConnectionPoolException e) {
-                e.printStackTrace();
+                logger.log(Level.WARN, e);
             }
         }
     }
@@ -117,13 +122,13 @@ public class AppUserDaoTests {
             Assert.assertEquals(usersBefore.size()+1, usersAfter.size());
 
         } catch (ConnectionPoolException | DaoRuntimeException e) {
-            e.printStackTrace();
+            logger.log(Level.WARN, e);
         } finally {
             try {
                 assert pool != null;
                 pool.destroy();
             } catch (ConnectionPoolException e) {
-                e.printStackTrace();
+                logger.log(Level.WARN, e);
             }
         }
     }
@@ -155,13 +160,13 @@ public class AppUserDaoTests {
             Assert.assertEquals(0, purse.getAmount());
 
         } catch (ConnectionPoolException | DaoRuntimeException e) {
-            e.printStackTrace();
+            logger.log(Level.WARN, e);
         } finally {
             try {
                 assert pool != null;
                 pool.destroy();
             } catch (ConnectionPoolException e) {
-                e.printStackTrace();
+                logger.log(Level.WARN, e);
             }
         }
     }
@@ -195,13 +200,13 @@ public class AppUserDaoTests {
             Assert.assertEquals(purseBefore.getAmount()+50, purseAfter.getAmount());
 
         } catch (ConnectionPoolException | DaoRuntimeException e) {
-            e.printStackTrace();
+            logger.log(Level.WARN, e);
         } finally {
             try {
                 assert pool != null;
                 pool.destroy();
             } catch (ConnectionPoolException e) {
-                e.printStackTrace();
+                logger.log(Level.WARN, e);
             }
         }
     }
