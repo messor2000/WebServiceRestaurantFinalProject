@@ -4,6 +4,7 @@ import epam.task.finaltaskepam.command.Command;
 import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.dto.order.Order;
+import epam.task.finaltaskepam.dto.order.Status;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 import epam.task.finaltaskepam.service.FactoryService;
 import epam.task.finaltaskepam.service.order.OrderService;
@@ -47,14 +48,16 @@ public class ShowOrder implements Command {
 
         Order order = orderService.showOrder(userId);
 
-        if (order == null) {
-            order = orderService.createAnOrder(userId);
-        }
-        List<Dish> dishes = orderService.showDishesInOrder(order.getOrderId());
+        List<Dish> dishList = orderService.showDishesInOrder(order.getOrderId());
 
-        if (!dishes.isEmpty()) {
+        if (order.getOrderStatus().equals(Status.COMPLETE)) {
+            Order newOrder = orderService.createAnOrder(userId);
+            dishList = orderService.showDishesInOrder(newOrder.getOrderId());
+        }
+
+        if (!dishList.isEmpty()) {
             try {
-                request.setAttribute(Constants.MENU_REQUEST_ATTRIBUTE, dishes);
+                request.setAttribute(Constants.MENU_REQUEST_ATTRIBUTE, dishList);
 
                 request.getRequestDispatcher(JSP_PURSE_PAGE_PATH).forward(request, response);
             } catch (ServiceRuntimeException e) {

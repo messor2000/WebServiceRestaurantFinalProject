@@ -2,7 +2,9 @@ package epam.task.finaltaskepam.command.customer;
 
 import epam.task.finaltaskepam.command.Command;
 import epam.task.finaltaskepam.dto.AppUser;
+import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.dto.order.Order;
+import epam.task.finaltaskepam.dto.order.Status;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 import epam.task.finaltaskepam.service.FactoryService;
 import epam.task.finaltaskepam.service.order.OrderService;
@@ -16,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -47,16 +50,20 @@ public class MakeAnOrder implements Command {
         OrderService orderService = FactoryService.getInstance().getOrderService();
 
         Order order = orderService.showOrder(userId);
+        List<Dish> dishList = orderService.showDishesInOrder(order.getOrderId());
 
-        if (order == null) {
+        if (dishList.isEmpty() && order.getOrderStatus().equals(Status.COMPLETE)) {
             order = orderService.createAnOrder(userId);
         }
+
+//        if (order == null) {
+//            order = orderService.createAnOrder(userId);
+//        }
 
         try {
             orderService.makeAnOrder(dishName, order.getOrderId());
 
             response.sendRedirect(previousQuery);
-
         } catch (ServiceRuntimeException e) {
             logger.log(Level.ERROR, e.getMessage(), e);
             request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR);

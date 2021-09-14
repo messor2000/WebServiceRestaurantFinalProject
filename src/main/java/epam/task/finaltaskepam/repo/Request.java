@@ -14,7 +14,8 @@ public class Request {
     public static final String DELETE_USER_BY_USERNAME = "delete from users where username=?";
 
 //    public static final String CREATE_AN_ORDER = "insert into orders(order_id, order_status, user_id, creation_date, update_date) values(?, 'WAITING_FOR_ACCEPT', ?, ?, ?)";
-    public static final String CREATE_AN_ORDER = "insert into orders(order_id, order_status, user_id) values(?, 'WAITING_FOR_ACCEPT', ?)";
+//    public static final String CREATE_AN_ORDER = "insert into orders(order_id, order_status, user_id) values(?, 'WAITING_FOR_ACCEPT', ?)";
+    public static final String CREATE_AN_ORDER = "insert into orders(order_status, user_id) values(?, ?)";
     public static final String ADD_DISH_INTO_ORDER = "insert into dishes_orders(dish_name, order_id) values(?, ?)";
     public static final String SHOW_DISHES_IN_ORDER = "select dish_name from dishes_orders where order_id=?";
 //    public static final String SHOW_USER_ORDER = "select * from orders where user_id=?";
@@ -24,8 +25,9 @@ public class Request {
     public static final String FIND_ORDER_BY_ID = "select * from orders where order_id=?";
     public static final String CHANGE_ORDER_STATUS = "update orders set order_status=? where order_id=?";
     public static final String PAY_FOR_DISH = "update purse set amount=amount-? where user_id=?";
+    public static final String DELETE_DISH_FROM_ORDER = "delete from dishes_orders where (order_id=?) and (dish_name=?)";
 
-
+//(`order_id` = '6') and (`dish_name` = 'Big Mac')
 
     public static final String SHOW_MENU = "select * from dish";
     public static final String ADD_DISH = "insert into dish(dish_name, price, category, amount) values(?, ?, ?, ?)";

@@ -69,18 +69,6 @@
                                 data-dismiss="modal">Оплатить
                         </button>
                     </a>
-<%--                    <c:when test="${requestScope.order.orderStatus}">--%>
-
-<%--                    </c:when>--%>
-
-
-<%--                    <c:if test='${requestScope.get("order").orderStatus eq "COOKING"}'>--%>
-<%--                        <a href="FrontController?command=pay">--%>
-<%--                            <button type="button" class="btn btn-default"--%>
-<%--                                    data-dismiss="modal">Оплатить--%>
-<%--                            </button>--%>
-<%--                        </a>--%>
-<%--                    </c:if>--%>
                 </div>
             </div>
         </div>

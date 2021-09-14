@@ -44,7 +44,7 @@ public class OrderDaoTests {
             Assert.assertNotEquals(order, null);
             Assert.assertEquals(userId, order.getOrderId());
             Assert.assertEquals(userId, order.getUserId());
-            Assert.assertEquals(Status.WAITING_FOR_ACCEPT, order.getOrderStatus());
+            Assert.assertEquals(Status.WAITING_FOR_PAY, order.getOrderStatus());
         } catch (ConnectionPoolException | DaoRuntimeException e) {
             logger.log(Level.WARN, e);
         } finally {

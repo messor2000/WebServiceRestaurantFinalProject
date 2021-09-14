@@ -40,7 +40,7 @@ public class ApproveOrder implements Command {
         OrderService orderService = FactoryService.getInstance().getOrderService();
 
         try {
-            orderService.approveOrder(Integer.parseInt(orderId), Status.COOKING);
+            orderService.approveOrder(Integer.parseInt(orderId), Status.COMPLETE);
 
             response.sendRedirect(previousQuery);
 

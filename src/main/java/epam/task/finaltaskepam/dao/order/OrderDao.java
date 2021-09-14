@@ -30,4 +30,6 @@ public interface OrderDao {
     void changeOrderStatus(int orderId, Status status) throws DaoRuntimeException;
 
     void deleteOrder(int orderId) throws DaoRuntimeException;
+
+    void deleteDishFromOrder(int orderId) throws DaoRuntimeException;
 }

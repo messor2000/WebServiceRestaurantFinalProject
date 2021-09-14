@@ -3,6 +3,7 @@ package epam.task.finaltaskepam.servlet.command;
 import epam.task.finaltaskepam.command.Command;
 import epam.task.finaltaskepam.command.customer.Logout;
 import epam.task.finaltaskepam.command.customer.MakeAnOrder;
+import epam.task.finaltaskepam.command.customer.Pay;
 import epam.task.finaltaskepam.command.customer.Purse;
 import epam.task.finaltaskepam.command.customer.ShowOrder;
 import epam.task.finaltaskepam.command.customer.ToUpAPurse;
@@ -57,6 +58,7 @@ public class CommandProducer {
         customerCommands.put(CommandPool.TOP_UP_PURSE, new ToUpAPurse());
         customerCommands.put(CommandPool.MAKE_AN_ORDER, new MakeAnOrder());
         customerCommands.put(CommandPool.SHOW_ORDER, new ShowOrder());
+        customerCommands.put(CommandPool.PAY, new Pay());
 
         managerCommands.putAll(customerCommands);
         managerCommands.put(CommandPool.SHOW_ALL_USERS, new ShowAllUsers());
