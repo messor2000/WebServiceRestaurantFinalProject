@@ -134,23 +134,11 @@
                                     <c:if test='${sessionScope.get("user").role eq "customer" || sessionScope.get("user").role eq "manager"}'>
                                         <div class="col-sm-7">
 
-                                            <a href="FrontController?command=make-an-order?dishName=${dish.name}">
+                                            <a href="FrontController?command=make-an-order&dishName=${dish.name}">
                                                 <button type="button" class="btn btn-default"
                                                         data-dismiss="modal">Положить в корзину
                                                 </button>
                                             </a>
-                                                <%--                                        <form name="replenishStock" class="form-horizontal" method="post"--%>
-                                                <%--                                              action="FrontController">--%>
-                                                <%--                                            <input type="hidden" name="command" value="make-an-order"/>--%>
-                                                <%--                                            <div class="replenishStock">--%>
-                                                <%--                                                <div class="form-group">--%>
-                                                <%--                                                    <div class="col-sm-offset-3 col-sm-7 batton-submit batton-submit-put">--%>
-                                                <%--                                                        <button type="submit" class="btn btn-primary">Put in bucket--%>
-                                                <%--                                                        </button>--%>
-                                                <%--                                                    </div>--%>
-                                                <%--                                                </div>--%>
-                                                <%--                                            </div>--%>
-                                                <%--                                        </form>--%>
                                         </div>
                                     </c:if>
                                 </div>

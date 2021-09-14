@@ -1,8 +1,10 @@
-package epam.task.finaltaskepam.command.customer;
+package epam.task.finaltaskepam.command.manager;
 
 import epam.task.finaltaskepam.command.Command;
+import epam.task.finaltaskepam.command.customer.MakeAnOrder;
 import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.dto.order.Order;
+import epam.task.finaltaskepam.dto.order.Status;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 import epam.task.finaltaskepam.service.FactoryService;
 import epam.task.finaltaskepam.service.order.OrderService;
@@ -20,11 +22,11 @@ import java.io.IOException;
 /**
  * @author Aleksandr Ovcharenko
  */
-public class MakeAnOrder implements Command {
+public class ApproveOrder implements Command {
 
-    private static final Logger logger = LogManager.getLogger(MakeAnOrder.class);
+    private static final Logger logger = LogManager.getLogger(ApproveOrder.class);
 
-    private static final String DISH_NAME = "dishName";
+    private static final String ORDER_ID = "orderId";
 
     public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/menu.jsp";
     private static final String MESSAGE_OF_ERROR = "Something wrong with menu, pls try later";
@@ -33,27 +35,12 @@ public class MakeAnOrder implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String previousQuery = Util.getPreviousQuery(request);
 
-        String dishName = request.getParameter(DISH_NAME);
-
-        int userId = 0;
-
-        Object object = request.getSession(false).getAttribute(Constants.USER_REQUEST_ATTRIBUTE);
-
-        if (object.getClass().equals(AppUser.class)) {
-            AppUser user = (AppUser) object;
-            userId = user.getIdUser();
-        }
+        String orderId = request.getParameter(ORDER_ID);
 
         OrderService orderService = FactoryService.getInstance().getOrderService();
 
-        Order order = orderService.showOrder(userId);
-
-        if (order == null) {
-            order = orderService.createAnOrder(userId);
-        }
-
         try {
-            orderService.makeAnOrder(dishName, order.getOrderId());
+            orderService.approveOrder(Integer.parseInt(orderId), Status.COOKING);
 
             response.sendRedirect(previousQuery);
 

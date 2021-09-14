@@ -63,7 +63,11 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-7">
-                                <button type="submit" class="btn btn-primary">Подвтердить заказ</button>
+                                <a href="FrontController?command=approve-order&orderId=${order.orderId}">
+                                    <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">Подвтердить
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     </c:forEach>

@@ -2,6 +2,10 @@ package epam.task.finaltaskepam.dao.order;
 
 import epam.task.finaltaskepam.dao.FactoryDao;
 import epam.task.finaltaskepam.dao.dish.DishDao;
+import epam.task.finaltaskepam.dao.user.AppUserDao;
+import epam.task.finaltaskepam.dao.user.AppUserDaoImpl;
+import epam.task.finaltaskepam.dto.AppUser;
+import epam.task.finaltaskepam.dto.AppUserPurse;
 import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.dto.order.Order;
 import epam.task.finaltaskepam.dto.order.Status;
@@ -82,21 +86,6 @@ public class OrderDaoImpl extends Order implements OrderDao {
             if (resultSet.next()) {
                 return showUserOrder(userId);
             }
-
-//            Order order = null;
-//
-//            while (resultSet.next()) {
-////                int orderId = resultSet.getInt(1);
-//                order = new Order.Builder()
-//                        .withOrderId(userId)
-//                        .withUserId(userId)
-//                        .withOrderStatus(Status.WAITING_FOR_ACCEPT)
-//                        .withCreationDate(java.sql.Date.valueOf(CREATION_DATE))
-//                        .withUpdateDate(java.sql.Date.valueOf(UPDATE_DATE))
-//                        .build();
-//            }
-//
-//            return order;
         } catch (SQLException e) {
             throw new DaoRuntimeException("Create order sql error", e);
         } catch (ConnectionPoolException e) {
@@ -120,11 +109,6 @@ public class OrderDaoImpl extends Order implements OrderDao {
             statement.setInt(2, orderId);
             statement.executeUpdate();
 
-//            if (i < 0) {
-//
-//                return getPurseAmount(userId);userId
-//            }
-
         } catch (SQLException e) {
             throw new DaoRuntimeException("Create check sql error", e);
         } catch (ConnectionPoolException e) {
@@ -133,7 +117,6 @@ public class OrderDaoImpl extends Order implements OrderDao {
             Util.closeResource(connection, statement);
         }
 
-//        return null;
     }
 
     @Override
@@ -246,6 +229,86 @@ public class OrderDaoImpl extends Order implements OrderDao {
     @Override
     public Order findOrderById(int orderId) throws ServiceRuntimeException {
         return null;
+    }
+
+    @Override
+    public void payForOrder(int orderId, int userId) throws DaoRuntimeException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+//            connection = ConnectionPoolImpl.getInstance().takeConnection();
+//            statement = connection.prepareStatement(Request.SHOW_USER_ORDER);
+//            statement.setInt(1, userId);
+//            resultSet = statement.executeQuery();
+
+//            if (!resultSet.next()) {
+//                return null;
+//            }
+
+//            Order order = new Order.Builder()
+//                    .withOrderId(resultSet.getInt(ORDER_ID))
+//                    .withOrderStatus(Status.valueOf(resultSet.getString(ORDER_STATUS)))
+//                    .withUserId(resultSet.getInt(USER_ID))
+////                    .withCreationDate(java.sql.Date.valueOf(resultSet.getString(CREATION_DATE)))
+////                    .withUpdateDate(java.sql.Date.valueOf(resultSet.getString(UPDATE_DATE)))
+//                    .build();
+
+            List<Dish> orderList = showDishesInOrder(orderId);
+            int totalPrice = 0;
+            for (Dish dish: orderList) {
+                totalPrice += dish.getPrice();
+            }
+
+            AppUserPurse purse = AppUserDaoImpl.getInstance().getPurseAmount(userId);
+
+            if (purse.getAmount() > totalPrice) {
+                connection = ConnectionPoolImpl.getInstance().takeConnection();
+                statement = connection.prepareStatement(Request.PAY_FOR_DISH);
+                statement.setInt(1, totalPrice);
+                statement.setInt(2, userId);
+                resultSet = statement.executeQuery();
+            } else {
+                throw new DaoRuntimeException("Dont enough money");
+            }
+
+        } catch (SQLException e) {
+            throw new DaoRuntimeException("Dish sql error", e);
+        } catch (ConnectionPoolException e) {
+            throw new DaoRuntimeException("Dish pool connection error", e);
+        } finally {
+            Util.closeResource(connection, statement, resultSet);
+        }
+    }
+
+    @Override
+    public void changeOrderStatus(int orderId, Status status) throws DaoRuntimeException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPoolImpl.getInstance().takeConnection();
+
+            statement = connection.prepareStatement(Request.CHANGE_ORDER_STATUS);
+
+            statement.setString(1, String.valueOf(Status.COOKING));
+            statement.setInt(2, orderId);
+            statement.executeUpdate();
+//            int i = statement.executeUpdate();
+
+//            if (i > 0) {
+//                return getPurseAmount(userId);
+//            }
+
+        } catch (SQLException e) {
+            throw new DaoRuntimeException("Create check sql error", e);
+        } catch (ConnectionPoolException e) {
+            throw new DaoRuntimeException("Create check  connection error", e);
+        } finally {
+            Util.closeResource(connection, statement);
+        }
+
+//        return null;
     }
 
     @Override

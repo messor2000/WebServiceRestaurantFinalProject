@@ -64,28 +64,25 @@
                             </div>
                         </div>
                     </c:forEach>
-                    <c:if test='${requestScope.get("order").orderStatus eq "COOKING"}'>
-                        <a href="FrontController?command=pay">
-                            <button type="button" class="btn btn-default"
-                                    data-dismiss="modal">Оплатить
-                            </button>
-                        </a>
-                    </c:if>
+                    <a href="FrontController?command=pay">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">Оплатить
+                        </button>
+                    </a>
+<%--                    <c:when test="${requestScope.order.orderStatus}">--%>
+
+<%--                    </c:when>--%>
+
+
+<%--                    <c:if test='${requestScope.get("order").orderStatus eq "COOKING"}'>--%>
+<%--                        <a href="FrontController?command=pay">--%>
+<%--                            <button type="button" class="btn btn-default"--%>
+<%--                                    data-dismiss="modal">Оплатить--%>
+<%--                            </button>--%>
+<%--                        </a>--%>
+<%--                    </c:if>--%>
                 </div>
             </div>
-
-<%--            <div class="col-sm-7">--%>
-<%--                <form name="toUpAPurse" class="form-horizontal" method="post" action="FrontController">--%>
-<%--                    <input type="hidden" name="command" value="pay"/>--%>
-<%--                    <div class="pay">--%>
-<%--                        <div class="form-group">--%>
-<%--                            <div class="col-sm-offset-3 col-sm-7 batton-submit">--%>
-<%--                                <button type="submit" class="btn btn-primary">Pay</button>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </form>--%>
-<%--            </div>--%>
         </div>
     </div>
 </div>

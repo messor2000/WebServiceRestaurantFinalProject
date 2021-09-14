@@ -7,6 +7,7 @@ import epam.task.finaltaskepam.command.customer.Purse;
 import epam.task.finaltaskepam.command.customer.ShowOrder;
 import epam.task.finaltaskepam.command.customer.ToUpAPurse;
 import epam.task.finaltaskepam.command.manager.AddDish;
+import epam.task.finaltaskepam.command.manager.ApproveOrder;
 import epam.task.finaltaskepam.command.manager.ReplenishStock;
 import epam.task.finaltaskepam.command.manager.ShowAllOrders;
 import epam.task.finaltaskepam.command.manager.ShowAllUsers;
@@ -62,6 +63,7 @@ public class CommandProducer {
         managerCommands.put(CommandPool.ADD_DISH, new AddDish());
         managerCommands.put(CommandPool.REPLENISH_STOCK, new ReplenishStock());
         managerCommands.put(CommandPool.SHOW_ALL_ORDERS, new ShowAllOrders());
+        managerCommands.put(CommandPool.APPROVE_ORDER, new ApproveOrder());
     }
 
     public Command getCommandForUser(String role, String commandName) {

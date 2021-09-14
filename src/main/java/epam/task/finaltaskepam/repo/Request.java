@@ -22,6 +22,8 @@ public class Request {
     public static final String SHOW_ALL_ORDERS = "select * from orders";
     public static final String DELETE_ORDER_BY_ID = "delete from orders where order_id=?";
     public static final String FIND_ORDER_BY_ID = "select * from orders where order_id=?";
+    public static final String CHANGE_ORDER_STATUS = "update orders set order_status=? where order_id=?";
+    public static final String PAY_FOR_DISH = "update purse set amount=amount-? where user_id=?";
 
 
 

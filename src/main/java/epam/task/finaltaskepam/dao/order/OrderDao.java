@@ -2,6 +2,7 @@ package epam.task.finaltaskepam.dao.order;
 
 import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.dto.order.Order;
+import epam.task.finaltaskepam.dto.order.Status;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 
@@ -23,6 +24,10 @@ public interface OrderDao {
     List<Dish> showDishesInOrder(int orderId) throws DaoRuntimeException;
 
     Order findOrderById(int orderId) throws DaoRuntimeException;
+
+    void payForOrder(int orderId, int userId) throws DaoRuntimeException;
+
+    void changeOrderStatus(int orderId, Status status) throws DaoRuntimeException;
 
     void deleteOrder(int orderId) throws DaoRuntimeException;
 }

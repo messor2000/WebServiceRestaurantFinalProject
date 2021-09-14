@@ -4,6 +4,7 @@ import epam.task.finaltaskepam.dao.FactoryDao;
 import epam.task.finaltaskepam.dao.order.OrderDao;
 import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.dto.order.Order;
+import epam.task.finaltaskepam.dto.order.Status;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 
@@ -68,6 +69,30 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return dishes;
+    }
+
+    @Override
+    public void payForOrder(int orderId, int userId) throws ServiceRuntimeException {
+        FactoryDao factoryDao = FactoryDao.getInstance();
+        OrderDao orderDao = factoryDao.getOrderDao();
+
+        try {
+            orderDao.payForOrder(orderId, userId);
+        } catch (DaoRuntimeException e) {
+            throw new ServiceRuntimeException("Error in source", e);
+        }
+    }
+
+    @Override
+    public void approveOrder(int orderId, Status status) throws ServiceRuntimeException {
+        FactoryDao factoryDao = FactoryDao.getInstance();
+        OrderDao orderDao = factoryDao.getOrderDao();
+
+        try {
+            orderDao.changeOrderStatus(orderId, status);
+        } catch (DaoRuntimeException e) {
+            throw new ServiceRuntimeException("Error in source", e);
+        }
     }
 
     @Override
