@@ -47,15 +47,8 @@ public class ShowOrder implements Command {
 
         Order order = orderService.showOrder(userId);
 
-//        List<Dish> dishList = orderService.showDishesInOrder(order.getOrderId());
-
-//        if (order.getOrderStatus().equals(Status.COMPLETE)) {
-//            Order newOrder = orderService.createAnOrder(userId);
-//            dishList = orderService.showDishesInOrder(newOrder.getOrderId());
-//        }
         if (order == null) {
             order = orderService.createAnOrder(userId);
-//            dishList = orderService.showDishesInOrder(newOrder.getOrderId());
         }
 
         List<Dish> dishList = orderService.showDishesInOrder(order.getOrderId());

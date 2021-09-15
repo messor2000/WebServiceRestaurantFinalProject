@@ -13,8 +13,6 @@ public class Request {
     public static final String FIND_USER_BY_USERNAME = "select * from users where username=?";
     public static final String DELETE_USER_BY_USERNAME = "delete from users where username=?";
 
-//    public static final String CREATE_AN_ORDER = "insert into orders(order_id, order_status, user_id, creation_date, update_date) values(?, 'WAITING_FOR_ACCEPT', ?, ?, ?)";
-//    public static final String CREATE_AN_ORDER = "insert into orders(order_id, order_status, user_id) values(?, 'WAITING_FOR_ACCEPT', ?)";
     public static final String CREATE_AN_ORDER = "insert into orders(order_status, user_id) values(?, ?)";
     public static final String ADD_DISH_INTO_ORDER = "insert into dishes_orders(dish_name, order_id) values(?, ?)";
     public static final String SHOW_DISHES_IN_ORDER = "select dish_name from dishes_orders where order_id=?";

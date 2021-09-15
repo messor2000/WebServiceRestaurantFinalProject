@@ -1,7 +1,6 @@
 package epam.task.finaltaskepam.repo;
 
 import epam.task.finaltaskepam.error.ConnectionPoolException;
-import epam.task.finaltaskepam.listener.ConnectionPoolListener;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +20,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
     private static final String USER = "root";
     private static final String PASSWORD = "password";
 
-    private static final Logger LOGGER = LogManager.getLogger(ConnectionPoolListener.class);
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionPoolImpl.class);
 
     private static final int MINIMAL_CONNECTION_COUNT = 5;
 

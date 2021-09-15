@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,7 +23,6 @@ import java.util.List;
 public class AddDish implements Command {
 
     private static final Logger logger = LogManager.getLogger(AddDish.class);
-    private static final String REDIRECT = "Controller?command=add-dish";
 
     private static final String NAME = "name";
     private static final String PRICE = "price";

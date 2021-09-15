@@ -27,11 +27,9 @@ public class Pay implements Command {
 
     private static final Logger logger = LogManager.getLogger(Pay.class);
 
-    public static final String JSP_PURSE_PAGE_PATH = "WEB-INF/jsp/order.jsp";
     public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/menu.jsp";
     private static final String MESSAGE_OF_ERROR = "You dont have enough money to pay";
     private static final String MESSAGE_OF_ERROR_2 = "You have already paid, wait managers approve";
-//    private static final String MESSAGE_OF_ERROR_3 = "You dont make any order";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -51,27 +49,6 @@ public class Pay implements Command {
 
         List<Dish> dishes = orderService.showDishesInOrder(order.getOrderId());
 
-//        if (!dishes.isEmpty()) {
-//            if (order.getOrderStatus().equals(Status.WAITING_FOR_PAY)) {
-//                try {
-//                    orderService.payForOrder(order.getOrderId(), userId);
-//
-//                    request.setAttribute(Constants.MENU_REQUEST_ATTRIBUTE, dishes);
-//
-//                    request.getRequestDispatcher(JSP_MENU_PAGE_PATH).forward(request, response);
-//                } catch (ServiceRuntimeException e) {
-//                    logger.log(Level.ERROR, e.getMessage(), e);
-//                    request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR);
-//                    request.getRequestDispatcher(Constants.ERROR_PAGE).forward(request, response);
-//                }
-//            } else {
-//                request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_2);
-//                request.getRequestDispatcher(Constants.ERROR_PAGE).forward(request, response);
-//            }
-//        } else {
-//            request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_3);
-//            request.getRequestDispatcher(Constants.ERROR_PAGE).forward(request, response);
-//        }
         if (order.getOrderStatus().equals(Status.WAITING_FOR_PAY)) {
             try {
                 orderService.payForOrder(order.getOrderId(), userId);

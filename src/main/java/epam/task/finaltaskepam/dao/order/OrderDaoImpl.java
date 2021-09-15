@@ -2,9 +2,7 @@ package epam.task.finaltaskepam.dao.order;
 
 import epam.task.finaltaskepam.dao.FactoryDao;
 import epam.task.finaltaskepam.dao.dish.DishDao;
-import epam.task.finaltaskepam.dao.user.AppUserDao;
 import epam.task.finaltaskepam.dao.user.AppUserDaoImpl;
-import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.dto.AppUserPurse;
 import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.dto.order.Order;
@@ -27,11 +25,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -90,9 +85,9 @@ public class OrderDaoImpl extends Order implements OrderDao {
                 return showUserOrder(userId);
             }
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Create order sql error", e);
+            throw new DaoRuntimeException(SQL_EXCEPTION, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Create check  connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_EXCEPTION, e);
         } finally {
             Util.closeResource(connection, statement);
         }
@@ -115,9 +110,9 @@ public class OrderDaoImpl extends Order implements OrderDao {
 
         } catch (SQLException e) {
             rollback(connection);
-            throw new DaoRuntimeException("Create check sql error", e);
+            throw new DaoRuntimeException(SQL_EXCEPTION, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Create check  connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_EXCEPTION, e);
         } finally {
             Util.closeResource(connection, statement);
         }
@@ -157,9 +152,9 @@ public class OrderDaoImpl extends Order implements OrderDao {
 
             return order;
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Dish sql error", e);
+            throw new DaoRuntimeException(SQL_EXCEPTION, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Dish pool connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_EXCEPTION, e);
         } finally {
             Util.closeResource(connection, statement, resultSet);
         }
@@ -194,9 +189,9 @@ public class OrderDaoImpl extends Order implements OrderDao {
             return allDishes;
 
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Dish sql error", e);
+            throw new DaoRuntimeException(SQL_EXCEPTION, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Dish pool connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_EXCEPTION, e);
         } finally {
             Util.closeResource(connection, statement, resultSet);
         }
@@ -228,9 +223,9 @@ public class OrderDaoImpl extends Order implements OrderDao {
             return orders;
 
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Dish sql error", e);
+            throw new DaoRuntimeException(SQL_EXCEPTION, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Dish pool connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_EXCEPTION, e);
         } finally {
             Util.closeResource(connection, statement, resultSet);
         }
@@ -264,9 +259,9 @@ public class OrderDaoImpl extends Order implements OrderDao {
                     .build();
 
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Dish sql error", e);
+            throw new DaoRuntimeException(SQL_EXCEPTION, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Dish pool connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_EXCEPTION, e);
         } finally {
             Util.closeResource(connection, statement, resultSet);
         }
@@ -292,7 +287,6 @@ public class OrderDaoImpl extends Order implements OrderDao {
             AppUserPurse purse = AppUserDaoImpl.getInstance().getPurseAmount(userId);
 
             if (purse.getAmount() > totalPrice) {
-//                connection = ConnectionPoolImpl.getInstance().takeConnection();
                 statement = connection.prepareStatement(Request.PAY_FOR_DISH);
                 statement.setInt(1, totalPrice);
                 statement.setInt(2, userId);
@@ -308,9 +302,9 @@ public class OrderDaoImpl extends Order implements OrderDao {
 
         } catch (SQLException e) {
             rollback(connection);
-            throw new DaoRuntimeException("Dish sql error", e);
+            throw new DaoRuntimeException(SQL_EXCEPTION, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Dish pool connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_EXCEPTION, e);
         } finally {
             Util.closeResource(connection, statement, resultSet);
         }
@@ -337,9 +331,9 @@ public class OrderDaoImpl extends Order implements OrderDao {
 
         } catch (SQLException e) {
             rollback(connection);
-            throw new DaoRuntimeException("Create check sql error", e);
+            throw new DaoRuntimeException(SQL_EXCEPTION, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Create check  connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_EXCEPTION, e);
         } finally {
             Util.closeResource(connection, statement);
         }
@@ -358,9 +352,9 @@ public class OrderDaoImpl extends Order implements OrderDao {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new DaoRuntimeException("User sql error", e);
+            throw new DaoRuntimeException(SQL_EXCEPTION, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("User pool connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_EXCEPTION, e);
         } finally {
             Util.closeResource(connection, statement);
         }
@@ -384,9 +378,9 @@ public class OrderDaoImpl extends Order implements OrderDao {
             }
 
         } catch (SQLException e) {
-            throw new DaoRuntimeException("User sql error", e);
+            throw new DaoRuntimeException(SQL_EXCEPTION, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("User pool connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_EXCEPTION, e);
         } finally {
             Util.closeResource(connection, statement);
         }
@@ -401,4 +395,7 @@ public class OrderDaoImpl extends Order implements OrderDao {
             }
         }
     }
+
+    private static final String SQL_EXCEPTION = "Order sql error";
+    private static final String CONNECTION_POOL_EXCEPTION = "Order pool connection error";
 }

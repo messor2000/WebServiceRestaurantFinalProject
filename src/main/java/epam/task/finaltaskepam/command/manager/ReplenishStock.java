@@ -35,7 +35,6 @@ public class ReplenishStock implements Command {
 
         MenuService menuService = FactoryService.getInstance().getMenuService();
 
-
         try {
             menuService.replenishStock(dishName, Integer.parseInt(amount));
 

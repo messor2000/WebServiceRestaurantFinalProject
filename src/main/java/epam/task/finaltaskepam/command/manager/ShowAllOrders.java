@@ -1,14 +1,10 @@
 package epam.task.finaltaskepam.command.manager;
 
 import epam.task.finaltaskepam.command.Command;
-import epam.task.finaltaskepam.command.customer.Purse;
-import epam.task.finaltaskepam.dto.AppUser;
-import epam.task.finaltaskepam.dto.AppUserPurse;
 import epam.task.finaltaskepam.dto.order.Order;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 import epam.task.finaltaskepam.service.FactoryService;
 import epam.task.finaltaskepam.service.order.OrderService;
-import epam.task.finaltaskepam.service.user.AppUserService;
 import epam.task.finaltaskepam.util.Constants;
 import epam.task.finaltaskepam.util.Util;
 import org.apache.logging.log4j.Level;

@@ -194,9 +194,9 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
             }
 
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Create check sql error", e);
+            throw new DaoRuntimeException("Fill up a purse sql error", e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Create check  connection error", e);
+            throw new DaoRuntimeException("Fill up a purse connection error", e);
         } finally {
             Util.closeResource(connection, statement);
         }
@@ -225,9 +225,9 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
                         .build();
             }
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Create check sql error", e);
+            throw new DaoRuntimeException("Get purse amount sql error", e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Create check  connection error", e);
+            throw new DaoRuntimeException("Get purse amount connection error", e);
         } finally {
             Util.closeResource(connection, statement);
         }
@@ -258,9 +258,9 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
             }
 
         } catch (SQLException e) {
-            throw new DaoRuntimeException("User sql error", e);
+            throw new DaoRuntimeException("Get user error", e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("User pool connection error", e);
+            throw new DaoRuntimeException("Get user connection error", e);
         } finally {
             Util.closeResource(connection, statement, resultSet);
         }
@@ -281,21 +281,11 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new DaoRuntimeException("User sql error", e);
+            throw new DaoRuntimeException("delete user sql error", e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("User pool connection error", e);
+            throw new DaoRuntimeException("delete user pool connection error", e);
         } finally {
             Util.closeResource(connection, statement);
-        }
-    }
-
-    private static void rollback(Connection connection) {
-        if (connection != null) {
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                logger.log(Level.ERROR, e);
-            }
         }
     }
 }

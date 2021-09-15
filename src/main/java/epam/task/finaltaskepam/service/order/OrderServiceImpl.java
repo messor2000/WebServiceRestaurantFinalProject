@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             order = orderDao.createAnOrder(userId);
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
 
         return order;
@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             orderDao.putDishIntoOrder(dishName, orderId);
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
     }
 
@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             order = orderDao.showUserOrder(userId);
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
 
         return order;
@@ -65,7 +65,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             dishes = orderDao.showDishesInOrder(orderId);
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
 
         return dishes;
@@ -79,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             orderDao.payForOrder(orderId, userId);
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
     }
 
@@ -91,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             orderDao.changeOrderStatus(orderId, status);
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
     }
 
@@ -104,7 +104,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             order = orderDao.findOrderById(orderId);
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
 
         return order;
@@ -119,10 +119,11 @@ public class OrderServiceImpl implements OrderService {
         try {
             orders = orderDao.showAllOrders();
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
 
         return orders;
     }
 
+    private static final String ERROR_IN_SOURCE = "Error in source";
 }
