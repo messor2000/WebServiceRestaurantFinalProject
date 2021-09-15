@@ -24,4 +24,6 @@ public interface OrderService {
     void payForOrder(int orderId, int userId) throws ServiceRuntimeException;
 
     void approveOrder(int orderId, Status status) throws ServiceRuntimeException;
+
+    Order showOrderById(int orderId) throws ServiceRuntimeException;
 }

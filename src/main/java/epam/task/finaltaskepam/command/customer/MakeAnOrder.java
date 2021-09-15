@@ -7,6 +7,7 @@ import epam.task.finaltaskepam.dto.order.Order;
 import epam.task.finaltaskepam.dto.order.Status;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 import epam.task.finaltaskepam.service.FactoryService;
+import epam.task.finaltaskepam.service.menu.MenuService;
 import epam.task.finaltaskepam.service.order.OrderService;
 import epam.task.finaltaskepam.util.Constants;
 import epam.task.finaltaskepam.util.Util;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -52,11 +54,13 @@ public class MakeAnOrder implements Command {
         Order order = orderService.showOrder(userId);
         List<Dish> dishList = orderService.showDishesInOrder(order.getOrderId());
 
-        if (dishList.isEmpty() && order.getOrderStatus().equals(Status.COMPLETE)) {
-            order = orderService.createAnOrder(userId);
-        }
+//        if (dishList.isEmpty()) {
+//            order.setOrderStatus(Status.WAITING_FOR_PAY);
+//        }
 
-//        if (order == null) {
+
+
+//        if (order.getOrderStatus().equals(Status.COMPLETE) || order == null) {
 //            order = orderService.createAnOrder(userId);
 //        }
 

@@ -16,6 +16,8 @@
 <fmt:message bundle="${locale}" key="locale.password" var="password"/>
 <fmt:message bundle="${locale}" key="locale.role" var="role"/>
 <fmt:message bundle="${locale}" key="locale.purse" var="purse"/>
+<fmt:message bundle="${locale}" key="locale.dishPrice" var="price"/>
+<fmt:message bundle="${locale}" key="locale.category" var="category"/>
 
 <!DOCTYPE html>
 <html>
@@ -57,6 +59,19 @@
                                         <li class="list-group-item">Статус:${order.orderStatus}</li>
                                         <li class="list-group-item">Юзер айди:${order.userId}</li>
                                         <li class="list-group-item">Время создания:${order.creationDate}</li>
+                                        <c:forEach items="${requestScope.menu}" var="dish">
+                                            <div class="col-sm-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title card-Title-Found">${dish.name}</h5>
+                                                        <ul class="list-group list-group-flush">
+                                                            <li class="list-group-item">${price}:${dish.price}</li>
+                                                            <li class="list-group-item">${category}:${dish.category}</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
                                     </ul>
                                 </div>
                             </div>

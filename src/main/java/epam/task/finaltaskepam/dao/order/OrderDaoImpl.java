@@ -16,6 +16,7 @@ import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
 import epam.task.finaltaskepam.repo.Request;
 import epam.task.finaltaskepam.util.Constants;
 import epam.task.finaltaskepam.util.Util;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,7 +29,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Aleksandr Ovcharenko
@@ -102,14 +105,16 @@ public class OrderDaoImpl extends Order implements OrderDao {
         PreparedStatement statement = null;
         try {
             connection = ConnectionPoolImpl.getInstance().takeConnection();
-
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(Request.ADD_DISH_INTO_ORDER, Statement.RETURN_GENERATED_KEYS);
 
             statement.setString(1, dishName);
             statement.setInt(2, orderId);
             statement.executeUpdate();
+            connection.commit();
 
         } catch (SQLException e) {
+            rollback(connection);
             throw new DaoRuntimeException("Create check sql error", e);
         } catch (ConnectionPoolException e) {
             throw new DaoRuntimeException("Create check  connection error", e);
@@ -128,7 +133,7 @@ public class OrderDaoImpl extends Order implements OrderDao {
         try {
             connection = ConnectionPoolImpl.getInstance().takeConnection();
 
-            statement = connection.prepareStatement(Request.SHOW_USER_ORDER);
+            statement = connection.prepareStatement(Request.SHOW_USER_ORDER, Statement.RETURN_GENERATED_KEYS);
 
             statement.setInt(1, userId);
 
@@ -138,7 +143,7 @@ public class OrderDaoImpl extends Order implements OrderDao {
                 return null;
             }
 
-            return new Order.Builder()
+            Order order = new Order.Builder()
                     .withOrderId(resultSet.getInt(ORDER_ID))
                     .withOrderStatus(Status.valueOf(resultSet.getString(ORDER_STATUS)))
                     .withUserId(resultSet.getInt(USER_ID))
@@ -146,6 +151,11 @@ public class OrderDaoImpl extends Order implements OrderDao {
 //                    .withUpdateDate(java.sql.Date.valueOf(resultSet.getString(UPDATE_DATE)))
                     .build();
 
+            if (order.getOrderStatus().equals(Status.COMPLETE)) {
+                changeOrderStatus(order.getOrderId(), Status.WAITING_FOR_PAY);
+            }
+
+            return order;
         } catch (SQLException e) {
             throw new DaoRuntimeException("Dish sql error", e);
         } catch (ConnectionPoolException e) {
@@ -177,7 +187,7 @@ public class OrderDaoImpl extends Order implements OrderDao {
             }
 
             List<Dish> allDishes = new ArrayList<>();
-            for(String dishName: dishes) {
+            for (String dishName : dishes) {
                 allDishes.addAll(dishDao.getDishByName(dishName));
             }
 
@@ -228,7 +238,38 @@ public class OrderDaoImpl extends Order implements OrderDao {
 
     @Override
     public Order findOrderById(int orderId) throws ServiceRuntimeException {
-        return null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = ConnectionPoolImpl.getInstance().takeConnection();
+
+            statement = connection.prepareStatement(Request.FIND_ORDER_BY_ID, Statement.RETURN_GENERATED_KEYS);
+
+            statement.setInt(1, orderId);
+
+            resultSet = statement.executeQuery();
+
+            if (!resultSet.next()) {
+                return null;
+            }
+
+            return new Order.Builder()
+                    .withOrderId(resultSet.getInt(ORDER_ID))
+                    .withOrderStatus(Status.valueOf(resultSet.getString(ORDER_STATUS)))
+                    .withUserId(resultSet.getInt(USER_ID))
+//                    .withCreationDate(java.sql.Date.valueOf(resultSet.getString(CREATION_DATE)))
+//                    .withUpdateDate(java.sql.Date.valueOf(resultSet.getString(UPDATE_DATE)))
+                    .build();
+
+        } catch (SQLException e) {
+            throw new DaoRuntimeException("Dish sql error", e);
+        } catch (ConnectionPoolException e) {
+            throw new DaoRuntimeException("Dish pool connection error", e);
+        } finally {
+            Util.closeResource(connection, statement, resultSet);
+        }
     }
 
     @Override
@@ -238,34 +279,20 @@ public class OrderDaoImpl extends Order implements OrderDao {
         ResultSet resultSet = null;
 
         try {
-//            connection = ConnectionPoolImpl.getInstance().takeConnection();
-//            statement = connection.prepareStatement(Request.SHOW_USER_ORDER);
-//            statement.setInt(1, userId);
-//            resultSet = statement.executeQuery();
-
-//            if (!resultSet.next()) {
-//                return null;
-//            }
-
-//            Order order = new Order.Builder()
-//                    .withOrderId(resultSet.getInt(ORDER_ID))
-//                    .withOrderStatus(Status.valueOf(resultSet.getString(ORDER_STATUS)))
-//                    .withUserId(resultSet.getInt(USER_ID))
-////                    .withCreationDate(java.sql.Date.valueOf(resultSet.getString(CREATION_DATE)))
-////                    .withUpdateDate(java.sql.Date.valueOf(resultSet.getString(UPDATE_DATE)))
-//                    .build();
+            connection = ConnectionPoolImpl.getInstance().takeConnection();
+            connection.setAutoCommit(false);
 
             List<Dish> orderList = showDishesInOrder(orderId);
             int totalPrice = 0;
             int dishAmount = 0;
-            for (Dish dish: orderList) {
+            for (Dish dish : orderList) {
                 totalPrice += dish.getPrice();
             }
 
             AppUserPurse purse = AppUserDaoImpl.getInstance().getPurseAmount(userId);
 
             if (purse.getAmount() > totalPrice) {
-                connection = ConnectionPoolImpl.getInstance().takeConnection();
+//                connection = ConnectionPoolImpl.getInstance().takeConnection();
                 statement = connection.prepareStatement(Request.PAY_FOR_DISH);
                 statement.setInt(1, totalPrice);
                 statement.setInt(2, userId);
@@ -273,13 +300,14 @@ public class OrderDaoImpl extends Order implements OrderDao {
 
                 if (i > 0) {
                     changeOrderStatus(orderId, Status.PAYED);
-//                    deleteDishFromOrder(orderId);
                 }
+                connection.commit();
             } else {
                 throw new DaoRuntimeException("Dont enough money");
             }
 
         } catch (SQLException e) {
+            rollback(connection);
             throw new DaoRuntimeException("Dish sql error", e);
         } catch (ConnectionPoolException e) {
             throw new DaoRuntimeException("Dish pool connection error", e);
@@ -294,6 +322,7 @@ public class OrderDaoImpl extends Order implements OrderDao {
         PreparedStatement statement = null;
         try {
             connection = ConnectionPoolImpl.getInstance().takeConnection();
+            connection.setAutoCommit(false);
 
             statement = connection.prepareStatement(Request.CHANGE_ORDER_STATUS);
 
@@ -304,8 +333,10 @@ public class OrderDaoImpl extends Order implements OrderDao {
             if (status.equals(Status.COMPLETE)) {
                 deleteDishFromOrder(orderId);
             }
+            connection.commit();
 
         } catch (SQLException e) {
+            rollback(connection);
             throw new DaoRuntimeException("Create check sql error", e);
         } catch (ConnectionPoolException e) {
             throw new DaoRuntimeException("Create check  connection error", e);
@@ -346,8 +377,7 @@ public class OrderDaoImpl extends Order implements OrderDao {
 
             List<Dish> dishesInOrder = getInstance().showDishesInOrder(orderId);
 
-            for (Dish dish: dishesInOrder) {
-//                statement = connection.prepareStatement(Request.DELETE_DISH_FROM_ORDER);
+            for (Dish dish : dishesInOrder) {
                 statement.setInt(1, orderId);
                 statement.setString(2, dish.getName());
                 statement.executeUpdate();
@@ -359,6 +389,16 @@ public class OrderDaoImpl extends Order implements OrderDao {
             throw new DaoRuntimeException("User pool connection error", e);
         } finally {
             Util.closeResource(connection, statement);
+        }
+    }
+
+    private static void rollback(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                logger.log(Level.ERROR, e);
+            }
         }
     }
 }

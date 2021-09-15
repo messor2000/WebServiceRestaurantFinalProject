@@ -64,15 +64,14 @@
                             </div>
                         </div>
                     </c:forEach>
-                    <a href="FrontController?command=pay">
-                        <button type="button" class="btn btn-default"
-                                data-dismiss="modal">Оплатить
-                        </button>
-                    </a>
                 </div>
+                <a href="FrontController?command=pay">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Оплатить</button>
+                </a>
             </div>
         </div>
     </div>
+</div>
 </div>
 </div>
 <c:import url="template/footer.jsp"/>

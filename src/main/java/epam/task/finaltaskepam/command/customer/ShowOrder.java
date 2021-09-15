@@ -4,7 +4,6 @@ import epam.task.finaltaskepam.command.Command;
 import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.dto.order.Order;
-import epam.task.finaltaskepam.dto.order.Status;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
 import epam.task.finaltaskepam.service.FactoryService;
 import epam.task.finaltaskepam.service.order.OrderService;
@@ -27,7 +26,7 @@ public class ShowOrder implements Command {
 
     private static final Logger logger = LogManager.getLogger(ShowOrder.class);
 
-    public static final String JSP_PURSE_PAGE_PATH = "WEB-INF/jsp/order.jsp";
+    public static final String JSP_ORDER_PAGE_PATH = "WEB-INF/jsp/order.jsp";
     public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/menu.jsp";
     private static final String MESSAGE_OF_ERROR = "Something wrong with show your order, pls try later";
     private static final String MESSAGE_OF_ERROR_2 = "You dont make any order";
@@ -48,18 +47,26 @@ public class ShowOrder implements Command {
 
         Order order = orderService.showOrder(userId);
 
-        List<Dish> dishList = orderService.showDishesInOrder(order.getOrderId());
+//        List<Dish> dishList = orderService.showDishesInOrder(order.getOrderId());
 
-        if (order.getOrderStatus().equals(Status.COMPLETE)) {
-            Order newOrder = orderService.createAnOrder(userId);
-            dishList = orderService.showDishesInOrder(newOrder.getOrderId());
+//        if (order.getOrderStatus().equals(Status.COMPLETE)) {
+//            Order newOrder = orderService.createAnOrder(userId);
+//            dishList = orderService.showDishesInOrder(newOrder.getOrderId());
+//        }
+        if (order == null) {
+            order = orderService.createAnOrder(userId);
+//            dishList = orderService.showDishesInOrder(newOrder.getOrderId());
         }
+
+        List<Dish> dishList = orderService.showDishesInOrder(order.getOrderId());
 
         if (!dishList.isEmpty()) {
             try {
+                dishList = orderService.showDishesInOrder(order.getOrderId());
+
                 request.setAttribute(Constants.MENU_REQUEST_ATTRIBUTE, dishList);
 
-                request.getRequestDispatcher(JSP_PURSE_PAGE_PATH).forward(request, response);
+                request.getRequestDispatcher(JSP_ORDER_PAGE_PATH).forward(request, response);
             } catch (ServiceRuntimeException e) {
                 logger.log(Level.ERROR, e.getMessage(), e);
                 request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR);

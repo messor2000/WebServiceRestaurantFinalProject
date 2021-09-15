@@ -96,6 +96,21 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order showOrderById(int orderId) throws ServiceRuntimeException {
+        FactoryDao factoryDao = FactoryDao.getInstance();
+        OrderDao orderDao = factoryDao.getOrderDao();
+        Order order;
+
+        try {
+            order = orderDao.findOrderById(orderId);
+        } catch (DaoRuntimeException e) {
+            throw new ServiceRuntimeException("Error in source", e);
+        }
+
+        return order;
+    }
+
+    @Override
     public List<Order> showAllOrders() throws ServiceRuntimeException {
         FactoryDao factoryDao = FactoryDao.getInstance();
         OrderDao orderDao = factoryDao.getOrderDao();

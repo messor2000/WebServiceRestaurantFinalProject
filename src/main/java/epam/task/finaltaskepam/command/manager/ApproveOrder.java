@@ -1,8 +1,6 @@
 package epam.task.finaltaskepam.command.manager;
 
 import epam.task.finaltaskepam.command.Command;
-import epam.task.finaltaskepam.command.customer.MakeAnOrder;
-import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.dto.order.Order;
 import epam.task.finaltaskepam.dto.order.Status;
 import epam.task.finaltaskepam.error.ServiceRuntimeException;
@@ -30,6 +28,7 @@ public class ApproveOrder implements Command {
 
     public static final String JSP_MENU_PAGE_PATH = "WEB-INF/jsp/menu.jsp";
     private static final String MESSAGE_OF_ERROR = "Something wrong with menu, pls try later";
+    private static final String MESSAGE_OF_ERROR_2 = "You cant approve it";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -39,11 +38,17 @@ public class ApproveOrder implements Command {
 
         OrderService orderService = FactoryService.getInstance().getOrderService();
 
+        Order order = orderService.showOrderById(Integer.parseInt(orderId));
+
         try {
-            orderService.approveOrder(Integer.parseInt(orderId), Status.COMPLETE);
+            if (order.getOrderStatus().equals(Status.PAYED)) {
+                orderService.approveOrder(Integer.parseInt(orderId), Status.COMPLETE);
 
-            response.sendRedirect(previousQuery);
-
+                response.sendRedirect(previousQuery);
+            } else {
+                request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR_2);
+                request.getRequestDispatcher(Constants.ERROR_PAGE).forward(request, response);
+            }
         } catch (ServiceRuntimeException e) {
             logger.log(Level.ERROR, e.getMessage(), e);
             request.setAttribute(Constants.ERROR, MESSAGE_OF_ERROR);
