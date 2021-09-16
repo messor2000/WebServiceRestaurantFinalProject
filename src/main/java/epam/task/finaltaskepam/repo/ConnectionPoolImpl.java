@@ -125,9 +125,6 @@ public class ConnectionPoolImpl implements ConnectionPool {
         }
 
         try {
-//            if (usedConnections.remove(connection)) {
-//                freeConnections.put(connection);
-//            }
             usedConnections.remove(connection);
             freeConnections.put(connection);
         } catch (InterruptedException e) {
