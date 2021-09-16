@@ -5,6 +5,9 @@ import epam.task.finaltaskepam.dao.FactoryDao;
 import epam.task.finaltaskepam.dao.user.AppUserDao;
 import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.dto.AppUserPurse;
+import epam.task.finaltaskepam.error.ConnectionPoolException;
+import epam.task.finaltaskepam.repo.ConnectionPool;
+import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
 import epam.task.finaltaskepam.service.user.AppUserServiceImpl;
 
 import static org.junit.Assert.assertEquals;
@@ -14,6 +17,7 @@ import static org.mockito.Mockito.*;
 import epam.task.finaltaskepam.servlet.FrontController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -44,18 +48,8 @@ public class VisitorAbilitiesTests {
     HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
     HttpSession session = Mockito.mock(HttpSession.class);
     RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
-    AppUser user = Mockito.mock(AppUser.class);
-
-//    @Before
-//    public static void precondition(){
-//        logger.info("Registration Test");
-////        testUser.setIdUser(55);
-//        testUser.setUsername("testUser");
-//        testUser.setEmail("testmail@gmail.com");
-//        testUser.setPassword("password");
-//
-//        testUser.setPurse(testPurse);
-//    }
+//    AppUser user = Mockito.mock(AppUser.class);
+    AppUser user;
 
     @Before
     public void setUp() {
@@ -63,22 +57,58 @@ public class VisitorAbilitiesTests {
         response = mock(HttpServletResponse.class);
         session = mock(HttpSession.class);
         dispatcher = mock(RequestDispatcher.class);
-        user = mock(AppUser.class);
+
+//        FactoryDao factory = FactoryDao.getInstance();
+//        ConnectionPool pool = ConnectionPoolImpl.getInstance();
+//        AppUserDao userDao = factory.getUserDao();
+//
+//        try {
+//            pool.init();
+//            String userNickname= "testUser2";
+//            String userEmail= "testuser2@gmail.com";
+//            String userPass= "testUserPass";
+//
+//            user = userDao.register(userNickname, userEmail, userPass);
+//        } catch (ConnectionPoolException e) {
+//            e.printStackTrace();
+//        }
+
+//        user = mock(AppUser.class);
+//
+//        user.setUsername("testUser");
+//        user.setEmail("testmail@gmail.com");
+//        user.setPassword("password");
     }
 
 
 
     @Test
-    public void registrationTest() throws IOException {
+    public void registrationTest() throws IOException, ServletException {
         when(request.getParameter("command")).thenReturn("registration");
         when(session.getAttribute("username")).thenReturn(user.getUsername());
         when(session.getAttribute("role")).thenReturn(user.getRole());
+        when(session.getAttribute("user")).thenReturn(user);
 
 //        when(session.getAttribute("name_en")).thenReturn(faculty.getNameEn());
 
-        new FrontController().doGet(request, response);
+//        new FrontController().doGet(request, response);
+        new Register().execute(request, response);
         verify(response, atLeast(1)).sendRedirect(anyString());
     }
 
+    @Test
+    public void testNoCommand() throws ServletException, IOException {
+        when(request.getParameter("command")).thenReturn("invalid_command");
+        new FrontController().doGet(request, response);
+        verify(response, times(1)).sendRedirect(anyString());
+    }
 
+//    @After
+//    public void clean() {
+//        FactoryDao factory = FactoryDao.getInstance();
+////        ConnectionPool pool = ConnectionPoolImpl.getInstance();
+//        AppUserDao userDao = factory.getUserDao();
+//
+//        userDao.deleteUser(user.getUsername());
+//    }
 }

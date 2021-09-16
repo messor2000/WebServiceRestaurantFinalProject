@@ -6,7 +6,6 @@ import epam.task.finaltaskepam.error.DaoRuntimeException;
 import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
 import epam.task.finaltaskepam.repo.Request;
 import epam.task.finaltaskepam.util.Util;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -1,6 +1,5 @@
 package service;
 
-import dao.AppUserDaoTests;
 import epam.task.finaltaskepam.dao.FactoryDao;
 import epam.task.finaltaskepam.dao.user.AppUserDao;
 import epam.task.finaltaskepam.dto.AppUser;
@@ -176,17 +175,17 @@ public class AppUserServiceTests {
             byte[] password2 = "password".getBytes();
 
             AppUser user = userService.register(username, email, password, password2);
+            AppUserPurse purse;
 
-            AppUserPurse purseBefore = userService.checkPurseAmount(user.getIdUser());
-            userService.fillUpAPurse(user.getIdUser(), 100);
-            AppUserPurse purseAfter = userService.checkPurseAmount(user.getIdUser());
+            purse = userService.fillUpAPurse(user.getIdUser(), 100);
+            AppUserPurse purseAfter = userService.checkPurseAmount(purse.getIdPurse());
 
             userDao.deleteUser(username);
 
             Assert.assertNotEquals(user, null);
-            Assert.assertEquals(0, purseBefore.getAmount());
+            Assert.assertEquals(0, purse.getAmount());
             Assert.assertEquals(100, purseAfter.getAmount());
-            Assert.assertEquals(purseBefore.getAmount()+100, purseAfter.getAmount());
+            Assert.assertEquals(purse.getAmount()+100, purseAfter.getAmount());
 
         } catch (ConnectionPoolException | ServiceRuntimeException | DaoRuntimeException e) {
             logger.log(Level.WARN, e);

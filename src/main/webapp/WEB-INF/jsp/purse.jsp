@@ -12,6 +12,8 @@
 <fmt:setBundle basename="locale" var="locale"/>
 <fmt:message bundle="${locale}" key="locale.cancel" var="cancel"/>
 <fmt:message bundle="${locale}" key="locale.purse" var="purse"/>
+<fmt:message bundle="${locale}" key="locale.purseAmount" var="purseAmount"/>
+<fmt:message bundle="${locale}" key="locale.topUp" var="topUp"/>
 
 <!DOCTYPE html>
 <html>
@@ -23,8 +25,6 @@
     <link rel="stylesheet" href="../../css/first.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="shortcut icon" href="images/main/favicon_16x16.png">
-
 </head>
 <body onload="active()">
 
@@ -48,7 +48,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Amount: ${requestScope.purse.amount}</li>
+                                    <li class="list-group-item">${purseAmount}:${requestScope.purse.amount}</li>
                                 </ul>
                             </div>
                         </div>
@@ -63,13 +63,13 @@
                                 <span id="amount" class="red"></span>
                                 <div class="col-sm-7 input-amount">
                                     <label for="purseAmount"></label>
-                                    <input type="text" class="form-control" id="purseAmount" placeholder="Пополнить кошелек"
+                                    <input type="text" class="form-control" id="purseAmount" placeholder=${topUp}
                                            name="amount" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-7 batton-submit">
-                                    <button type="submit" class="btn btn-primary">Пополнить</button>
+                                    <button type="submit" class="btn btn-primary">${topUp}</button>
                                 </div>
                             </div>
                         </div>

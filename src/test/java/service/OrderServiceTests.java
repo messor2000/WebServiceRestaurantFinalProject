@@ -1,14 +1,19 @@
-package dao;
+package service;
 
+import dao.DishDaoTests;
 import epam.task.finaltaskepam.dao.FactoryDao;
 import epam.task.finaltaskepam.dao.dish.DishDao;
 import epam.task.finaltaskepam.dao.order.OrderDao;
+import epam.task.finaltaskepam.dao.user.AppUserDao;
+import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.dto.order.Order;
 import epam.task.finaltaskepam.dto.order.Status;
 import epam.task.finaltaskepam.error.ConnectionPoolException;
 import epam.task.finaltaskepam.error.DaoRuntimeException;
 import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
+import epam.task.finaltaskepam.service.FactoryService;
+import epam.task.finaltaskepam.service.order.OrderServiceImpl;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,31 +25,44 @@ import java.util.List;
 /**
  * @author Aleksandr Ovcharenko
  */
-public class OrderDaoTests {
+public class OrderServiceTests {
 
     private static final Logger logger = LogManager.getLogger(DishDaoTests.class);
 
     @Test
     public void addOrderTest() {
-        FactoryDao factory;
         ConnectionPoolImpl pool = null;
+        FactoryService factoryService;
+        OrderServiceImpl orderService;
         OrderDao orderDao;
+        FactoryDao factory;
+        AppUserDao appUserDao;
         try{
-            factory = FactoryDao.getInstance();
             pool = ConnectionPoolImpl.getInstance();
+            factoryService = FactoryService.getInstance();
+            orderService = factoryService.getOrderService();
+            factory = FactoryDao.getInstance();
             orderDao = factory.getOrderDao();
+            appUserDao = factory.getUserDao();
 
             pool.init();
-            int userId = 10;
+            String userNickname= "userForTests";
+            String userEmail= "userForTests@gmail.com";
+            String userPass= "testUserPass";
+            AppUser user = appUserDao.register(userNickname, userEmail, userPass);
 
-            Order order = orderDao.createAnOrder(userId);
+            Order order = orderService.createAnOrder(user.getIdUser());
+
+            int userId = user.getIdUser();
 
             orderDao.deleteOrder(userId);
+            appUserDao.deleteUser(user.getUsername());
 
             Assert.assertNotEquals(order, null);
             Assert.assertEquals(userId, order.getOrderId());
             Assert.assertEquals(userId, order.getUserId());
             Assert.assertEquals(Status.WAITING_FOR_PAY, order.getOrderStatus());
+
         } catch (ConnectionPoolException | DaoRuntimeException e) {
             logger.log(Level.WARN, e);
         } finally {
@@ -59,24 +77,35 @@ public class OrderDaoTests {
 
     @Test
     public void showAllOrdersTest() {
-        FactoryDao factory;
         ConnectionPoolImpl pool = null;
+        FactoryService factoryService;
+        OrderServiceImpl orderService;
         OrderDao orderDao;
+        FactoryDao factory;
+        AppUserDao appUserDao;
+
         try{
-            factory = FactoryDao.getInstance();
             pool = ConnectionPoolImpl.getInstance();
+            factoryService = FactoryService.getInstance();
+            orderService = factoryService.getOrderService();
+            factory = FactoryDao.getInstance();
             orderDao = factory.getOrderDao();
+            appUserDao = factory.getUserDao();
 
             pool.init();
-            int userId = 10;
+            String userNickname= "userForTests";
+            String userEmail= "userForTests@gmail.com";
+            String userPass= "testUserPass";
+            AppUser user = appUserDao.register(userNickname, userEmail, userPass);
 
-            List<Order> ordersBefore = orderDao.showAllOrders();
+            List<Order> ordersBefore = orderService.showAllOrders();
 
-            Order order = orderDao.createAnOrder(userId);
+            Order order = orderService.createAnOrder(user.getIdUser());
 
-            List<Order> ordersAfter = orderDao.showAllOrders();
+            List<Order> ordersAfter = orderService.showAllOrders();
 
             orderDao.deleteOrder(order.getOrderId());
+            appUserDao.deleteUser(user.getUsername());
 
             Assert.assertNotEquals(ordersAfter, null);
             Assert.assertEquals(ordersBefore.size()+1, ordersAfter.size());
@@ -94,31 +123,44 @@ public class OrderDaoTests {
 
     @Test
     public void showDishesInOrderTest() {
-        FactoryDao factory;
         ConnectionPoolImpl pool = null;
+        FactoryService factoryService;
+        OrderServiceImpl orderService;
+        FactoryDao factory;
         OrderDao orderDao;
         DishDao dishDao;
+        AppUserDao appUserDao;
+
         try{
             factory = FactoryDao.getInstance();
             pool = ConnectionPoolImpl.getInstance();
+            factoryService = FactoryService.getInstance();
+            orderService = factoryService.getOrderService();
             orderDao = factory.getOrderDao();
             dishDao = factory.getDishDao();
+            appUserDao = factory.getUserDao();
 
             pool.init();
-            int userId = 10;
+            String userNickname= "userForTests";
+            String userEmail= "userForTests@gmail.com";
+            String userPass= "testUserPass";
+            AppUser user = appUserDao.register(userNickname, userEmail, userPass);
+
+            int userId = user.getIdUser();
 
             List<Dish> dishes = dishDao.getDishByName("Ice Cake");
             Dish dish = dishes.get(0);
 
-            Order order = orderDao.createAnOrder(userId);
+            Order order = orderService.createAnOrder(userId);
 
-            orderDao.putDishIntoOrder(dish.getName(), order.getOrderId());
+            orderService.makeAnOrder(dish.getName(), order.getOrderId());
 
-            List<Dish> dishesFromOrder = orderDao.showDishesInOrder(userId);
+            List<Dish> dishesFromOrder = orderService.showDishesInOrder(userId);
 
             Dish dishFromOrder = dishesFromOrder.get(0);
 
             orderDao.deleteOrder(userId);
+            appUserDao.deleteUser(user.getUsername());
 
             Assert.assertNotEquals(dishesFromOrder, null);
             Assert.assertEquals(dish.getName(), dishFromOrder.getName());
@@ -139,22 +181,34 @@ public class OrderDaoTests {
 
     @Test
     public void showUserOrderTest() {
-        FactoryDao factory;
         ConnectionPoolImpl pool = null;
+        FactoryService factoryService;
+        OrderServiceImpl orderService;
+        FactoryDao factory;
         OrderDao orderDao;
+        AppUserDao appUserDao;
+
         try{
             factory = FactoryDao.getInstance();
             pool = ConnectionPoolImpl.getInstance();
+            factoryService = FactoryService.getInstance();
+            orderService = factoryService.getOrderService();
             orderDao = factory.getOrderDao();
+            appUserDao = factory.getUserDao();
 
             pool.init();
-            int userId = 10;
+            String userNickname= "userForTests";
+            String userEmail= "userForTests@gmail.com";
+            String userPass= "testUserPass";
+            AppUser user = appUserDao.register(userNickname, userEmail, userPass);
+            int userId = user.getIdUser();
 
-            Order order = orderDao.createAnOrder(userId);
+            Order order = orderService.createAnOrder(userId);
 
-            Order orderFounded = orderDao.showUserOrder(userId);
+            Order orderFounded = orderService.showOrder(userId);
 
             orderDao.deleteOrder(order.getOrderId());
+            appUserDao.deleteUser(user.getUsername());
 
             Assert.assertNotEquals(order, null);
             Assert.assertNotEquals(orderFounded, null);
@@ -175,22 +229,34 @@ public class OrderDaoTests {
 
     @Test
     public void showFindOrderByIdTest() {
-        FactoryDao factory;
         ConnectionPoolImpl pool = null;
+        FactoryService factoryService;
+        OrderServiceImpl orderService;
+        FactoryDao factory;
         OrderDao orderDao;
+        AppUserDao appUserDao;
+
         try{
             factory = FactoryDao.getInstance();
             pool = ConnectionPoolImpl.getInstance();
+            factoryService = FactoryService.getInstance();
+            orderService = factoryService.getOrderService();
             orderDao = factory.getOrderDao();
+            appUserDao = factory.getUserDao();
 
             pool.init();
-            int userId = 10;
+            String userNickname= "userForTests";
+            String userEmail= "userForTests@gmail.com";
+            String userPass= "testUserPass";
+            AppUser user = appUserDao.register(userNickname, userEmail, userPass);
+            int userId = user.getIdUser();
 
-            Order order = orderDao.createAnOrder(userId);
+            Order order = orderService.createAnOrder(userId);
 
-            Order orderFounded = orderDao.findOrderById(order.getOrderId());
+            Order orderFounded = orderService.showOrderById(order.getOrderId());
 
             orderDao.deleteOrder(userId);
+            appUserDao.deleteUser(user.getUsername());
 
             Assert.assertNotEquals(order, null);
             Assert.assertNotEquals(orderFounded, null);
@@ -211,30 +277,43 @@ public class OrderDaoTests {
 
     @Test
     public void changeOrderStatusTest() {
-        FactoryDao factory;
         ConnectionPoolImpl pool = null;
+        FactoryService factoryService;
+        OrderServiceImpl orderService;
+        FactoryDao factory;
         OrderDao orderDao;
+        AppUserDao appUserDao;
+
         try{
             factory = FactoryDao.getInstance();
             pool = ConnectionPoolImpl.getInstance();
+            factoryService = FactoryService.getInstance();
+            orderService = factoryService.getOrderService();
             orderDao = factory.getOrderDao();
+            appUserDao = factory.getUserDao();
 
             pool.init();
-            int userId = 10;
+            String userNickname= "userForTests";
+            String userEmail= "userForTests@gmail.com";
+            String userPass= "testUserPass";
+            AppUser user = appUserDao.register(userNickname, userEmail, userPass);
+            int userId = user.getIdUser();
 
-            Order order = orderDao.createAnOrder(userId);
+            Order order = orderService.createAnOrder(userId);
 
-            Assert.assertEquals( Status.WAITING_FOR_PAY, order.getOrderStatus());
+            Assert.assertEquals(Status.WAITING_FOR_PAY, order.getOrderStatus());
 
-            orderDao.changeOrderStatus(order.getOrderId(), Status.PAYED);
+            orderService.approveOrder(order.getOrderId(), Status.PAYED);
 
-            Assert.assertEquals( Status.PAYED, order.getOrderStatus());
+            Assert.assertEquals(Status.PAYED, order.getOrderStatus());
 
-            orderDao.changeOrderStatus(order.getOrderId(), Status.COMPLETE);
+            orderService.approveOrder(order.getOrderId(), Status.COMPLETE);
 
-            Assert.assertEquals( Status.COMPLETE, order.getOrderStatus());
+            Assert.assertEquals(Status.COMPLETE, order.getOrderStatus());
 
             orderDao.deleteOrder(userId);
+            appUserDao.deleteUser(user.getUsername());
+
         } catch (ConnectionPoolException | DaoRuntimeException e) {
             logger.log(Level.WARN, e);
         } finally {
@@ -249,35 +328,47 @@ public class OrderDaoTests {
 
     @Test
     public void deleteDishFromOrderTest() {
-        FactoryDao factory;
         ConnectionPoolImpl pool = null;
+        FactoryService factoryService;
+        OrderServiceImpl orderService;
+        FactoryDao factory;
         OrderDao orderDao;
         DishDao dishDao;
+        AppUserDao appUserDao;
+
         try{
             factory = FactoryDao.getInstance();
             pool = ConnectionPoolImpl.getInstance();
+            factoryService = FactoryService.getInstance();
+            orderService = factoryService.getOrderService();
             orderDao = factory.getOrderDao();
             dishDao = factory.getDishDao();
+            appUserDao = factory.getUserDao();
 
             pool.init();
-            int userId = 10;
+            String userNickname= "userForTests";
+            String userEmail= "userForTests@gmail.com";
+            String userPass= "testUserPass";
+            AppUser user = appUserDao.register(userNickname, userEmail, userPass);
+            int userId = user.getIdUser();
 
             List<Dish> dishes = dishDao.getDishByName("Ice Cake");
             Dish dish = dishes.get(0);
 
-            Order order = orderDao.createAnOrder(userId);
+            Order order = orderService.createAnOrder(userId);
 
-            orderDao.putDishIntoOrder(dish.getName(), order.getOrderId());
+            orderService.makeAnOrder(dish.getName(), order.getOrderId());
 
-            List<Dish> dishesFromOrder = orderDao.showDishesInOrder(userId);
+            List<Dish> dishesFromOrder = orderService.showDishesInOrder(userId);
 
-            Assert.assertNotNull(dishesFromOrder);
+            Assert.assertNotEquals(dishesFromOrder, null);
 
             orderDao.deleteDishFromOrder(order.getOrderId());
 
             Assert.assertNull(dishesFromOrder);
 
             orderDao.deleteOrder(userId);
+            appUserDao.deleteUser(user.getUsername());
 
         } catch (ConnectionPoolException | DaoRuntimeException e) {
             logger.log(Level.WARN, e);

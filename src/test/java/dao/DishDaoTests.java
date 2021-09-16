@@ -2,7 +2,6 @@ package dao;
 
 import epam.task.finaltaskepam.dao.FactoryDao;
 import epam.task.finaltaskepam.dao.dish.DishDao;
-import epam.task.finaltaskepam.dao.dish.DishDaoImpl;
 import epam.task.finaltaskepam.dto.Dish;
 import epam.task.finaltaskepam.error.ConnectionPoolException;
 import epam.task.finaltaskepam.error.DaoRuntimeException;

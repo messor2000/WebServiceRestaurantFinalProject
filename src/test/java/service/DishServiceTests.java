@@ -32,10 +32,10 @@ public class DishServiceTests {
         MenuService menuService;
 
         try{
-            factoryService = FactoryService.getInstance();
             factoryDao = FactoryDao.getInstance();
             pool = ConnectionPoolImpl.getInstance();
             dishDao = factoryDao.getDishDao();
+            factoryService = FactoryService.getInstance();
             menuService = factoryService.getMenuService();
 
             pool.init();

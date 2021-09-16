@@ -19,18 +19,19 @@
 <fmt:message bundle="${locale}" key="locale.dishName" var="name"/>
 <fmt:message bundle="${locale}" key="locale.dishPrice" var="price"/>
 <fmt:message bundle="${locale}" key="locale.category" var="category"/>
+<fmt:message bundle="${locale}" key="locale.order" var="order"/>
+<fmt:message bundle="${locale}" key="locale.pay" var="pay"/>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Order</title>
+    <title>${order}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/first.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="shortcut icon" href="images/main/favicon_16x16.png">
 
 </head>
 <body onload="active()">
@@ -47,7 +48,7 @@
         <c:import url="template/leftbar.jsp"/>
 
         <div class="col-sm-8 text-left mainContent">
-            <h1>Order</h1>
+            <h1>${order}</h1>
 
             <div class="col-sm-8 text-left mainContent">
                 <div class="col-sm-6">
@@ -66,13 +67,11 @@
                     </c:forEach>
                 </div>
                 <a href="FrontController?command=pay">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Оплатить</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">${pay}</button>
                 </a>
             </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 <c:import url="template/footer.jsp"/>
 </body>

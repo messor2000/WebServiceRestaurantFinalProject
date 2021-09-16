@@ -28,6 +28,9 @@
 <fmt:message bundle="${locale}" key="locale.byPrice" var="byPrice"/>
 <fmt:message bundle="${locale}" key="locale.byCategory" var="byCategory"/>
 <fmt:message bundle="${locale}" key="locale.cancel" var="cancel"/>
+<fmt:message bundle="${locale}" key="locale.replenishStock" var="replenishStock"/>
+<fmt:message bundle="${locale}" key="locale.putInBucket" var="putInBucket"/>
+<fmt:message bundle="${locale}" key="locale.amount" var="amount"/>
 
 <!DOCTYPE html>
 <html>
@@ -39,9 +42,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/first.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <%--    <script src="../../js/test.js"></script>--%>
-    <link rel="shortcut icon" href="images/main/favicon_16x16.png">
-
 </head>
 <body onload="active()">
 
@@ -100,7 +100,7 @@
 
                     <c:if test='${sessionScope.get("user").role eq "manager"}'>
                         <ol><a data-toggle="modal" data-target="#replenish-stock" href="#">
-                            <span class="glyphicon"></span>Replenish stock of dishes</a>
+                            <span class="glyphicon"></span>${replenishStock}</a>
                         </ol>
                     </c:if>
                 </div>
@@ -128,7 +128,7 @@
                                         <li class="list-group-item">${price}:${dish.price}</li>
                                         <li class="list-group-item">${category}:${dish.category}</li>
                                         <c:if test='${sessionScope.get("user").role eq "manager"}'>
-                                            <li class="list-group-item">Amount:${dish.amount}</li>
+                                            <li class="list-group-item">${dish.amount}:${dish.amount}</li>
                                         </c:if>
                                     </ul>
                                     <c:if test='${sessionScope.get("user").role eq "customer" || sessionScope.get("user").role eq "manager"}'>
@@ -136,7 +136,7 @@
 
                                             <a href="FrontController?command=make-an-order&dishName=${dish.name}">
                                                 <button type="button" class="btn btn-default"
-                                                        data-dismiss="modal">Положить в корзину
+                                                        data-dismiss="modal">${putInBucket}
                                                 </button>
                                             </a>
                                         </div>
@@ -162,10 +162,6 @@
                                 <span id="dishAmount" class="red"></span>
                                 <div class="form-group">
                                     <div class="col-sm-7">
-                                        <%--                                        <label for="dishName"></label>--%>
-                                        <%--                                        <input type="text" class="form-control" id="dishName" placeholder="${name}"--%>
-                                        <%--                                               name="dishName" required>--%>
-
                                         <label>
                                             <select class="sortStat" name="dishName">
                                                 <c:forEach items="${requestScope.menu}" var="dish">
@@ -176,13 +172,13 @@
                                     </div>
                                     <div class="col-sm-7">
                                         <label for="amount"></label>
-                                        <input type="text" class="form-control" id="amount" placeholder="amount"
+                                        <input type="text" class="form-control" id="amount" placeholder=${amount}
                                                name="amount" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-7">
-                                        <button type="submit" class="btn btn-primary">Replenish stock</button>
+                                        <button type="submit" class="btn btn-primary">${replenishStock}</button>
                                     </div>
                                 </div>
                             </form>

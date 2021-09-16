@@ -29,9 +29,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/first.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<%--    <link rel="shortcut icon" href="images/main/favicon_16x16.png">--%>
-
-
 </head>
 <body onload="active()">
 
