@@ -14,7 +14,6 @@
 <fmt:message bundle="${locale}" key="locale.username" var="username"/>
 <fmt:message bundle="${locale}" key="locale.password" var="password"/>
 <fmt:message bundle="${locale}" key="locale.cancel" var="cancel"/>
-<%--<fmt:message bundle="${locale}" key="locale.movieRateEntrance" var="movieRateEntrance"/>--%>
 <fmt:message bundle="${locale}" key="locale.signIn" var="signIn"/>
 <!DOCTYPE html>
 <html>
@@ -27,8 +26,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/first.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<%--    <link rel="shortcut icon" href="images/main/favicon_16x16.png">--%>
-
 
 </head>
 <body onload="active()">
@@ -88,9 +85,6 @@
                 </div>
             </div>
         </div>
-
-<%--        <c:import url="template/sideright.jsp"/>--%>
-
     </div>
 </div>
 

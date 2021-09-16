@@ -23,10 +23,10 @@ public class MenuServiceImpl implements MenuService {
         try {
             menu = dishDao.getAllDishes();
             if (menu == null || menu.isEmpty()) {
-                throw new ServiceRuntimeException("No dishes matching your query");
+                throw new ServiceRuntimeException(NO_DISHES);
             }
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source!", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
         return menu;
     }
@@ -41,10 +41,10 @@ public class MenuServiceImpl implements MenuService {
         try {
             menu = dishDao.getDishesByHighPrice();
             if (menu == null || menu.isEmpty()) {
-                throw new ServiceRuntimeException("No dishes matching your query");
+                throw new ServiceRuntimeException(NO_DISHES);
             }
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source!", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
         return menu;
     }
@@ -59,10 +59,10 @@ public class MenuServiceImpl implements MenuService {
         try {
             menu = dishDao.getDishesByLowPrice();
             if (menu == null || menu.isEmpty()) {
-                throw new ServiceRuntimeException("No dishes matching your query");
+                throw new ServiceRuntimeException(NO_DISHES);
             }
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source!", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
         return menu;
     }
@@ -77,10 +77,10 @@ public class MenuServiceImpl implements MenuService {
         try {
             menu = dishDao.getDishesByCategory(category);
             if (menu == null || menu.isEmpty()) {
-                throw new ServiceRuntimeException("No dishes matching your query");
+                throw new ServiceRuntimeException(NO_DISHES);
             }
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source!", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
         return menu;
     }
@@ -95,10 +95,10 @@ public class MenuServiceImpl implements MenuService {
         try {
             menu = dishDao.getDishByName(name);
             if (menu == null || menu.isEmpty()) {
-                throw new ServiceRuntimeException("No dishes matching your query");
+                throw new ServiceRuntimeException(NO_DISHES);
             }
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source!", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
         return menu;
     }
@@ -112,10 +112,10 @@ public class MenuServiceImpl implements MenuService {
         try {
             menu = dishDao.addDish(name, price, category, amount);
             if (menu == null || menu.isEmpty()) {
-                throw new ServiceRuntimeException("No dishes matching your query");
+                throw new ServiceRuntimeException(NO_DISHES);
             }
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source!", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
 
         return menu;
@@ -130,10 +130,10 @@ public class MenuServiceImpl implements MenuService {
         try {
             dish = dishDao.getDishById(dishId);
             if (dish == null) {
-                throw new ServiceRuntimeException("No dishes matching your query");
+                throw new ServiceRuntimeException(NO_DISHES);
             }
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source!", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
 
         return dish;
@@ -147,8 +147,11 @@ public class MenuServiceImpl implements MenuService {
         try {
             dishDao.replenishStock(dishName, amount);
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source!", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
 
     }
+
+    private static final String NO_DISHES = "No dishes matching your query";
+    private static final String ERROR_IN_SOURCE = "Error in source";
 }

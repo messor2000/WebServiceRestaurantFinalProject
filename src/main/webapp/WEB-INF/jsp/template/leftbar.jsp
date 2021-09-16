@@ -21,15 +21,17 @@
 <fmt:message bundle="${locale}" key="locale.add" var="add"/>
 <fmt:message bundle="${locale}" key="locale.dishPrice" var="price"/>
 <fmt:message bundle="${locale}" key="locale.add" var="addDish"/>
+<fmt:message bundle="${locale}" key="locale.orders" var="orders"/>
+<fmt:message bundle="${locale}" key="locale.watchOrder" var="watchOrder"/>
 
 <div class="col-sm-2 sidenav">
     <c:if test='${sessionScope.get("user").role eq "manager"}'>
         <p><a class="manager" href="FrontController?command=show-all-users">${allUsers}</a></p>
         <p><a class="manager" href="FrontController?command=add-dish">${addDish}</a></p>
-        <p><a class="manager" href="FrontController?command=show-all-orders">Все заказы</a></p>
+        <p><a class="manager" href="FrontController?command=show-all-orders">${orders}</a></p>
     </c:if>
     <c:if test='${sessionScope.get("user").role eq "manager" || sessionScope.get("user").role eq "customer"}'>
         <p><a href="FrontController?command=show-purse">${purse}</a></p>
-        <p><a href="FrontController?command=show-order">Посмотреть заказ</a></p>
+        <p><a href="FrontController?command=show-order">${watchOrder}</a></p>
     </c:if>
 </div>

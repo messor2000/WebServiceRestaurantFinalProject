@@ -20,8 +20,10 @@ import java.util.List;
 /**
  * @author Aleksandr Ovcharenko
  */
-public class DishDaoImpl implements DishDao {
+public class DishDaoImpl extends Dish implements DishDao {
+
     private static final Logger logger = LogManager.getLogger(DishDaoImpl.class);
+    private static final long serialVersionUID = 5566685127381260994L;
 
     private static final String DISH_ID = "dish_id";
     private static final String NAME = "dish_name";
@@ -65,9 +67,9 @@ public class DishDaoImpl implements DishDao {
             return menu;
 
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Dish sql error", e);
+            throw new DaoRuntimeException(SQL_ERROR, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Dish pool connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_ERROR, e);
         } finally {
             Util.closeResource(connection, statement, resultSet);
         }
@@ -100,9 +102,9 @@ public class DishDaoImpl implements DishDao {
             return menu;
 
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Dish sql error", e);
+            throw new DaoRuntimeException(SQL_ERROR, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Dish pool connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_ERROR, e);
         } finally {
             Util.closeResource(connection, statement, resultSet);
         }
@@ -135,9 +137,9 @@ public class DishDaoImpl implements DishDao {
             return menu;
 
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Dish sql error", e);
+            throw new DaoRuntimeException(SQL_ERROR, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Dish pool connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_ERROR, e);
         } finally {
             Util.closeResource(connection, statement, resultSet);
         }
@@ -173,9 +175,9 @@ public class DishDaoImpl implements DishDao {
             return menu;
 
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Dish sql error", e);
+            throw new DaoRuntimeException(SQL_ERROR, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Dish pool connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_ERROR, e);
         } finally {
             Util.closeResource(connection, statement, resultSet);
         }
@@ -195,17 +197,7 @@ public class DishDaoImpl implements DishDao {
 
             resultSet = statement.executeQuery();
             List<Dish> dishes = new ArrayList<>();
-//            Dish dish = null;
 
-//            while (resultSet.next()) {
-//                dish = new Dish.Builder()
-//                        .withDishId(resultSet.getInt(DISH_ID))
-//                        .withName(resultSet.getString(NAME))
-//                        .withPrice(resultSet.getLong(PRICE))
-//                        .withCategory(resultSet.getString(CATEGORY))
-//                        .withAmount(resultSet.getInt(AMOUNT))
-//                        .build();
-//            }
             while (resultSet.next()) {
                 Dish dish = new Dish.Builder()
                         .withDishId(resultSet.getInt(DISH_ID))
@@ -219,12 +211,10 @@ public class DishDaoImpl implements DishDao {
             }
             return dishes;
 
-//            return dish;
-
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Dish sql error", e);
+            throw new DaoRuntimeException(SQL_ERROR, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Dish pool connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_ERROR, e);
         } finally {
             Util.closeResource(connection, statement, resultSet);
         }
@@ -258,9 +248,9 @@ public class DishDaoImpl implements DishDao {
 
             return dish;
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Dish sql error", e);
+            throw new DaoRuntimeException(SQL_ERROR, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Dish pool connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_ERROR, e);
         } finally {
             Util.closeResource(connection, statement, resultSet);
         }
@@ -287,9 +277,9 @@ public class DishDaoImpl implements DishDao {
             }
 
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Add dish sql error", e);
+            throw new DaoRuntimeException(SQL_ERROR, e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Dish pool connection error", e);
+            throw new DaoRuntimeException(CONNECTION_POOL_ERROR, e);
         } finally {
             Util.closeResource(connection, statement);
         }
@@ -310,10 +300,6 @@ public class DishDaoImpl implements DishDao {
             statement.setString(2, dishName);
             statement.executeUpdate();
 
-//            if (i > 0) {
-//                return getDishByName(dishName);
-//            }
-
         } catch (SQLException e) {
             throw new DaoRuntimeException("Replenish stock sql error", e);
         } catch (ConnectionPoolException e) {
@@ -321,7 +307,29 @@ public class DishDaoImpl implements DishDao {
         } finally {
             Util.closeResource(connection, statement);
         }
-
-//        return null;
     }
+
+    @Override
+    public void deleteDish(String dishName) throws DaoRuntimeException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = ConnectionPoolImpl.getInstance().takeConnection();
+
+            statement = connection.prepareStatement(Request.DELETE_DISH_BY_NAME);
+            statement.setString(1, dishName);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DaoRuntimeException(SQL_ERROR, e);
+        } catch (ConnectionPoolException e) {
+            throw new DaoRuntimeException(CONNECTION_POOL_ERROR, e);
+        } finally {
+            Util.closeResource(connection, statement);
+        }
+    }
+
+    private static final String SQL_ERROR = "Dish sql error";
+    private static final String CONNECTION_POOL_ERROR = "Dish pool connection error";
 }

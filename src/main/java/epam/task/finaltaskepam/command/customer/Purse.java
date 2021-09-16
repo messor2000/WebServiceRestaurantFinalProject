@@ -31,13 +31,13 @@ public class Purse implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Util.saveCurrentQueryToSession(request);
 
-        int userID = 0;
+        int userId = 0;
 
         Object object = request.getSession(false).getAttribute(Constants.USER_REQUEST_ATTRIBUTE);
 
         if (object.getClass().equals(AppUser.class)) {
             AppUser user = (AppUser) object;
-            userID = user.getIdUser();
+            userId = user.getIdUser();
         }
 
         AppUserPurse purse;
@@ -45,7 +45,7 @@ public class Purse implements Command {
 
         AppUserService appUserService = FactoryService.getInstance().getUserService();
         try {
-            purse = appUserService.checkPurseAmount(userID);
+            purse = appUserService.checkPurseAmount(userId);
 
             request.setAttribute(Constants.USER_PURSE_REQUEST_ATTRIBUTE, purse);
 

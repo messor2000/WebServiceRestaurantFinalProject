@@ -18,7 +18,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 /**
@@ -28,7 +27,6 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
 
     private static final Logger logger = LogManager.getLogger(AppUserDaoImpl.class);
     private static final long serialVersionUID = 5566685127381260993L;
-    private int counter = 10;
 
     public static final AppUserDao instance = new AppUserDaoImpl();
 
@@ -68,6 +66,7 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
                     .withIdUser(resultSet.getInt(1))
                     .withUsername(resultSet.getString(USERNAME))
                     .withEmail(resultSet.getString(EMAIL))
+                    .withPassword(resultSet.getString(PASSWORD))
                     .withRole(resultSet.getString(ROLE))
                     .withPurse(getPurse())
                     .build();
@@ -84,20 +83,25 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
     public AppUser register(String login, String email, String password) {
         Connection connection = null;
         PreparedStatement statement = null;
+        ResultSet resultSet = null;
         try {
             connection = ConnectionPoolImpl.getInstance().takeConnection();
 
-            statement = connection.prepareStatement(Request.CREATE_USER);
+            statement = connection.prepareStatement(Request.CREATE_USER, Statement.RETURN_GENERATED_KEYS);
 
-            statement.setInt(1, counter);
-            statement.setString(2, login);
-            statement.setString(3, email);
-            statement.setString(4, password);
-            int i = statement.executeUpdate();
+            statement.setString(1, login);
+            statement.setString(2, email);
+            statement.setString(3, password);
 
-            if (i > 0) {
-                createCheckForUser(counter);
-                counter++;
+            if (statement.executeUpdate() != 1) {
+                return null;
+            }
+
+            resultSet = statement.getGeneratedKeys();
+
+            if (resultSet.next()) {
+                int userId = resultSet.getInt(1);
+                createCheckForUser(userId);
                 return authorize(login, password);
             }
 
@@ -106,7 +110,7 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
         } catch (ConnectionPoolException e) {
             throw new DaoRuntimeException("Login pool connection error", e);
         } finally {
-            Util.closeResource(connection, statement);
+            Util.closeResource(connection, statement, resultSet);
         }
         return null;
     }
@@ -190,9 +194,9 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
             }
 
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Create check sql error", e);
+            throw new DaoRuntimeException("Fill up a purse sql error", e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Create check  connection error", e);
+            throw new DaoRuntimeException("Fill up a purse connection error", e);
         } finally {
             Util.closeResource(connection, statement);
         }
@@ -221,36 +225,67 @@ public class AppUserDaoImpl extends AppUser implements AppUserDao {
                         .build();
             }
         } catch (SQLException e) {
-            throw new DaoRuntimeException("Create check sql error", e);
+            throw new DaoRuntimeException("Get purse amount sql error", e);
         } catch (ConnectionPoolException e) {
-            throw new DaoRuntimeException("Create check  connection error", e);
+            throw new DaoRuntimeException("Get purse amount connection error", e);
         } finally {
             Util.closeResource(connection, statement);
         }
         return null;
     }
 
-    private static void rollback(Connection connection) {
-        if (connection != null) {
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                logger.log(Level.ERROR, e);
+    @Override
+    public AppUser getUserByNickname(String username) throws DaoRuntimeException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = ConnectionPoolImpl.getInstance().takeConnection();
+
+            statement = connection.prepareStatement(Request.FIND_USER_BY_USERNAME);
+            statement.setString(1, username);
+            resultSet = statement.executeQuery();
+
+
+            if (resultSet.next()) {
+                return new Builder()
+                        .withIdUser(resultSet.getInt(1))
+                        .withUsername(resultSet.getString(USERNAME))
+                        .withEmail(resultSet.getString(EMAIL))
+                        .withRole(resultSet.getString(ROLE))
+                        .withPurse(getPurse())
+                        .build();
             }
+
+        } catch (SQLException e) {
+            throw new DaoRuntimeException("Get user error", e);
+        } catch (ConnectionPoolException e) {
+            throw new DaoRuntimeException("Get user connection error", e);
+        } finally {
+            Util.closeResource(connection, statement, resultSet);
         }
+
+        return null;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        AppUserDaoImpl that = (AppUserDaoImpl) o;
-        return counter == that.counter;
-    }
+    public void deleteUser(String username) throws DaoRuntimeException {
+        Connection connection = null;
+        PreparedStatement statement = null;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), counter);
+        try {
+            connection = ConnectionPoolImpl.getInstance().takeConnection();
+
+            statement = connection.prepareStatement(Request.DELETE_USER_BY_USERNAME);
+            statement.setString(1, username);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DaoRuntimeException("delete user sql error", e);
+        } catch (ConnectionPoolException e) {
+            throw new DaoRuntimeException("delete user pool connection error", e);
+        } finally {
+            Util.closeResource(connection, statement);
+        }
     }
 }

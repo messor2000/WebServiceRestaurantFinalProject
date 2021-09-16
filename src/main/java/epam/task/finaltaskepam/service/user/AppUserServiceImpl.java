@@ -46,7 +46,7 @@ public class AppUserServiceImpl implements AppUserService {
                 throw new ServiceRuntimeException("Wrong login or password!");
             }
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
 
         return user;
@@ -80,7 +80,7 @@ public class AppUserServiceImpl implements AppUserService {
             }
 
         } catch (DaoRuntimeException | ServiceException e) {
-            throw new ServiceRuntimeException("Error in source!", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
 
         return user;
@@ -96,7 +96,7 @@ public class AppUserServiceImpl implements AppUserService {
         try {
             users = dao.getAllUsers();
         } catch (DaoRuntimeException | ServiceRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source!", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
 
 
@@ -112,7 +112,7 @@ public class AppUserServiceImpl implements AppUserService {
         try {
             purse = dao.fillUpAPurse(userId, amount);
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source!", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
 
         return purse;
@@ -127,10 +127,12 @@ public class AppUserServiceImpl implements AppUserService {
         try {
             purse = dao.getPurseAmount(userId);
         } catch (DaoRuntimeException e) {
-            throw new ServiceRuntimeException("Error in source!", e);
+            throw new ServiceRuntimeException(ERROR_IN_SOURCE, e);
         }
 
         return purse;
     }
+
+    private static final String ERROR_IN_SOURCE = "Error in source";
 }
 

@@ -1,6 +1,7 @@
 package epam.task.finaltaskepam.dto.order;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.Objects;
 
 /**
@@ -12,6 +13,8 @@ public class Order implements Serializable {
     private int orderId;
     private Status orderStatus;
     private int userId;
+    private Date creationDate;
+    private Date updateDate;
 
     public static final class Builder {
         private final Order order;
@@ -32,6 +35,16 @@ public class Order implements Serializable {
 
         public Builder withUserId(int userId) {
             order.userId = userId;
+            return this;
+        }
+
+        public Builder withCreationDate(Date creationDate) {
+            order.creationDate = creationDate;
+            return this;
+        }
+
+        public Builder withUpdateDate(Date updateDate) {
+            order.updateDate = updateDate;
             return this;
         }
 
@@ -67,6 +80,24 @@ public class Order implements Serializable {
         return this;
     }
 
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public Order setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+        return this;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public Order setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,11 +105,13 @@ public class Order implements Serializable {
         Order order = (Order) o;
         return orderId == order.orderId &&
                 userId == order.userId &&
-                orderStatus == order.orderStatus;
+                orderStatus == order.orderStatus &&
+                Objects.equals(creationDate, order.creationDate) &&
+                Objects.equals(updateDate, order.updateDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, orderStatus, userId);
+        return Objects.hash(orderId, orderStatus, userId, creationDate, updateDate);
     }
 }

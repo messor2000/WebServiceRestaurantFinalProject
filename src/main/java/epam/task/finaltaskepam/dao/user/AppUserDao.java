@@ -2,6 +2,7 @@ package epam.task.finaltaskepam.dao.user;
 
 import epam.task.finaltaskepam.dto.AppUser;
 import epam.task.finaltaskepam.dto.AppUserPurse;
+import epam.task.finaltaskepam.error.DaoRuntimeException;
 
 import java.util.List;
 
@@ -36,7 +37,24 @@ public interface AppUserDao {
      */
     List<AppUser> getAllUsers();
 
-    public AppUserPurse fillUpAPurse(int userId, int amount);
+    AppUserPurse fillUpAPurse(int userId, int amount);
 
-    public AppUserPurse getPurseAmount(int userId);
+    AppUserPurse getPurseAmount(int userId);
+
+    /**
+     * This method is used to get detailed information about some user from data source.
+     *
+     * @param username of user
+     * @return filled User bean.
+     * @throws DaoRuntimeException if some error occurred while processing data.
+     */
+    AppUser getUserByNickname(String username) throws DaoRuntimeException;
+
+    /**
+     * This method is used to delete some user from the system and used only for tests!!!
+     *
+     * @param username of user
+     * @throws DaoRuntimeException if some error occurred while processing data.
+     */
+    void deleteUser(String username) throws DaoRuntimeException;
 }

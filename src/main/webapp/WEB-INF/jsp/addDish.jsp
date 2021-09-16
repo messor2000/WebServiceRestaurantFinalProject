@@ -12,18 +12,23 @@
 <fmt:setBundle basename="locale" var="locale"/>
 <fmt:message bundle="${locale}" key="locale.cancel" var="cancel"/>
 <fmt:message bundle="${locale}" key="locale.purse" var="purse"/>
+<fmt:message bundle="${locale}" key="locale.add" var="add"/>
+<fmt:message bundle="${locale}" key="locale.dishName" var="dishName"/>
+<fmt:message bundle="${locale}" key="locale.dishPrice" var="dishPrice"/>
+<fmt:message bundle="${locale}" key="locale.category" var="category"/>
+<fmt:message bundle="${locale}" key="locale.amount" var="amount"/>
+<fmt:message bundle="${locale}" key="locale.add" var="add"/>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add dish</title>
+    <title>${add}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/first.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="shortcut icon" href="images/main/favicon_16x16.png">
 
 </head>
 <body onload="active()">
@@ -40,7 +45,7 @@
         <c:import url="template/leftbar.jsp"/>
 
         <div class="col-sm-8 text-left mainContent">
-            <h1>Add dish</h1>
+            <h1>${add}</h1>
 
             <div class="col-sm-8 text-left mainContent">
 
@@ -48,44 +53,44 @@
                     <form name="addDishForm" class="form-horizontal" method="post" action="FrontController">
                         <input type="hidden" name="command" value="add-dish"/>
                         <div class="form-group">
-                            <label for="name" class="col-sm-3 control-label">Dish name</label>
+                            <label for="name" class="col-sm-3 control-label">${dishName}</label>
                             <span id="name" class="red"></span>
                             <div class="col-sm-7">
                                 <label for="dishName"></label>
-                                <input type="text" class="form-control" id="dishName" placeholder="name"
+                                <input type="text" class="form-control" id="dishName" placeholder=${dishName}
                                                                      name="name" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="price" class="col-sm-3 control-label">Dish price</label>
+                            <label for="price" class="col-sm-3 control-label">${dishPrice}</label>
                             <span id="price" class="red"></span>
                             <div class="col-sm-7">
                                 <label for="dishPrice"></label>
-                                <input type="text" class="form-control" id="dishPrice" placeholder="price"
+                                <input type="text" class="form-control" id="dishPrice" placeholder=${dishPrice}
                                        name="price" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="category" class="col-sm-3 control-label">Dish category</label>
+                            <label for="category" class="col-sm-3 control-label">${category}</label>
                             <span id="category" class="red"></span>
                             <div class="col-sm-7">
                                 <label for="dishCategory"></label>
-                                <input type="text" class="form-control" id="dishCategory" placeholder="category"
+                                <input type="text" class="form-control" id="dishCategory" placeholder=${category}
                                        name="category" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="amount" class="col-sm-3 control-label">Dish amount</label>
+                            <label for="amount" class="col-sm-3 control-label">${amount}</label>
                             <span id="amount" class="red"></span>
                             <div class="col-sm-7">
                                 <label for="dishAmount"></label>
-                                <input type="text" class="form-control" id="dishAmount" placeholder="amount"
+                                <input type="text" class="form-control" id="dishAmount" placeholder=${amount}
                                        name="amount" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-7">
-                                <button type="submit" class="btn btn-primary">Добавить</button>
+                                <button type="submit" class="btn btn-primary">${add}</button>
                             </div>
                         </div>
                     </form>
