@@ -62,8 +62,7 @@
                             <div class="form-group">
                                 <span id="amount" class="red"></span>
                                 <div class="col-sm-7 input-amount">
-                                    <label for="purseAmount"></label>
-                                    <input type="text" class="form-control" id="purseAmount" placeholder=${topUp}
+                                    <input for="purseAmount" type="text" class="form-control" id="purseAmount" placeholder=${topUp}
                                            name="amount" required>
                                 </div>
                             </div>

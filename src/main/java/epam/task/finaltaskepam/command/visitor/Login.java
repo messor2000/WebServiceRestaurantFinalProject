@@ -20,6 +20,8 @@ import java.util.Arrays;
 
 /**
  * @author Aleksandr Ovcharenko
+ *
+ * Login class is used to handle sign in request from client.
  */
 public class Login implements Command {
 

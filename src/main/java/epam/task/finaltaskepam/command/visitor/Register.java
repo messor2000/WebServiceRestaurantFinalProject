@@ -20,6 +20,8 @@ import java.util.Arrays;
 
 /**
  * @author Aleksandr Ovcharenko
+ *
+ * Register is used to handle register request from client.
  */
 public class Register implements Command {
 

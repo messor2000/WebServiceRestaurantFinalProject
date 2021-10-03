@@ -52,17 +52,6 @@ public class MakeAnOrder implements Command {
         OrderService orderService = FactoryService.getInstance().getOrderService();
 
         Order order = orderService.showOrder(userId);
-        List<Dish> dishList = orderService.showDishesInOrder(order.getOrderId());
-
-//        if (dishList.isEmpty()) {
-//            order.setOrderStatus(Status.WAITING_FOR_PAY);
-//        }
-
-
-
-//        if (order.getOrderStatus().equals(Status.COMPLETE) || order == null) {
-//            order = orderService.createAnOrder(userId);
-//        }
 
         try {
             orderService.makeAnOrder(dishName, order.getOrderId());

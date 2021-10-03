@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="locale" var="locale"/>

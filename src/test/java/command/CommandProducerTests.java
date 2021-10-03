@@ -1,42 +1,43 @@
 package command;
 
 import epam.task.finaltaskepam.command.Command;
-import epam.task.finaltaskepam.dao.FactoryDao;
-import epam.task.finaltaskepam.dao.dish.DishDao;
-import epam.task.finaltaskepam.dto.Dish;
-import epam.task.finaltaskepam.error.ConnectionPoolException;
-import epam.task.finaltaskepam.error.DaoRuntimeException;
-import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
-import epam.task.finaltaskepam.service.FactoryService;
-import epam.task.finaltaskepam.service.menu.MenuService;
-import epam.task.finaltaskepam.servlet.command.CommandPool;
 import epam.task.finaltaskepam.servlet.command.CommandProducer;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import service.DishServiceTests;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import static epam.task.finaltaskepam.repo.Request.SHOW_MENU;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Aleksandr Ovcharenko
  */
 public class CommandProducerTests {
 
-    private static final Logger logger = LogManager.getLogger(DishServiceTests.class);
+    @Mock
+    HttpServletRequest request;
 
+    @Mock
+    HttpSession session;
+
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        when(request.getSession()).thenReturn(session);
+        when(request.getSession(anyBoolean())).thenReturn(session);
+        when(request.getParameter("userId")).thenReturn("1");
+
+    }
 
     @Test
-    public void getCommandForUserTest() {
-
-
-        CommandProducer commandProducer = CommandProducer.getInstance();
-
-        String role = "visitor";
-
-//        Command command = commandProducer.getCommandForUser(role, CommandPool.MAKE_AN_ORDER);
-
+    public void shouldGetValidCommand() {
+        Command c = CommandProducer.getInstance().getCommandForUser("admin", SHOW_MENU);
+        Assert.assertNotNull(c);
     }
 }

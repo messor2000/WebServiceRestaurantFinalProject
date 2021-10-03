@@ -10,6 +10,9 @@ import java.io.IOException;
 
 /**
  * @author Aleksandr Ovcharenko
+ *
+ * Logout class is used to handle client request to
+ * terminate signed-in session.
  */
 public class Logout implements Command {
     @Override

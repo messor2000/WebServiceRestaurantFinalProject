@@ -128,7 +128,7 @@
                                         <li class="list-group-item">${price}:${dish.price}</li>
                                         <li class="list-group-item">${category}:${dish.category}</li>
                                         <c:if test='${sessionScope.get("user").role eq "manager"}'>
-                                            <li class="list-group-item">${dish.amount}:${dish.amount}</li>
+                                            <li class="list-group-item">${amount}:${dish.amount}</li>
                                         </c:if>
                                     </ul>
                                     <c:if test='${sessionScope.get("user").role eq "customer" || sessionScope.get("user").role eq "manager"}'>
@@ -194,7 +194,5 @@
     </div>
 </div>
 <c:import url="template/footer.jsp"/>
-<script src="../../js/test.js"></script>
-
 </body>
 </html>

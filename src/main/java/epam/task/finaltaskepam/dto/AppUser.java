@@ -1,7 +1,6 @@
 package epam.task.finaltaskepam.dto;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.Objects;
 
 public class AppUser implements Serializable {
@@ -12,7 +11,6 @@ public class AppUser implements Serializable {
     private String email;
     private String password;
     private String role;
-//    private Date registrationDate;
     private AppUserPurse purse;
 
     public static final class Builder {
@@ -47,10 +45,6 @@ public class AppUser implements Serializable {
             return this;
         }
 
-//        public Builder withRegistrationDate(Date registrationDate) {
-//            appUser.registrationDate = registrationDate;
-//            return this;
-//        }
         public Builder withPurse(AppUserPurse purse) {
             appUser.purse = purse;
             return this;
@@ -105,16 +99,6 @@ public class AppUser implements Serializable {
         this.role = role;
         return this;
     }
-
-//    public Date getRegistrationDate() {
-//        return registrationDate;
-//    }
-//
-//    public AppUser setRegistrationDate(Date registrationDate) {
-//        this.registrationDate = registrationDate;
-//        return this;
-//    }
-
 
     public AppUserPurse getPurse() {
         return purse;

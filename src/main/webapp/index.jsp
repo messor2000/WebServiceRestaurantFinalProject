@@ -39,12 +39,6 @@
         <c:import url="WEB-INF/jsp/template/leftbar.jsp"/>
 
         <div class="col-sm-8 text-left mainContent">
-            <br>
-            <form method="get" action="FrontController" class="form-horizontal">
-                <input type="hidden" name="command" value="find-movie-by-title"/>
-
-
-            </form>
             <hr>
             <div id="slider1_container"
                  style="visibility: hidden; position: relative; margin: 0 auto; width: 1000px; height: 700px; overflow: hidden;">

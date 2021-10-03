@@ -12,6 +12,9 @@ import java.util.ArrayList;
 
 /**
  * @author Aleksandr Ovcharenko
+
+ * ChangeLanguage class is used to handle request to change language of
+ * application.
  */
 public class Language implements Command {
 
