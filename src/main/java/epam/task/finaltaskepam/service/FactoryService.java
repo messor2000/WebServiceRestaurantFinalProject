@@ -7,6 +7,9 @@ import epam.task.finaltaskepam.service.user.AppUserServiceImpl;
 
 /**
  * @author Aleksandr Ovcharenko
+ *
+ * FactoryService represents the factory for obtaining Service objects.
+ *
  */
 public class FactoryService {
     private static final FactoryService INSTANCE = new FactoryService();

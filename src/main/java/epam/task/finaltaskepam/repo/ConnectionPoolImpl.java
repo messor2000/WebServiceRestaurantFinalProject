@@ -13,6 +13,9 @@ import java.util.concurrent.BlockingQueue;
 
 /**
  * @author Aleksandr Ovcharenko
+ *
+ * ConnectionPoolImpl is an implementation of ConnectionPool for MySQL.
+ *
  */
 public class ConnectionPoolImpl implements ConnectionPool {
     private static final String DRIVER = "com.mysql.jdbc.Driver";
@@ -35,6 +38,11 @@ public class ConnectionPoolImpl implements ConnectionPool {
         // not used constructor
     }
 
+    /**
+     * This method is used to initialize pool of connections with data source.
+     *
+     * @throws ConnectionPoolException if some error occurred while initializing ConnectionPool.
+     */
     @Override
     public void init() throws ConnectionPoolException {
         if (!isInit) {

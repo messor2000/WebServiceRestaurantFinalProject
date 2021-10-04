@@ -18,6 +18,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Aleksandr Ovcharenko
+ *
+ *  CommandsUtil class is a helper class used to gather some common methods
+ *  which are used by many Command implementation classes.
+ *
  */
 public class Util {
     private static final Logger logger = LogManager.getLogger(Util.class);

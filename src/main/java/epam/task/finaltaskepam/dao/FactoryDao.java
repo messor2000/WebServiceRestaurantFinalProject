@@ -10,6 +10,9 @@ import epam.task.finaltaskepam.repo.ConnectionPoolImpl;
 
 /**
  * @author Aleksandr Ovcharenko
+ *
+ * FactoryDao represents the factory for obtaining DAO objects.
+ *
  */
 public class FactoryDao {
 

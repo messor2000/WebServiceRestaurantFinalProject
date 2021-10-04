@@ -6,6 +6,9 @@ import java.util.regex.Pattern;
 
 /**
  * @author Aleksandr Ovcharenko
+ *
+ * Validator is a class used for validation of data from services.
+ *
  */
 public class Validator {
     private static final String REGEXP = "[\\w\\W]{1,4000}";
